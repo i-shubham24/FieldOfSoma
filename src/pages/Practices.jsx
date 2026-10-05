@@ -6,6 +6,7 @@ import RevealLines from '../components/motion/RevealLines'
 import TextLink from '../components/ui/TextLink'
 import { practices } from '../content/practices'
 import { booking } from '../content/site'
+import AudioGuide from '../components/interactive/AudioGuide'
 import { PAGE_TOP } from '../lib/layout'
 import useTitle from '../lib/useTitle'
 
@@ -151,6 +152,14 @@ function SplitPractice({ item, flip = false }) {
           </div>
           <div className={`lg:col-span-6 ${flip ? 'lg:order-1 lg:col-start-1' : 'lg:col-start-7'}`}>
             <Heading item={item} />
+            {item.audioCue ? (
+              <AudioGuide
+                practiceTitle={item.name}
+                verbs={item.verbs}
+                duration={item.audioCue.duration}
+                transcript={item.audioCue.transcript}
+              />
+            ) : null}
             <div className="mt-16 space-y-16">
               <Session item={item} />
               <Serves item={item} />
@@ -178,6 +187,14 @@ function WidePractice({ item }) {
           <div className="mt-16 grid gap-16 md:mt-20 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-5">
               <Heading item={item} />
+              {item.audioCue ? (
+                <AudioGuide
+                  practiceTitle={item.name}
+                  verbs={item.verbs}
+                  duration={item.audioCue.duration}
+                  transcript={item.audioCue.transcript}
+                />
+              ) : null}
             </div>
             <div className="space-y-16 lg:col-span-6 lg:col-start-7">
               <Session item={item} />

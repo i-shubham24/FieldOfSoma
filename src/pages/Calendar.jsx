@@ -4,6 +4,7 @@ import RevealLines from '../components/motion/RevealLines'
 import Button from '../components/ui/Button'
 import DraftNote from '../components/ui/DraftNote'
 import TextLink from '../components/ui/TextLink'
+import ConsultationBuilder from '../components/interactive/ConsultationBuilder'
 import { calendar } from '../content/calendar'
 import { site } from '../content/site'
 import { PAGE_TOP } from '../lib/layout'
@@ -111,28 +112,37 @@ function Week() {
 }
 
 function Request() {
-  const { heading, body, cta, subject, image } = calendar.request
+  const { heading, body, image } = calendar.request
 
   return (
     <section className="py-28 md:py-40">
       <div className="shell">
-        <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-12 lg:gap-8">
-          <Frame
-            image={image}
-            ratio="aspect-[3/2]"
-            sizes="(min-width: 1024px) 40rem, 100vw"
-            drift
-            unveil
-            className="lg:col-span-6"
-          />
-          <Reveal className="lg:col-span-5 lg:col-start-8">
-            <h2 className="text-heading">{heading}</h2>
-            <p className="mt-6 max-w-[42ch] text-lede font-light text-soma-ink/80">{body}</p>
-            <Button href={mailto(subject)} arrow className="mt-10">
-              {cta}
-            </Button>
-            <p className="mt-5 text-[0.875rem] text-soma-clay-deep">{site.email}</p>
-          </Reveal>
+        <div className="mx-auto max-w-6xl">
+          <div className="grid items-start gap-14 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-5">
+              <Reveal as="h2" className="text-heading">
+                {heading}
+              </Reveal>
+              <Reveal
+                as="p"
+                delay={0.08}
+                className="mt-6 max-w-[42ch] text-lede font-light text-soma-ink/80"
+              >
+                {body}
+              </Reveal>
+              <Frame
+                image={image}
+                ratio="aspect-[3/2]"
+                sizes="(min-width: 1024px) 30rem, 100vw"
+                drift
+                unveil
+                className="mt-12 hidden lg:block"
+              />
+            </div>
+            <div className="lg:col-span-7">
+              <ConsultationBuilder />
+            </div>
+          </div>
         </div>
       </div>
     </section>

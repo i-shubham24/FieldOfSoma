@@ -3,12 +3,14 @@ import { Link, NavLink } from 'react-router-dom'
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react'
 import { booking, nav, site } from '../../content/site'
 import { EASE } from '../../lib/motion'
+import SomaticPause from '../interactive/SomaticPause'
 import Button from '../ui/Button'
 import Wordmark from './Wordmark'
 
 export default function Header() {
   const [settled, setSettled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [pauseOpen, setPauseOpen] = useState(false)
   const reduce = useReducedMotion()
   const { scrollY } = useScroll()
 
@@ -65,7 +67,14 @@ export default function Header() {
             </ul>
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden items-center gap-7 lg:flex">
+            <button
+              type="button"
+              onClick={() => setPauseOpen(true)}
+              className="link-grow pb-1 text-[0.8125rem] tracking-[0.02em] text-soma-moss transition-colors duration-500 hover:text-soma-moss-light"
+            >
+              Somatic Pause
+            </button>
             <Button to={booking.to} variant="outline" size="sm">
               {booking.label}
             </Button>
@@ -114,6 +123,16 @@ export default function Header() {
               </ul>
 
               <div className="mt-auto flex flex-col items-start gap-6 pt-14">
+                <button
+                  type="button"
+                  onClick={() => {
+                    close()
+                    setPauseOpen(true)
+                  }}
+                  className="link-grow pb-1 text-left text-[1.125rem] font-medium tracking-[0.02em] text-soma-moss"
+                >
+                  Take a Somatic Pause
+                </button>
                 <Button to={booking.to} onClick={close} arrow>
                   {booking.label}
                 </Button>
@@ -128,6 +147,8 @@ export default function Header() {
           </motion.div>
         ) : null}
       </AnimatePresence>
+
+      <SomaticPause open={pauseOpen} onClose={() => setPauseOpen(false)} />
     </>
   )
 }

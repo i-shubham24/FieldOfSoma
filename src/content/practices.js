@@ -48,6 +48,11 @@ export const practices = {
       ],
       format: 'Private sessions and small groups, in person and online',
       cta: 'Book a Somatics session',
+      audioCue: {
+        duration: 45,
+        transcript:
+          'Lie on your back, knees bent, feet flat on the floor. Inhale gently and press your lower back down into the floor just twenty percent. Feel the abdominal muscles engage. Now take eight long seconds to slowly release the press. Notice the exact moment when the muscles stop working and rest begins.',
+      },
     },
     {
       id: 'tai-chi',
@@ -86,6 +91,11 @@ export const practices = {
       ],
       format: 'Weekly group classes, in person and online',
       cta: 'Join a Tai Chi class',
+      audioCue: {
+        duration: 45,
+        transcript:
+          'Stand with your feet shoulder-width apart. Let your knees soften without bending forward. Allow your weight to settle down into the triangles of your feet. Feel your spine hang from above like a silk thread. With each exhalation, drop your shoulders another millimetre down into gravity.',
+      },
     },
     {
       id: 'creative-movement',
@@ -124,6 +134,11 @@ export const practices = {
       ],
       format: 'Workshops and small groups, in person',
       cta: 'Ask about the next workshop',
+      audioCue: {
+        duration: 45,
+        transcript:
+          'Close your eyes. Find your breath. Notice the first tiny movement that wants to happen without planning: a finger curling, the ribs shifting, or the neck turning. Do not judge how it looks. Simply follow the sensation of the movement as it travels into the next shape.',
+      },
     },
   ],
 
