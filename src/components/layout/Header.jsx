@@ -51,6 +51,7 @@ export default function Header() {
 
   const [overDark, setOverDark] = useState(false)
   const [hideLogo, setHideLogo] = useState(false)
+  const [scrollbarPad, setScrollbarPad] = useState(0)
 
   // Track scroll position to ensure crisp contrast AND scroll logo upwards out of sight past Pillars
   useEffect(() => {
@@ -94,9 +95,12 @@ export default function Header() {
     }
   }, [location.pathname])
 
-  // Accessible keyboard control and body scroll locking
+  // Accessible keyboard control and body scroll locking without shifting layout
   useEffect(() => {
-    if (!open) return undefined
+    if (!open) {
+      setScrollbarPad(0)
+      return undefined
+    }
 
     window.__lenis?.stop()
     const page = document.getElementById('page')
@@ -107,6 +111,7 @@ export default function Header() {
     // Preserve scrollbar width to prevent ANY layout shift on systems
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
     if (scrollbarWidth > 0) {
+      setScrollbarPad(scrollbarWidth)
       document.documentElement.style.paddingRight = `${scrollbarWidth}px`
     }
     document.documentElement.style.overflow = 'hidden'
@@ -117,6 +122,7 @@ export default function Header() {
       window.__lenis?.start()
       document.documentElement.style.overflow = ''
       document.documentElement.style.paddingRight = ''
+      setScrollbarPad(0)
       page?.removeAttribute('inert')
       window.removeEventListener('keydown', onKeyDown)
     }
@@ -135,7 +141,10 @@ export default function Header() {
   return (
     <>
       {/* Top sticky bar: pristine Kinfolk minimalism without solid background */}
-      <header className="fixed inset-x-0 top-0 z-50 bg-transparent pointer-events-none">
+      <header
+        className="fixed inset-x-0 top-0 z-50 bg-transparent pointer-events-none"
+        style={scrollbarPad > 0 ? { paddingRight: `${scrollbarPad}px` } : undefined}
+      >
         {/* Generous masthead posture with guaranteed crisp contrast */}
         <div
           className={`shell flex items-center justify-between pt-7 pb-5 pointer-events-auto transition-colors duration-500 ${
@@ -169,21 +178,21 @@ export default function Header() {
             aria-label={open ? 'Close menu' : 'Open menu'}
             onClick={() => setOpen((prev) => !prev)}
           >
-            <div className="relative flex h-6 w-8 items-center justify-center sm:w-9">
+            <div className="relative h-6 w-8 sm:w-9">
               {/* Top parallel line */}
               <span
-                className={`absolute block h-[2px] w-8 sm:w-9 bg-current transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] origin-center ${
+                className={`absolute inset-x-0 top-[11px] block h-[2px] w-full bg-current origin-center transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${
                   open
                     ? 'translate-y-0 rotate-45'
-                    : '-translate-y-[5px] group-hover:-translate-y-[7.5px]'
+                    : '-translate-y-[5px] rotate-0 group-hover:-translate-y-[7.5px]'
                 }`}
               />
               {/* Bottom parallel line */}
               <span
-                className={`absolute block h-[2px] w-8 sm:w-9 bg-current transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] origin-center ${
+                className={`absolute inset-x-0 top-[11px] block h-[2px] w-full bg-current origin-center transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${
                   open
                     ? 'translate-y-0 -rotate-45'
-                    : 'translate-y-[5px] group-hover:translate-y-[7.5px]'
+                    : 'translate-y-[5px] rotate-0 group-hover:translate-y-[7.5px]'
                 }`}
               />
             </div>
@@ -200,6 +209,7 @@ export default function Header() {
             aria-modal="true"
             aria-label="Site navigation menu"
             className="fixed inset-0 z-40 h-[100dvh] max-h-[100dvh] overflow-y-auto lg:overflow-hidden bg-gradient-to-b from-[#D4D8CF] via-[#DCE0D7] to-[#E3E6DF] text-soma-ink select-none"
+            style={scrollbarPad > 0 ? { paddingRight: `${scrollbarPad}px` } : undefined}
             initial={reduce ? false : { y: '-100%' }}
             animate={{ y: 0 }}
             exit={{ y: '-100%' }}

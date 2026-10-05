@@ -98,6 +98,7 @@
 
 @layer base {
   html {
+    scrollbar-gutter: stable;
     background-color: var(--color-soma-paper);
     color: var(--color-soma-ink);
     -webkit-font-smoothing: antialiased;

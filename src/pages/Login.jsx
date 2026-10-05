@@ -14,7 +14,7 @@ export default function Login() {
   }
 
   return (
-    <div className="relative min-h-[100dvh] lg:h-[100dvh] lg:max-h-[100dvh] w-full overflow-y-auto lg:overflow-hidden flex flex-col justify-center items-center px-4 py-8 lg:py-0 bg-[#F7F5F0] text-soma-ink select-none">
+    <div className="relative min-h-[100dvh] lg:h-[100dvh] lg:max-h-[100dvh] w-full overflow-x-hidden overflow-y-auto lg:overflow-hidden flex flex-col justify-center items-center px-4 py-8 lg:py-0 bg-[#F7F5F0] text-soma-ink select-none">
       {/* Return to website shortcut - pinned to top-left so it never affects vertical height */}
       <Link
         to="/"
@@ -26,12 +26,12 @@ export default function Login() {
         <span>Field of Soma</span>
       </Link>
 
-      {/* SOMA background watermark - sized to viewport height so all 4 letters are 100% fully visible without clipping */}
+      {/* SOMA background watermark matching Knotless reference (.watermark { font-size: 20rem; font-weight: 700; letter-spacing: .1em; writing-mode: vertical-rl; top: 50%; right: 5%; transform: translateY(-50%); }) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-4 sm:right-10 lg:right-20 top-1/2 -translate-y-1/2 select-none opacity-25 sm:opacity-35"
+        className="pointer-events-none absolute right-[3%] sm:right-[5%] lg:right-[6%] top-1/2 -translate-y-1/2 select-none z-0"
       >
-        <span className="block font-serif text-[clamp(3.5rem,10.5vh,6.75rem)] font-light tracking-[0.14em] text-[#DDD6CA] [writing-mode:vertical-rl] uppercase leading-none select-none">
+        <span className="block font-serif text-[clamp(9rem,20vw,20rem)] font-bold tracking-[0.1em] text-[#1c1a17]/[0.05] [writing-mode:vertical-rl] uppercase leading-none select-none">
           SOMA
         </span>
       </div>
