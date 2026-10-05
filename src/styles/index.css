@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+/*
+  Field of Soma: design tokens.
+  Colours and fonts come from CLAUDE_DESIGN_HANDOVER.md. One addition:
+  soma-clay-deep, a darker clay that passes WCAG AA for small text on paper.
+
+  Layers (z-index): header 50, mobile menu 40, paper grain 60.
+*/
+@theme {
+  --color-soma-paper: #faf6f0;
+  --color-soma-linen: #f0eae1;
+  --color-soma-ink: #1c1a17;
+  --color-soma-moss: #465942;
+  --color-soma-moss-light: #60775b;
+  --color-soma-clay: #8e7b6c;
+  --color-soma-clay-deep: #766557;
+  --color-soma-sand: #ded6c9;
+  --color-soma-white: #ffffff;
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --text-display: clamp(2.5rem, 6.6vw, 6rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.012em;
+
+  --text-heading: clamp(2.125rem, 3.8vw, 3.5rem);
+  --text-heading--line-height: 1.1;
+  --text-heading--letter-spacing: -0.008em;
+
+  --text-manifesto: clamp(1.75rem, 3.1vw, 2.875rem);
+  --text-manifesto--line-height: 1.3;
+
+  --text-lede: 1.0625rem;
+  --text-lede--line-height: 1.75;
+
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.18em;
+
+  --ease-soma: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background-color: var(--color-soma-paper);
+    color: var(--color-soma-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  /* Paper grain: fixed and non-interactive, so it never repaints on scroll. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.32;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-soma-moss);
+    color: var(--color-soma-paper);
+  }
+
+  :focus-visible {
+    outline: 1px solid currentColor;
+    outline-offset: 5px;
+  }
+}
+
+@layer components {
+  /* Page container: wide margins, the same on every section. */
+  .shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 82.5rem;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .shell {
+      padding-inline: 4rem;
+    }
+  }
+
+  /* Photographs share one gentle grade so different sources sit together. */
+  .photo {
+    filter: saturate(0.88) sepia(0.07) contrast(0.98);
+  }
+
+  /* The one full-colour band on a page. Selection inverts so it stays visible. */
+  .on-moss ::selection {
+    background-color: var(--color-soma-paper);
+    color: var(--color-soma-moss);
+  }
+}
+
+/* Underline that draws in from the left on hover. Used for navigation. */
+@utility link-grow {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 0% 1px;
+  transition: background-size 600ms var(--ease-soma);
+
+  &:hover,
+  &[aria-current="page"] {
+    background-position: 0 100%;
+    background-size: 100% 1px;
+  }
+}
+
+/* Underline that is always present. Used for editorial text links. */
+@utility link-rest {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+}
+
+/* The pandiculation cycle: a marker travels the circle, each word brightens as it passes. */
+@keyframes soma-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes soma-phase {
+  0%,
+  9% {
+    opacity: 1;
+  }
+  18%,
+  82% {
+    opacity: 0.5;
+  }
+  91%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@utility cycle-orbit {
+  animation: soma-orbit 24s linear infinite;
+}
+
+@utility cycle-phase {
+  animation: soma-phase 24s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cycle-orbit {
+    animation: none;
+    display: none;
+  }
+
+  .cycle-phase {
+    animation: none;
+    opacity: 1;
+  }
+}
