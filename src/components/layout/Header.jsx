@@ -98,6 +98,7 @@ export default function Header() {
   useEffect(() => {
     if (!open) return undefined
 
+    window.__lenis?.stop()
     const page = document.getElementById('page')
     const onKeyDown = (event) => {
       if (event.key === 'Escape') setOpen(false)
@@ -113,6 +114,7 @@ export default function Header() {
     window.addEventListener('keydown', onKeyDown)
 
     return () => {
+      window.__lenis?.start()
       document.documentElement.style.overflow = ''
       document.documentElement.style.paddingRight = ''
       page?.removeAttribute('inert')

@@ -14,4 +14,15 @@ export default defineConfig({
   optimizeDeps: {
     include: icons.map((name) => `@phosphor-icons/react/dist/csr/${name}`),
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-motion': ['motion'],
+          'vendor-lenis': ['lenis'],
+        },
+      },
+    },
+  },
 })

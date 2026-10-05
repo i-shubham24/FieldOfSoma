@@ -48,13 +48,10 @@ export default function KinfolkStory() {
 
         {/* Fixed Editorial Typography Layer (Exact Kinfolk Layout) */}
         <div className="shell relative z-10 flex h-full flex-col justify-between pt-24 pb-4 sm:pt-28 sm:pb-5 lg:pt-32 lg:pb-5">
-          {/* Top fixed line: Issue sub-heading matching Kinfolk */}
-          <div className="flex items-center justify-between">
+          {/* Top fixed line matching Kinfolk */}
+          <div>
             <p className="font-sans text-[0.8125rem] font-normal tracking-[0.04em] text-soma-paper/90 sm:text-[0.9375rem]">
               An inquiry into somatic education and embodied presence.
-            </p>
-            <p className="hidden font-sans text-[0.75rem] font-medium tracking-[0.16em] text-soma-sand uppercase sm:block">
-              Issue 01 / Embodiment
             </p>
           </div>
 

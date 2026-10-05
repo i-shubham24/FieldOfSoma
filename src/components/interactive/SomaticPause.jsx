@@ -75,17 +75,20 @@ export default function SomaticPause({ open, onClose }) {
   // Reset when dialog opens
   useEffect(() => {
     if (open) {
+      window.__lenis?.stop()
       document.body.style.overflow = 'hidden'
       setActive(true)
       setPhaseIndex(0)
       setSecondsLeft(PHASES[0].seconds)
       setCyclesCompleted(0)
     } else {
+      window.__lenis?.start()
       document.body.style.overflow = ''
       setActive(false)
       clearInterval(timerRef.current)
     }
     return () => {
+      window.__lenis?.start()
       document.body.style.overflow = ''
       clearInterval(timerRef.current)
     }
