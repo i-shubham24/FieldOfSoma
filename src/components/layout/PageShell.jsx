@@ -3,14 +3,29 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Footer from './Footer'
 import Header from './Header'
 
-// Each new page opens at the top, or at the section named in the address.
+// Each new page opens at the top always, or at the anchor section if hashed.
 function useScrollRestore() {
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    const target = hash ? document.getElementById(hash.slice(1)) : null
-    if (target) target.scrollIntoView()
-    else window.scrollTo(0, 0)
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+  }, [])
+
+  useEffect(() => {
+    if (hash) {
+      const id = hash.slice(1)
+      const target = document.getElementById(id)
+      if (target) {
+        target.scrollIntoView({ behavior: 'auto', block: 'start' })
+        return
+      }
+    }
+    // Always load every page from the absolute top immediately
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
   }, [pathname, hash])
 }
 

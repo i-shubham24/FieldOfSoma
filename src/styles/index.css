@@ -1,10 +1,62 @@
 @import "tailwindcss";
 
 /*
-  Field of Soma: design tokens.
-  Colours and fonts come from CLAUDE_DESIGN_HANDOVER.md. One addition:
-  soma-clay-deep, a darker clay that passes WCAG AA for small text on paper.
+  Atelier Akuko exact bespoke typefaces:
+  1. Astralaga: distinctive artistic display (logo & brand marks)
+  2. Swear Banner Cilati: iconic high-contrast flared editorial serif with radical italic loops
+  3. Labil Grotesk: avant-garde Swiss/editorial grotesk (body & navigation)
+*/
+@font-face {
+  font-family: 'Astralaga';
+  src: url('https://framerusercontent.com/assets/srelVpxD1welA0w16Q8gqerTU.woff2') format('woff2');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 300;
+}
 
+@font-face {
+  font-family: 'Swear Banner Cilati';
+  src: url('https://framerusercontent.com/assets/Qy4AqVcGVRGF24LnTJi2A8IzAk.woff2') format('woff2');
+  font-display: swap;
+  font-style: italic;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Swear Banner Cilati';
+  src: url('https://framerusercontent.com/assets/hU0xzb4jEm4UdWEwYDY9ud34A.woff2') format('woff2');
+  font-display: swap;
+  font-style: italic;
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'Labil Grotesk';
+  src: url('https://framerusercontent.com/assets/uzy1kHL5Kn3hXRXmRhkkzR80ao.woff2') format('woff2');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Labil Grotesk';
+  src: url('https://framerusercontent.com/assets/TourEzPFNmIKIwclKrlyWZMqSg.woff2') format('woff2');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Labil Grotesk';
+  src: url('https://framerusercontent.com/assets/FtcyPkI7LWcvSzlCggtYe28aGk.woff2') format('woff2');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+}
+
+/*
+  Field of Soma: design tokens.
+  Colours and fonts come from CLAUDE_DESIGN_HANDOVER.md with Atelier Akuko bespoke typefaces.
   Layers (z-index): header 50, mobile menu 40, paper grain 60.
 */
 @theme {
@@ -18,8 +70,10 @@
   --color-soma-sand: #ded6c9;
   --color-soma-white: #ffffff;
 
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-display: "Swear Banner Cilati", "Cormorant Garamond", Georgia, serif;
+  --font-brand: "Astralaga", "Swear Banner Cilati", serif;
+  --font-sans: "Labil Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
 
   --text-display: clamp(2.5rem, 6.6vw, 6rem);
   --text-display--line-height: 1.04;

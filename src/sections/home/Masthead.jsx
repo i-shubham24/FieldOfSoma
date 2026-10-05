@@ -59,6 +59,7 @@ export default function Masthead() {
           sizes="(min-width: 1024px) 56rem, 100vw"
           priority
           ratio="aspect-[4/5] sm:aspect-[3/2]"
+          position="object-[center_25%]"
           drift
           unveil
           delay={0.6}

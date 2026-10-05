@@ -12,7 +12,11 @@ export default function Window() {
 
   return (
     <>
-      <section className="on-moss bg-soma-moss py-28 text-soma-paper md:py-40">
+      <section
+        id="window-section"
+        data-theme="dark"
+        className="on-moss bg-soma-moss py-28 text-soma-paper md:py-40"
+      >
         <div className="shell">
           <div className="mx-auto grid max-w-6xl items-center gap-20 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-6">

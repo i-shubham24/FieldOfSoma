@@ -1,68 +1,145 @@
 import { Link } from 'react-router-dom'
-import { footerGroups, site } from '../../content/site'
-import Wordmark from './Wordmark'
+import { site } from '../../content/site'
 
-const linkClass =
-  'link-grow pb-0.5 text-[0.9375rem] whitespace-nowrap text-soma-ink/80 transition-colors duration-500 hover:text-soma-ink'
+const DISCIPLINES = [
+  { to: '/practices#somatics', label: 'Clinical Somatics' },
+  { to: '/practices#tai-chi', label: 'Tai Chi Form' },
+  { to: '/practices#creative-movement', label: 'Creative Movement' },
+  { to: '/practices', label: 'Spoken Audio Guidance' },
+  { to: '/somatics', label: 'Sensory Body Map' },
+  { to: '/calendar', label: 'Private Consultations' },
+]
 
-// Column widths on wide screens: brand 1 to 3, a gap, then the three link groups.
-const GROUP_SPANS = ['lg:col-span-3 lg:col-start-5', 'lg:col-span-2']
-
-const titleClass = 'font-sans text-label font-medium uppercase text-soma-clay-deep'
+const EXPLORE = [
+  { to: '/somatics', label: 'Discover Somatics' },
+  { to: '/practices', label: 'The Practices' },
+  { to: '/classes', label: 'Recorded Classes' },
+  { to: '/calendar', label: 'Calendar and Booking' },
+  { to: '/about', label: 'About Kirti' },
+  { to: '/articles', label: 'Writing and Essays' },
+]
 
 export default function Footer() {
   return (
-    <footer className="bg-soma-linen">
-      <div className="shell pt-20 pb-10 md:pt-28">
-        <div className="grid gap-14 sm:grid-cols-3 sm:gap-x-8 lg:grid-cols-12">
-          <div className="sm:col-span-3">
-            <Link to="/" aria-label={`${site.name}, home`}>
-              <Wordmark className="text-[1.75rem] leading-none tracking-[-0.01em]" />
-            </Link>
-            <p className="mt-5 max-w-[26ch] text-[0.9375rem] leading-[1.7] text-soma-ink/80">
-              Movement and somatic education with {site.person}.
-            </p>
+    <footer className="overflow-hidden border-t border-soma-sand/70 bg-[#EAE7E1] text-soma-ink">
+      <div className="shell pt-20 pb-10 sm:pt-28 sm:pb-14 lg:pt-32 lg:pb-14">
+        {/* Top Section: Editorial statement on left, 3 link columns on right (mirrors ViV MGMT) */}
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+          {/* Left statement with high-contrast serif and selective italics */}
+          <div className="lg:col-span-5">
+            <div className="space-y-5">
+              <p className="font-display text-xl sm:text-2xl lg:text-[1.75rem] font-normal leading-[1.3] text-soma-ink">
+                <span className="italic">Field of Soma</span> is movement education.<br />
+                Body-based practices for living healing.
+              </p>
+              <p className="font-display text-xl sm:text-2xl lg:text-[1.75rem] font-normal leading-[1.3] text-soma-ink">
+                Informed by Somatics, Tai Chi,<br />
+                and Creative Movement from dance.
+              </p>
+              <p className="font-sans text-[0.875rem] font-normal leading-[1.6] text-soma-clay-deep max-w-[38ch]">
+                Cultivating felt presence and coming back to the body&apos;s innate capacity to heal, steady, and express.
+              </p>
+            </div>
           </div>
 
-          {footerGroups.map((group, i) => (
-            <nav key={group.title} aria-label={group.title} className={GROUP_SPANS[i]}>
-              <h2 className={titleClass}>{group.title}</h2>
-              <ul className="mt-5 space-y-3">
-                {group.links.map((item) => (
-                  <li key={item.to}>
-                    <Link to={item.to} className={linkClass}>
+          {/* Right Columns (Disciplines, Explore, Connect) */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7 lg:gap-10">
+            {/* Column 1: Disciplines */}
+            <div>
+              <p className="font-sans text-[0.8125rem] font-medium tracking-[0.02em] text-soma-ink/50">
+                Disciplines
+              </p>
+              <ul className="mt-5 space-y-2.5">
+                {DISCIPLINES.map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      to={item.to}
+                      className="font-sans text-[0.9375rem] text-soma-ink transition-colors duration-300 hover:text-soma-moss"
+                    >
                       {item.label}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </nav>
-          ))}
+            </div>
 
-          <div className="lg:col-span-3">
-            <h2 className={titleClass}>Connect</h2>
-            <ul className="mt-5 space-y-3">
-              <li>
-                <a href={`mailto:${site.email}`} className={linkClass}>
-                  {site.email}
-                </a>
-              </li>
-              <li>
-                <a href={site.instagram} target="_blank" rel="noreferrer" className={linkClass}>
-                  Instagram
-                </a>
-              </li>
-            </ul>
+            {/* Column 2: Explore */}
+            <div>
+              <p className="font-sans text-[0.8125rem] font-medium tracking-[0.02em] text-soma-ink/50">
+                Explore
+              </p>
+              <ul className="mt-5 space-y-2.5">
+                {EXPLORE.map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      to={item.to}
+                      className="font-sans text-[0.9375rem] text-soma-ink transition-colors duration-300 hover:text-soma-moss"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 3: Connect */}
+            <div className="col-span-2 sm:col-span-1">
+              <p className="font-sans text-[0.8125rem] font-medium tracking-[0.02em] text-soma-ink/50">
+                Connect
+              </p>
+              <ul className="mt-5 space-y-2.5 font-sans text-[0.9375rem]">
+                <li>
+                  <Link
+                    to="/contact"
+                    className="text-soma-ink transition-colors duration-300 hover:text-soma-moss"
+                  >
+                    Contact Studio
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/login"
+                    className="text-soma-ink transition-colors duration-300 hover:text-soma-moss"
+                  >
+                    Member Login
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href={`mailto:${site.email}`}
+                    className="text-soma-ink transition-colors duration-300 hover:text-soma-moss"
+                  >
+                    {site.email}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={site.instagram}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-soma-ink transition-colors duration-300 hover:text-soma-moss"
+                  >
+                    Instagram
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div className="mt-20 flex flex-col gap-2 border-t border-soma-ink/15 pt-6 text-[0.8125rem] text-soma-clay-deep sm:flex-row sm:justify-between md:mt-24">
-          <p>
-            © {new Date().getFullYear()} {site.name}
-          </p>
-          <p>
-            {site.person}, {site.role}
-          </p>
+        {/* Bottom Section: Field of Soma lettering across bottom-left + copyright baseline on right */}
+        <div className="mt-14 flex flex-col justify-between gap-6 border-t border-soma-ink/15 pt-8 sm:mt-18 lg:mt-20 lg:flex-row lg:items-end">
+          <div className="select-none">
+            <span className="block font-display text-[clamp(3.75rem,11vw,9.5rem)] font-semibold tracking-tight leading-none text-soma-ink uppercase">
+              SOMA
+            </span>
+          </div>
+
+          <div className="pb-1 text-left sm:text-right lg:pb-2">
+            <p className="font-sans text-[0.8125rem] tracking-[0.04em] text-soma-clay-deep">
+              © {new Date().getFullYear()} Field of Soma, All Rights Reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

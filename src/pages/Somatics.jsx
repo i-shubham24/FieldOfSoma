@@ -167,7 +167,7 @@ function Grounding() {
   const { heading, image, items } = somatics.grounding
 
   return (
-    <section className="on-moss bg-soma-moss py-28 text-soma-paper md:py-40">
+    <section data-theme="dark" className="on-moss bg-soma-moss py-28 text-soma-paper md:py-40">
       <div className="shell">
         <div className="mx-auto grid max-w-6xl items-center gap-16 lg:grid-cols-12 lg:gap-8">
           <Frame
@@ -204,15 +204,23 @@ function Doubts() {
   const { heading, items } = somatics.faq
 
   return (
-    <section className="pb-28 md:pb-40">
+    <section className="py-24 md:py-36">
       <div className="shell">
-        <div className="mx-auto grid max-w-6xl gap-12 border-t border-soma-sand pt-24 md:pt-32 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-4">
-            <Reveal as="h2" className="max-w-[12ch] text-heading">
+        <div className="mx-auto max-w-4xl">
+          {/* Centered Heading matching spotstravel.co reference */}
+          <div className="text-center pb-12 sm:pb-16">
+            <Reveal
+              as="h2"
+              className="font-serif text-[clamp(2.25rem,4.5vw,3.5rem)] font-normal text-soma-ink leading-tight"
+            >
+              Frequently Asked Questions
+            </Reveal>
+            <Reveal as="p" delay={0.08} className="mt-3 text-sm sm:text-base text-soma-clay-deep">
               {heading}
             </Reveal>
           </div>
-          <Reveal delay={0.1} className="lg:col-span-7 lg:col-start-6">
+
+          <Reveal delay={0.15}>
             <Accordion items={items} />
           </Reveal>
         </div>

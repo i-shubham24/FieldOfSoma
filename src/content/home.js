@@ -9,7 +9,7 @@ export const hero = {
   subtext:
     'Through Somatic healing, Tai Chi, and Creative Movement, rediscover the quiet intelligence your body already holds.',
   primary: { to: '/practices', label: 'Explore the Practices' },
-  image: images.wallWalk, // PLACEHOLDER: stock photograph until Kirti's own arrive
+  image: images.floorLight,
 }
 
 export const manifesto = {

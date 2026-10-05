@@ -6,14 +6,18 @@ import Calendar from './pages/Calendar'
 import Classes from './pages/Classes'
 import Contact from './pages/Contact'
 import Home from './pages/Home'
+import Login from './pages/Login'
 import NotFound from './pages/NotFound'
 import Practices from './pages/Practices'
+import Signup from './pages/Signup'
 import Somatics from './pages/Somatics'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
         <Route element={<PageShell />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />

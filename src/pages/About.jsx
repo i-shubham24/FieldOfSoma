@@ -11,32 +11,34 @@ function Intro() {
   const { label, headline, lede, image, caption } = about.intro
 
   return (
-    <section className={PAGE_TOP}>
+    <section className={`${PAGE_TOP} pb-20 sm:pb-28 lg:pb-32`}>
       <div className="shell">
-        <div className="mx-auto grid max-w-6xl items-end gap-14 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-6 lg:pb-10">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-7">
             <Reveal as="p" className="text-label font-medium text-soma-clay-deep uppercase">
               {label}
             </Reveal>
-            <RevealLines as="h1" lines={headline} delay={0.1} className="mt-7 text-display" />
+            <RevealLines as="h1" lines={headline} delay={0.08} className="mt-4 sm:mt-5 text-display" />
             <Reveal
               as="p"
-              delay={0.35}
-              className="mt-8 max-w-[34ch] font-display text-[clamp(1.375rem,2.2vw,1.875rem)] leading-[1.35]"
+              delay={0.2}
+              className="mt-6 sm:mt-7 max-w-[36ch] font-display text-[clamp(1.25rem,1.9vw,1.65rem)] leading-[1.38] text-soma-ink/90"
             >
               {lede}
             </Reveal>
           </div>
-          <Frame
-            image={image}
-            caption={caption}
-            ratio="aspect-[4/5]"
-            sizes="(min-width: 1024px) 34rem, 100vw"
-            priority
-            unveil
-            delay={0.3}
-            className="lg:col-span-5 lg:col-start-8"
-          />
+          <div className="lg:col-span-5 max-w-sm sm:max-w-md lg:max-w-none mx-auto w-full">
+            <Frame
+              image={image}
+              caption={caption}
+              ratio="aspect-[4/4.5]"
+              sizes="(min-width: 1024px) 24rem, 100vw"
+              priority
+              unveil
+              delay={0.25}
+              className="w-full max-h-[46vh] object-cover"
+            />
+          </div>
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import useTitle from '../lib/useTitle'
 import Convergence from '../sections/home/Convergence'
 import Invitation from '../sections/home/Invitation'
+import KinfolkStory from '../sections/home/KinfolkStory'
 import Manifesto from '../sections/home/Manifesto'
 import Masthead from '../sections/home/Masthead'
 import Pillars from '../sections/home/Pillars'
@@ -14,6 +15,7 @@ export default function Home() {
     <>
       <Masthead />
       <Manifesto />
+      <KinfolkStory />
       <Pillars />
       <Convergence />
       <Window />
