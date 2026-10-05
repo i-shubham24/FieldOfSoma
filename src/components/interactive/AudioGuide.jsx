@@ -35,15 +35,25 @@ function createVoiceDrone(pitch = 216) {
     osc1.start()
     osc2.start()
 
+    let stopped = false
+
     return {
       stop: () => {
+        if (stopped) return
+        stopped = true
         try {
           gainNode.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.8)
           setTimeout(() => {
             try {
               osc1.stop()
+            } catch {}
+            try {
               osc2.stop()
-              ctx.close()
+            } catch {}
+            try {
+              if (ctx && ctx.state !== 'closed') {
+                ctx.close().catch(() => {})
+              }
             } catch {}
           }, 900)
         } catch {}
@@ -51,6 +61,22 @@ function createVoiceDrone(pitch = 216) {
     }
   } catch {
     return null
+  }
+}
+
+// Active audio guide dispatcher to ensure only one drone plays at any given moment
+let activeStopper = null
+
+function registerActivePlayer(stopFn) {
+  if (activeStopper && activeStopper !== stopFn) {
+    activeStopper()
+  }
+  activeStopper = stopFn
+}
+
+function unregisterActivePlayer(stopFn) {
+  if (activeStopper === stopFn) {
+    activeStopper = null
   }
 }
 
@@ -71,6 +97,9 @@ export default function AudioGuide({ practiceTitle, verbs, duration = 45, transc
 
   useEffect(() => {
     if (isPlaying) {
+      const stopSelf = () => setIsPlaying(false)
+      registerActivePlayer(stopSelf)
+
       droneRef.current = createVoiceDrone(pitch)
       intervalRef.current = setInterval(() => {
         setSeconds((prev) => {
@@ -82,6 +111,12 @@ export default function AudioGuide({ practiceTitle, verbs, duration = 45, transc
           return prev + 1
         })
       }, 1000)
+
+      return () => {
+        unregisterActivePlayer(stopSelf)
+        droneRef.current?.stop()
+        clearInterval(intervalRef.current)
+      }
     } else {
       droneRef.current?.stop()
       clearInterval(intervalRef.current)

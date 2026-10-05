@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import { ArrowRightIcon } from '@phosphor-icons/react/dist/csr/ArrowRight'
 import { CheckIcon } from '@phosphor-icons/react/dist/csr/Check'
@@ -23,6 +24,7 @@ export default function ConsultationBuilder() {
   const [focus, setFocus] = useState('somatics')
   const [format, setFormat] = useState('private')
   const [time, setTime] = useState('Weekday morning')
+  const [copied, setCopied] = useState(false)
   const reduce = useReducedMotion()
 
   const selectedFocus = FOCUSES.find((f) => f.id === focus) || FOCUSES[0]
@@ -146,18 +148,38 @@ export default function ConsultationBuilder() {
               </p>
             </div>
 
-            <motion.a
-              href={mailtoLink}
-              whileTap={reduce ? undefined : { scale: 0.98 }}
-              className="inline-flex h-11 items-center justify-center gap-2.5 rounded-[2px] bg-soma-moss px-7 text-[0.8125rem] font-medium text-soma-paper transition-colors duration-500 ease-soma hover:bg-soma-moss-light"
-            >
-              <span>Write to book</span>
-              <ArrowRightIcon size={14} weight="light" />
-            </motion.a>
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  if (navigator?.clipboard?.writeText) {
+                    navigator.clipboard.writeText(bodyText)
+                    setCopied(true)
+                    setTimeout(() => setCopied(false), 2500)
+                  }
+                }}
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-[2px] border border-soma-sand bg-transparent px-4 text-[0.8125rem] font-medium text-soma-ink transition-colors hover:border-soma-moss hover:text-soma-moss cursor-pointer"
+              >
+                {copied ? <CheckIcon size={14} className="text-soma-moss" weight="bold" /> : null}
+                <span>{copied ? 'Copied' : 'Copy message'}</span>
+              </button>
+
+              <Link
+                to={`/contact?query=${encodeURIComponent(bodyText)}`}
+                className="inline-flex h-11 items-center justify-center gap-2.5 rounded-[2px] bg-soma-moss px-6 text-[0.8125rem] font-medium text-soma-paper transition-colors duration-500 ease-soma hover:bg-soma-moss-light"
+              >
+                <span>Send via form</span>
+                <ArrowRightIcon size={14} weight="light" />
+              </Link>
+            </div>
           </div>
 
           <p className="mt-5 text-[0.75rem] leading-[1.65] text-soma-clay-deep">
-            Sends directly to {site.email}. Kirti personally replies within 24 to 48 hours to confirm slot availability.
+            You can send directly through our contact form or{' '}
+            <a href={mailtoLink} className="underline hover:text-soma-ink">
+              open in your mail app
+            </a>
+            . Kirti personally replies within 24 to 48 hours to confirm slot availability.
           </p>
         </div>
       </div>

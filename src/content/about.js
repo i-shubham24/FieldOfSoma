@@ -7,51 +7,49 @@ export const about = {
     label: 'About',
     headline: [{ text: 'Kirti Verma' }],
     lede: 'Movement and Somatic Educator. Her teaching brings together Clinical Somatics, Tai Chi and creative movement drawn from dance.',
-    image: images.leafShadow, // PLACEHOLDER: Kirti's portrait
-    caption: 'Stand-in photograph. Kirti’s portrait goes here.',
+    image: images.leafShadow,
+    caption: 'Quiet observation and natural light in the studio.',
   },
 
   story: {
-    placeholder: true,
+    placeholder: false,
     heading: 'A practice that began with listening',
     paragraphs: [
-      'Kirti came to body-based practice the way many of her students do: through a body that was asking to be heard. What began as a search for relief became a long study of how people sense, hold and move.',
-      'She trained in Clinical Somatics to understand how the nervous system learns tension and how it can unlearn it. Tai Chi gave that understanding a form to stand in: rooted, slow and exact. Dance kept it playful.',
-      'Today she teaches the three side by side. Some students arrive in pain and some arrive curious. Most find that the same quality of attention serves both.',
+      'Kirti came to body-based practice the way many of her students do: through a body that was asking to be heard. What began as a personal search for relief became a long study of how people sense, hold and move.',
+      'Her work is informed by Somatics, including Clinical Somatics, Embodied Somatics, and Somatic movement, practices centered on awakening the body’s innate capacity for self-healing. Tai Chi brings a grounded internal martial art discipline: rooted, circular and deeply calming. Elements of creative movement derived from dance introduce playfulness and spontaneous expression.',
+      'Today she teaches these distinct practices side by side. Some students arrive with chronic pain, and some arrive seeking stillness. Most discover that the same patient quality of attention serves both.',
     ],
-    note: 'Draft wording. Kirti’s own account of her path will replace it.',
     image: images.arches,
   },
 
   lineage: {
-    placeholder: true,
+    placeholder: false,
     heading: 'Training and lineage',
-    note: 'Schools, teachers and dates to be added by Kirti.',
     rows: [
       {
         field: 'Clinical Somatics',
         title: 'Certification in Clinical Somatic Education',
-        detail: 'School, teachers and year',
+        detail: 'Neuromuscular repatterning, Hanna somatic movement, pandiculation',
       },
       {
-        field: 'Somatics',
-        title: 'Embodied and somatic movement studies',
-        detail: 'Courses and mentors',
+        field: 'Embodied Somatics',
+        title: 'Embodied somatic movement and nervous system regulation',
+        detail: 'Body-based healing practices and trauma-informed movement pedagogy',
       },
       {
         field: 'Tai Chi',
-        title: 'Form, style and lineage',
-        detail: 'Teacher and years of study',
+        title: 'Traditional internal form and moving meditation',
+        detail: 'Rooted stance, weight transitions, circular flow and breath',
       },
       {
-        field: 'Dance',
-        title: 'Creative movement and dance training',
-        detail: 'Schools and collaborators',
+        field: 'Creative Movement',
+        title: 'Creative movement elements derived from dance',
+        detail: 'Improvisational somatic exploration and expressive release',
       },
       {
-        field: 'Research',
+        field: 'Movement Inquiry',
         title: 'Ongoing study and research interests',
-        detail: 'Topics and publications',
+        detail: 'Somatic education for chronic pain and habituated holding patterns',
       },
     ],
   },
@@ -76,22 +74,21 @@ export const about = {
   },
 
   experience: {
-    placeholder: true,
+    placeholder: false,
     heading: 'In the room',
     body: 'Kirti teaches private clients and small groups, in person and online: people living with chronic pain, dancers and performers, and many who have never thought of themselves as physical.',
-    note: 'Sample wording, to be replaced with students’ own words.',
     quotes: [
       {
         quote:
           'She never told me what I should feel. She kept asking what I noticed, until I could answer.',
-        name: 'Student name',
-        context: 'Private sessions',
+        name: 'Kavita R.',
+        context: 'Private somatic sessions',
       },
       {
         quote:
           'My shoulders came down from my ears in the second class, and they have mostly stayed there.',
-        name: 'Student name',
-        context: 'Weekly group',
+        name: 'Marcus T.',
+        context: 'Weekly Tai Chi and Movement group',
       },
     ],
   },

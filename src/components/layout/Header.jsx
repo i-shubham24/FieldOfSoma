@@ -140,14 +140,20 @@ export default function Header() {
 
   return (
     <>
-      {/* Top sticky bar: pristine Kinfolk minimalism without solid background */}
+      {/* Top sticky bar: fixed across all devices; nav bg on mobile screens only, transparent on tabs and laptops */}
       <header
-        className="fixed inset-x-0 top-0 z-50 bg-transparent pointer-events-none"
+        className={`fixed inset-x-0 top-0 z-50 pointer-events-none transition-colors duration-300 ${
+          open
+            ? 'bg-transparent border-transparent shadow-none'
+            : overDark
+              ? 'bg-soma-ink/90 border-b border-soma-sand/20 backdrop-blur-md shadow-2xs sm:bg-transparent sm:border-transparent sm:shadow-none sm:backdrop-blur-none'
+              : 'bg-soma-paper/95 border-b border-soma-sand/50 backdrop-blur-md shadow-2xs sm:bg-transparent sm:border-transparent sm:shadow-none sm:backdrop-blur-none'
+        }`}
         style={scrollbarPad > 0 ? { paddingRight: `${scrollbarPad}px` } : undefined}
       >
-        {/* Generous masthead posture with guaranteed crisp contrast */}
+        {/* Masthead posture: compact on mobile, generous editorial on tabs and laptops */}
         <div
-          className={`shell flex items-center justify-between pt-7 pb-5 pointer-events-auto transition-colors duration-500 ${
+          className={`shell flex items-center justify-between pt-3.5 pb-3.5 sm:pt-7 sm:pb-5 pointer-events-auto transition-colors duration-500 ${
             open
               ? 'text-soma-ink'
               : overDark
@@ -172,7 +178,7 @@ export default function Header() {
           {/* Right: Iconic 2-line hamburger that expands on hover and morphs into a centered cross when open */}
           <button
             type="button"
-            className="group relative flex h-11 w-11 cursor-pointer items-center justify-center text-inherit focus:outline-none"
+            className="group relative flex h-11 w-11 cursor-pointer items-center justify-center text-inherit focus:outline-none focus-visible:ring-1 focus-visible:ring-current"
             aria-expanded={open}
             aria-controls="kinfolk-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -237,7 +243,7 @@ export default function Header() {
                     <div className="flex gap-4 items-center">
                       <div className="h-20 w-16 shrink-0 overflow-hidden bg-soma-linen">
                         <img
-                          src={images.floorLight.src}
+                          src={images.wallWalk.src}
                           alt="Somatic practice with Kirti Verma"
                           className="photo h-full w-full object-cover"
                         />
@@ -410,6 +416,8 @@ export default function Header() {
                     <div className="flex items-center justify-between border-b border-soma-ink/30 pb-2">
                       <input
                         type="text"
+                        name="inquiry"
+                        aria-label="Type here to inquire"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Type here to inquire"

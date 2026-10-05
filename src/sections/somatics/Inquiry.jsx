@@ -98,7 +98,21 @@ function BodySilhouette({ areas, chosen, onToggle }) {
           const { x, y } = area.coords
 
           return (
-            <g key={area.id} className="cursor-pointer" onClick={() => onToggle(area.id)}>
+            <g
+              key={area.id}
+              role="button"
+              tabIndex={0}
+              aria-label={`Toggle ${area.label || area.name || area.id} tension inquiry`}
+              aria-pressed={on}
+              className="cursor-pointer outline-none focus:outline-none"
+              onClick={() => onToggle(area.id)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  onToggle(area.id)
+                }
+              }}
+            >
               {/* Outer pulse when active */}
               {on ? (
                 <motion.circle

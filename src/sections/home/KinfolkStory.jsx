@@ -37,8 +37,8 @@ export default function KinfolkStory() {
           {/* Editorial portrait backdrop with serene face and graceful movement visible */}
           <div className="relative h-full w-full">
             <img
-              src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1800&q=80"
-              alt="Somatic educator moving with serene expression in natural light"
+              src={images.kinfolkStory.src}
+              alt={images.kinfolkStory.alt}
               className="absolute inset-0 h-full w-full object-cover object-[center_10%] sm:object-[center_top] filter brightness-[0.85] contrast-[1.06]"
             />
             {/* Subtle atmospheric vignette */}

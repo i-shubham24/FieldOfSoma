@@ -64,8 +64,8 @@ export default function Signup() {
           <div className="rounded-xl border border-stone-200/80 overflow-hidden bg-white p-2 shadow-xs max-w-sm">
             <div className="h-32 sm:h-38 w-full overflow-hidden rounded-lg bg-soma-linen">
               <img
-                src={images.studio.src}
-                alt="Somatic practice studio"
+                src={images.sanctuaryInterior.src}
+                alt={images.sanctuaryInterior.alt}
                 className="h-full w-full object-cover"
               />
             </div>

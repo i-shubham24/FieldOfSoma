@@ -7,6 +7,7 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [resetSent, setResetSent] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -115,7 +116,7 @@ export default function Login() {
                   </label>
                   <button
                     type="button"
-                    onClick={() => alert('Password reset link sent to your registered email.')}
+                    onClick={() => setResetSent(true)}
                     className="cursor-pointer font-sans text-[0.75rem] text-soma-clay-deep transition-colors hover:text-soma-ink"
                   >
                     Forgot?
@@ -130,6 +131,11 @@ export default function Login() {
                   placeholder="••••••••"
                   className="w-full rounded-xl border border-transparent bg-[#F2EFEB] px-4 py-2.5 sm:py-3 font-sans text-[0.875rem] text-soma-ink placeholder:text-soma-clay-deep/50 transition-all focus:border-soma-moss focus:bg-white focus:outline-none"
                 />
+                {resetSent ? (
+                  <p className="mt-2 text-xs text-soma-moss font-medium">
+                    Password reset link sent to your registered email.
+                  </p>
+                ) : null}
               </div>
 
               <button

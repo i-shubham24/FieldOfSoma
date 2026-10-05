@@ -7,6 +7,7 @@ const About = lazy(() => import('./pages/About'))
 const Somatics = lazy(() => import('./pages/Somatics'))
 const Practices = lazy(() => import('./pages/Practices'))
 const Classes = lazy(() => import('./pages/Classes'))
+const ClassDetail = lazy(() => import('./pages/ClassDetail'))
 const Calendar = lazy(() => import('./pages/Calendar'))
 const Articles = lazy(() => import('./pages/Articles'))
 const Contact = lazy(() => import('./pages/Contact'))
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="somatics" element={<Somatics />} />
             <Route path="practices" element={<Practices />} />
             <Route path="classes" element={<Classes />} />
+            <Route path="classes/:id" element={<ClassDetail />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="articles" element={<Articles />} />
             <Route path="contact" element={<Contact />} />

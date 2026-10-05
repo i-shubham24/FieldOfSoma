@@ -15,7 +15,7 @@ export const practices = {
       id: 'somatics',
       name: 'Clinical Somatics',
       verbs: 'Heal, sense',
-      image: images.floorLight,
+      image: images.somaticRelease,
       intention:
         'To give you back the control of muscles that have been working without your consent. Sessions are quiet, precise and unhurried, and you leave knowing a few movements well enough to repeat them at home.',
       session: [

@@ -29,10 +29,18 @@ export default function Voices() {
           <AnimatePresence mode="wait" initial={false}>
             <motion.figure
               key={index}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -35) step(1)
+                else if (info.offset.x > 35) step(-1)
+              }}
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduce ? undefined : { opacity: 0, y: -8 }}
               transition={{ duration: 0.7, ease: EASE }}
+              className="cursor-grab active:cursor-grabbing select-none"
             >
               <blockquote className="font-display text-[clamp(1.625rem,2.8vw,2.375rem)] leading-[1.3] italic">
                 “{item.quote}”

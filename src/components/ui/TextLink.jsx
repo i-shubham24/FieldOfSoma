@@ -24,6 +24,15 @@ export default function TextLink({ to, href, className = '', children, ...rest }
     )
   }
 
+  if (rest.as === 'button' || (!href && rest.onClick)) {
+    const { as, ...buttonProps } = rest
+    return (
+      <button type="button" className={`${classes} cursor-pointer text-left`} {...buttonProps}>
+        {content}
+      </button>
+    )
+  }
+
   return (
     <a href={href} className={classes} {...rest}>
       {content}

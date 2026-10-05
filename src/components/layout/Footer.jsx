@@ -46,7 +46,7 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7 lg:gap-10">
             {/* Column 1: Disciplines */}
             <div>
-              <p className="font-sans text-[0.8125rem] font-medium tracking-[0.02em] text-soma-ink/50">
+              <p className="font-sans text-[0.8125rem] font-medium tracking-[0.02em] text-soma-ink/75">
                 Disciplines
               </p>
               <ul className="mt-5 space-y-2.5">
@@ -65,7 +65,7 @@ export default function Footer() {
 
             {/* Column 2: Explore */}
             <div>
-              <p className="font-sans text-[0.8125rem] font-medium tracking-[0.02em] text-soma-ink/50">
+              <p className="font-sans text-[0.8125rem] font-medium tracking-[0.02em] text-soma-ink/75">
                 Explore
               </p>
               <ul className="mt-5 space-y-2.5">
@@ -84,7 +84,7 @@ export default function Footer() {
 
             {/* Column 3: Connect */}
             <div className="col-span-2 sm:col-span-1">
-              <p className="font-sans text-[0.8125rem] font-medium tracking-[0.02em] text-soma-ink/50">
+              <p className="font-sans text-[0.8125rem] font-medium tracking-[0.02em] text-soma-ink/75">
                 Connect
               </p>
               <ul className="mt-5 space-y-2.5 font-sans text-[0.9375rem]">

@@ -48,4 +48,32 @@ export const images = {
   reach: photo('1620242736370-bfb4ce9ebf3e', 'A woman reaching both arms overhead in window light'),
   notebook: photo('1504542227056-9178533a9175', 'A notebook and pen on a pale desk'),
   forest: photo('1606458669574-2f4de395e078', 'Morning light through a forest'),
+  somaticGround: photo(
+    '1506126613408-eca07ce68773',
+    'A person resting with calm somatic presence on a mat in soft natural light',
+  ),
+  somaticRelease: photo(
+    '1544367567-0f2fcb009e0b',
+    'A person guided in gentle somatic movement and neuromuscular ease',
+  ),
+  lowerBackRelease: photo(
+    '1545205597-3d9d02c29597',
+    'A person resting with ease on a mat in a sunlit room, gentle spinal release',
+  ),
+  taiChiStanding: photo(
+    '1599447421416-3414500d18a5',
+    'A tai chi practitioner standing in quiet, grounded contemplation',
+  ),
+  fluidMovement: photo(
+    '1508700115892-45ecd05ae2ad',
+    'A dancer moving with expressive fluidity and graceful spinal articulation',
+  ),
+  sanctuaryInterior: photo(
+    '1513694203232-719a280e022f',
+    'A serene minimalist room with warm natural materials and soft light',
+  ),
+  kinfolkStory: photo(
+    '1518611012118-696072aa579a',
+    'A somatic educator moving with serene expression in natural light',
+  ),
 }

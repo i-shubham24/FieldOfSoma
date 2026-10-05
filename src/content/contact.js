@@ -13,8 +13,8 @@ export const contact = {
 
   details: [
     { term: 'Email', value: site.email, href: `mailto:${site.email}` },
-    { term: 'Studio', value: 'Location to be added' }, // PLACEHOLDER
-    { term: 'Time zone', value: 'To be added' }, // PLACEHOLDER
+    { term: 'Studio', value: 'Dharamshala & Online Worldwide' },
+    { term: 'Time zone', value: 'IST (UTC +5:30)' },
     { term: 'Instagram', value: 'Follow the practice', href: site.instagram, external: true },
   ],
 

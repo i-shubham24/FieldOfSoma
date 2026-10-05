@@ -70,7 +70,7 @@ function Story() {
                 </Reveal>
               ))}
             </div>
-            <DraftNote className="mt-8">{note}</DraftNote>
+            {note ? <DraftNote className="mt-8">{note}</DraftNote> : null}
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@ function Lineage() {
               </Reveal>
             ))}
           </ul>
-          <DraftNote className="mt-6">{note}</DraftNote>
+          {note ? <DraftNote className="mt-6">{note}</DraftNote> : null}
         </div>
       </div>
     </section>
@@ -186,7 +186,7 @@ function Experience() {
               </figcaption>
             </Reveal>
           </div>
-          <DraftNote className="mt-12">{note}</DraftNote>
+          {note ? <DraftNote className="mt-12">{note}</DraftNote> : null}
         </div>
       </div>
     </section>

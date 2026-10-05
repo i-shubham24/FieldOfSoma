@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Frame from '../components/media/Frame'
 import Reveal from '../components/motion/Reveal'
 import RevealLines from '../components/motion/RevealLines'
@@ -22,7 +23,17 @@ function validate(values) {
 
 function MessageForm() {
   const { form } = contact
-  const [values, setValues] = useState(EMPTY)
+  const [searchParams] = useSearchParams()
+  const initialQuery = searchParams.get('query') || searchParams.get('message') || ''
+  const initialPractice = searchParams.get('practice') || contact.form.practice.options[0]
+
+  const [values, setValues] = useState(() => ({
+    ...EMPTY,
+    message: initialQuery,
+    practice: contact.form.practice.options.includes(initialPractice)
+      ? initialPractice
+      : contact.form.practice.options[0],
+  }))
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | sending | done
   const thanks = useRef(null)
@@ -33,6 +44,14 @@ function MessageForm() {
     thanks.current?.focus({ preventScroll: true })
     thanks.current?.scrollIntoView({ block: 'center' })
   }, [status])
+
+  // Sync if query parameter changes while on page
+  useEffect(() => {
+    const q = searchParams.get('query') || searchParams.get('message')
+    if (q) {
+      setValues((current) => ({ ...current, message: q }))
+    }
+  }, [searchParams])
 
   const set = (key) => (event) => {
     setValues((current) => ({ ...current, [key]: event.target.value }))

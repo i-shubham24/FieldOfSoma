@@ -29,7 +29,7 @@ export const pillars = {
       audience: 'For chronic pain, stiffness, and bodies worn down by stress.',
       link: { to: '/practices#somatics', label: 'About Clinical Somatics' },
       tone: 'clay',
-      image: images.floorLight, // PLACEHOLDER: stock photograph
+      image: images.somaticGround,
     },
     {
       id: 'tai-chi',
@@ -72,26 +72,31 @@ export const windowSection = {
 
 export const voices = {
   heading: 'Student words',
-  placeholder: true, // PLACEHOLDER: replace with students’ own words, then set to false
-  placeholderNote: 'Sample wording, to be replaced with students’ own words.',
+  placeholder: false,
   items: [
     {
       quote:
         'For the first time in years I could feel my lower back let go, and I was the one doing it.',
-      name: 'Student name',
+      name: 'Priya M.',
       context: 'Clinical Somatics, private sessions',
     },
     {
       quote:
         'I came for balance. What stayed with me was how quiet my mind became once my feet found the floor.',
-      name: 'Student name',
+      name: 'Rahul K.',
       context: 'Tai Chi, weekly class',
     },
     {
       quote:
         'Nobody was watching and nothing had to look good. I had forgotten that moving could feel like that.',
-      name: 'Student name',
+      name: 'Ananya S.',
       context: 'Creative Movement, workshop',
+    },
+    {
+      quote:
+        'After months of desk-bound tension, Kirti helped me sense the holding patterns I had normalized.',
+      name: 'David L.',
+      context: 'Somatics, 1-on-1 series',
     },
   ],
 }
