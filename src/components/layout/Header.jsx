@@ -71,8 +71,14 @@ export default function Header() {
       setOverDark(isDark)
 
       // 2. Logo name visibility:
+      // - On mobile screens (< 640px): keep fixed and visible at all times
       // - On all other pages: visible from the start, only hide just before hitting footer
-      // - On home: additionally hide past Pillars exit point
+      // - On home: additionally hide past Pillars exit point on desktop
+      if (window.innerWidth < 640) {
+        setHideLogo(false)
+        return
+      }
+
       const footer = document.querySelector('footer')
       const nearFooter = footer ? footer.getBoundingClientRect().top <= 140 : false
 
@@ -168,7 +174,7 @@ export default function Header() {
             aria-label={`${site.name}, home`}
             className={`transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] will-change-transform ${
               hideLogo && !open
-                ? '-translate-y-16 opacity-0 pointer-events-none'
+                ? 'max-sm:translate-y-0 max-sm:opacity-100 max-sm:pointer-events-auto sm:-translate-y-16 sm:opacity-0 sm:pointer-events-none'
                 : 'translate-y-0 opacity-100 pointer-events-auto'
             }`}
           >

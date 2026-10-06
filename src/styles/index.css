@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /*
-  Atelier Akuko exact bespoke typefaces:
+  Field of Soma Bespoke Typography:
   1. Astralaga: distinctive artistic display (logo & brand marks)
-  2. Swear Banner Cilati: iconic high-contrast flared editorial serif with radical italic loops
+  2. Playfair Display: elegant, readable editorial serif (titles and italics)
   3. Labil Grotesk: avant-garde Swiss/editorial grotesk (body & navigation)
 */
 @font-face {
@@ -12,22 +12,6 @@
   font-display: swap;
   font-style: normal;
   font-weight: 300;
-}
-
-@font-face {
-  font-family: 'Swear Banner Cilati';
-  src: url('https://framerusercontent.com/assets/Qy4AqVcGVRGF24LnTJi2A8IzAk.woff2') format('woff2');
-  font-display: swap;
-  font-style: italic;
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: 'Swear Banner Cilati';
-  src: url('https://framerusercontent.com/assets/hU0xzb4jEm4UdWEwYDY9ud34A.woff2') format('woff2');
-  font-display: swap;
-  font-style: italic;
-  font-weight: 800;
 }
 
 @font-face {
@@ -56,7 +40,7 @@
 
 /*
   Field of Soma: design tokens.
-  Colours and fonts come from CLAUDE_DESIGN_HANDOVER.md with Atelier Akuko bespoke typefaces.
+  Colours and fonts with Playfair Display editorial serif and Labil Grotesk body.
   Layers (z-index): header 50, mobile menu 40, paper grain 60.
 */
 @theme {
@@ -70,9 +54,9 @@
   --color-soma-sand: #ded6c9;
   --color-soma-white: #ffffff;
 
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-display: "Swear Banner Cilati", "Cormorant Garamond", Georgia, serif;
-  --font-brand: "Astralaga", "Swear Banner Cilati", serif;
+  --font-serif: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-display: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-brand: "Astralaga", "Playfair Display", serif;
   --font-sans: "Labil Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
 
   --text-display: clamp(2.5rem, 6.6vw, 6rem);
@@ -110,6 +94,7 @@
     font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.75;
+    cursor: default;
   }
 
   /* Paper grain: fixed and non-interactive, so it never repaints on scroll. */

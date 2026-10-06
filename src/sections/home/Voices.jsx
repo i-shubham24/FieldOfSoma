@@ -40,7 +40,7 @@ export default function Voices() {
               animate={{ opacity: 1, y: 0 }}
               exit={reduce ? undefined : { opacity: 0, y: -8 }}
               transition={{ duration: 0.7, ease: EASE }}
-              className="cursor-grab active:cursor-grabbing select-none"
+              className="select-none touch-pan-y"
             >
               <blockquote className="font-display text-[clamp(1.625rem,2.8vw,2.375rem)] leading-[1.3] italic">
                 “{item.quote}”
