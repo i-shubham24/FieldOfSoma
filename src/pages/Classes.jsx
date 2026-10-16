@@ -692,7 +692,43 @@ function Library() {
 }
 
 export default function Classes() {
-  useTitle('Recorded Classes')
+  const courseSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Recorded Somatic Movement Classes',
+    itemListElement: classes.items.map((item, index) => ({
+      '@type': 'Course',
+      position: index + 1,
+      name: item.title,
+      description: item.subtitle || item.focus,
+      provider: {
+        '@type': 'EducationalOrganization',
+        name: 'Field of Soma',
+        sameAs: 'https://fieldofsoma.com',
+      },
+      offers: {
+        '@type': 'Offer',
+        price: item.price.replace(/[^\d]/g, ''),
+        priceCurrency: 'INR',
+        availability: 'https://schema.org/InStock',
+      },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: item.rating,
+        reviewCount: item.ratingCount,
+      },
+    })),
+  }
+
+  useTitle('Recorded Classes: Somatics, Tai Chi and Movement at Home', {
+    description:
+      'Learn somatic movement at your own pace. Video classes for neck and shoulder release, lower back tension, and spinal mobility with Kirti Verma.',
+    path: '/classes',
+    keywords:
+      'somatic classes online, recorded somatics, neck shoulder release video, lower back somatic exercises, pandiculation lessons',
+    breadcrumbs: [{ name: 'Recorded Classes', path: '/classes' }],
+    schema: courseSchema,
+  })
 
   return (
     <>

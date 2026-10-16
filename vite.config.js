@@ -15,6 +15,7 @@ export default defineConfig({
     include: icons.map((name) => `@phosphor-icons/react/dist/csr/${name}`),
   },
   build: {
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {

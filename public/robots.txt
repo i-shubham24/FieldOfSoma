@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /signup
+
+# AI Crawlers and Search Bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+Sitemap: https://fieldofsoma.com/sitemap.xml

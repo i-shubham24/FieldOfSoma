@@ -194,7 +194,41 @@ function Experience() {
 }
 
 export default function About() {
-  useTitle('About Kirti Verma')
+  const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Kirti Verma',
+      jobTitle: 'Movement and Somatic Educator',
+      worksFor: {
+        '@type': 'EducationalOrganization',
+        name: 'Field of Soma',
+        url: 'https://fieldofsoma.com',
+      },
+      description:
+        'Movement educator and somatic practitioner working at the intersection of Clinical Somatics, Tai Chi, and creative dance inquiry to help students release held tension.',
+      knowsAbout: [
+        'Clinical Somatics',
+        'Pandiculation',
+        'Sensory-Motor Amnesia',
+        'Tai Chi Chuan',
+        'Zhan Zhuang',
+        'Creative Movement',
+        'Neuromuscular Education',
+      ],
+    },
+  }
+
+  useTitle('About Kirti Verma: Movement and Somatic Educator', {
+    description:
+      'Learn about Kirti Verma, movement and somatic educator at Field of Soma. Background in Clinical Somatics, Tai Chi, and creative movement inquiry.',
+    path: '/about',
+    keywords:
+      'Kirti Verma, somatic educator, Clinical Somatics teacher, Tai Chi instructor, creative movement educator, somatic movement India',
+    breadcrumbs: [{ name: 'About Kirti Verma', path: '/about' }],
+    schema: personSchema,
+  })
 
   return (
     <>

@@ -831,7 +831,37 @@ export default function ClassDetail() {
   const course = classes.items.find((item) => item.id === id) || classes.items[0]
   const enrolled = isPurchased(course.id)
 
-  useTitle(`${course.title} - Field of Soma`)
+  const courseSchema = course
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Course',
+        name: course.title,
+        description: course.subtitle || course.focus,
+        provider: {
+          '@type': 'EducationalOrganization',
+          name: 'Field of Soma',
+          sameAs: 'https://fieldofsoma.com',
+        },
+        offers: {
+          '@type': 'Offer',
+          price: course.price.replace(/[^\d]/g, ''),
+          priceCurrency: 'INR',
+          availability: 'https://schema.org/InStock',
+        },
+      }
+    : null
+
+  useTitle(`${course.title}: Online Somatics Class`, {
+    description: `${course.subtitle || course.focus} Guided movement session with Kirti Verma at Field of Soma.`,
+    path: `/classes/${course.id}`,
+    keywords: `${course.title}, ${course.practiceName}, somatic class online, pandiculation video, Kirti Verma`,
+    image: course.image?.src,
+    breadcrumbs: [
+      { name: 'Recorded Classes', path: '/classes' },
+      { name: course.title, path: `/classes/${course.id}` },
+    ],
+    schema: courseSchema,
+  })
 
   if (!course) {
     return (

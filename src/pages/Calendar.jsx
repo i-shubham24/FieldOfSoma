@@ -492,7 +492,11 @@ function Request() {
 }
 
 export default function Calendar() {
-  useTitle('Calendar and Booking')
+  useTitle('Schedule and Consultations: Group Classes and Private Sessions', {
+    description:
+      'View the weekly schedule for Clinical Somatics, Tai Chi, and Creative Movement. Book private 1-on-1 consultations or reserve group classes with Kirti Verma.',
+    path: '/calendar',
+  })
   const [activeBooking, setActiveBooking] = useState(null)
 
   return (

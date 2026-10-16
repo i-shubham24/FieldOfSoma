@@ -243,7 +243,21 @@ function ArticleReader({ article, onClose }) {
 }
 
 export default function Articles() {
-  useTitle('Writing')
+  const articlesSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Writing and Somatic Reflections',
+    description:
+      'Essays on somatic philosophy, the biology of movement, pandiculation, and the practice of embodied attention by Kirti Verma.',
+    url: 'https://fieldofsoma.com/articles',
+  }
+
+  useTitle('Writing and Essays on Somatics, Movement and Rest', {
+    description:
+      'Read essays on somatic education, sensory-motor amnesia, pandiculation, and embodied stillness by Kirti Verma. Subscribe to Field Notes.',
+    path: '/articles',
+    schema: articlesSchema,
+  })
   const [activeArticle, setActiveArticle] = useState(null)
 
   return (

@@ -230,7 +230,28 @@ function Doubts() {
 }
 
 export default function Somatics() {
-  useTitle('Discover Somatics')
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: somatics.faq.items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  }
+
+  useTitle('Discover Clinical Somatics and Pandiculation', {
+    description:
+      'Explore Clinical Somatics: gentle neuromuscular movements and pandiculation to release sensory-motor amnesia, chronic muscular tension, and stress at the nervous system level.',
+    path: '/somatics',
+    keywords:
+      'Clinical Somatics, pandiculation, sensory motor amnesia, somatic movement, chronic tension relief, back pain somatics, Thomas Hanna somatics',
+    breadcrumbs: [{ name: 'Discover Somatics', path: '/somatics' }],
+    schema: faqSchema,
+  })
 
   return (
     <>

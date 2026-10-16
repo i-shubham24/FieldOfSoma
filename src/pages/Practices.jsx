@@ -208,7 +208,46 @@ function WidePractice({ item }) {
 }
 
 export default function Practices() {
-  useTitle('The Practices')
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: [
+      {
+        '@type': 'Service',
+        position: 1,
+        name: 'Clinical Somatics',
+        description:
+          'Neuromuscular movement therapy based on pandiculation to reverse sensory-motor amnesia and relieve chronic tension.',
+        provider: { '@id': 'https://fieldofsoma.com/#organization' },
+      },
+      {
+        '@type': 'Service',
+        position: 2,
+        name: 'Tai Chi',
+        description:
+          'Gentle internal martial art practiced as moving meditation for balance, quiet strength, and rooting.',
+        provider: { '@id': 'https://fieldofsoma.com/#organization' },
+      },
+      {
+        '@type': 'Service',
+        position: 3,
+        name: 'Creative Movement',
+        description:
+          'Unchoreographed movement inquiry drawn from dance to restore natural bodily expression, play, and curiosity.',
+        provider: { '@id': 'https://fieldofsoma.com/#organization' },
+      },
+    ],
+  }
+
+  useTitle('The Practices: Clinical Somatics, Tai Chi, Creative Movement', {
+    description:
+      'Explore the three core disciplines at Field of Soma: Clinical Somatics for tension release, Tai Chi for grounded stillness, and Creative Movement for free expression.',
+    path: '/practices',
+    keywords:
+      'Clinical Somatics, Tai Chi, Creative Movement, moving meditation, somatic nervous system, sensory motor amnesia release',
+    breadcrumbs: [{ name: 'Practices', path: '/practices' }],
+    schema: serviceSchema,
+  })
   const [somatics, taiChi, creative] = practices.items
 
   return (

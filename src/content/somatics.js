@@ -158,6 +158,16 @@ export const somatics = {
     heading: 'Doubts, answered plainly',
     items: [
       {
+        question: 'How is Clinical Somatics different from Yoga or passive stretching?',
+        answer:
+          'Traditional stretching pulls on a muscle that the nervous system is actively holding. This often triggers the protective stretch reflex, causing the muscle to grip back. Somatics uses pandiculation: a deliberate, gentle contraction followed by slow, controlled release so the motor cortex relearns resting ease.',
+      },
+      {
+        question: 'What is Sensory-Motor Amnesia and can it be reversed?',
+        answer:
+          'Sensory-motor amnesia occurs when chronic stress, sitting, or old injuries train muscles to stay contracted until the brain stops sensing them. It is not structural damage or aging: it is a learned habit of the nervous system, and it can be unlearned through attentive somatic movement.',
+      },
+      {
         question: 'Is it strenuous?',
         answer:
           'No. The movements are small, slow and mostly done lying down. If something strains, you are asked to do less.',
@@ -166,6 +176,11 @@ export const somatics = {
         question: 'Can I do it if I have chronic pain?',
         answer:
           'Yes. Somatics was developed for people with chronic muscular pain, and each session is adapted to what your body can do on the day. It sits alongside medical care and does not replace it.',
+      },
+      {
+        question: 'How often should I practise somatic movements to feel lasting results?',
+        answer:
+          'Ten to fifteen minutes of mindful pandiculation once or twice a day is often enough. Because the work retrains neuromuscular control rather than exhausting tissue, consistency matters more than duration.',
       },
       {
         question: 'Can sessions happen online?',

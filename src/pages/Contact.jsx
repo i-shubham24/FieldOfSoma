@@ -132,7 +132,21 @@ function MessageForm() {
 }
 
 export default function Contact() {
-  useTitle('Contact')
+  const contactSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact Field of Soma',
+    description:
+      'Get in touch with Kirti Verma for questions about private sessions, workshops, or somatic education.',
+    url: 'https://fieldofsoma.com/contact',
+  }
+
+  useTitle('Contact: Ask a Question or Enquire About Sessions', {
+    description:
+      'Have questions about somatic movement, weekly classes, or booking a consultation? Reach out directly to Kirti Verma at Field of Soma.',
+    path: '/contact',
+    schema: contactSchema,
+  })
   const { label, headline, lede, image } = contact.intro
 
   return (

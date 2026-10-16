@@ -9,7 +9,11 @@ import Voices from '../sections/home/Voices'
 import Window from '../sections/home/Window'
 
 export default function Home() {
-  useTitle()
+  useTitle('', {
+    description:
+      'Field of Soma: Clinical Somatics, Tai Chi, and Creative Movement with Kirti Verma. Gentle, neuromuscular education to release chronic tension and restore ease.',
+    path: '/',
+  })
 
   return (
     <>
