@@ -15,7 +15,7 @@ function Drift({ children }) {
 
   return (
     <div ref={ref} className="absolute inset-0">
-      <motion.div style={{ scale, y }} className="absolute inset-0 will-change-transform">
+      <motion.div style={{ scale, y }} className="absolute inset-0 will-change-transform transform-gpu">
         {children}
       </motion.div>
     </div>
@@ -68,7 +68,7 @@ export default function Frame({
         className={`relative overflow-hidden bg-soma-linen ${ratio}`}
         initial={masked ? { clipPath: VEILED } : false}
         animate={masked ? { clipPath: inView ? OPEN : VEILED } : undefined}
-        transition={{ duration: 1.8, delay, ease: EASE }}
+        transition={{ duration: 1.25, delay, ease: EASE }}
       >
         {drift && !reduce ? <Drift>{media}</Drift> : media}
       </motion.div>

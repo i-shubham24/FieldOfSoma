@@ -20,7 +20,6 @@ import { classes } from '../content/classes'
 import { site } from '../content/site'
 import { PAGE_TOP } from '../lib/layout'
 import { addPurchasedClass, usePurchasedClasses } from '../lib/purchases'
-import { useDragScroll } from '../lib/useDragScroll'
 import useTitle from '../lib/useTitle'
 
 export function CheckoutModal({ course, onClose, onOpenFullVideo }) {
@@ -31,9 +30,6 @@ export function CheckoutModal({ course, onClose, onOpenFullVideo }) {
   const [upiId, setUpiId] = useState('')
   const [errors, setErrors] = useState({})
   const scrollRef = useRef(null)
-
-  // Enable mouse click and drag scrolling for effortless navigation without scrollbars
-  useDragScroll(scrollRef, { direction: 'vertical' })
 
   useEffect(() => {
     window.__lenis?.stop()
@@ -468,7 +464,6 @@ export function CheckoutModal({ course, onClose, onOpenFullVideo }) {
 
 export function VideoPreviewModal({ course, onClose }) {
   const previewScrollRef = useRef(null)
-  useDragScroll(previewScrollRef, { direction: 'vertical' })
 
   useEffect(() => {
     window.__lenis?.stop()
@@ -544,7 +539,6 @@ export function FullVideoPlayerModal({ course, onClose }) {
   const [progressPercent, setProgressPercent] = useState(35)
   const [downloadNotice, setDownloadNotice] = useState('')
   const playerScrollRef = useRef(null)
-  useDragScroll(playerScrollRef, { direction: 'vertical' })
 
   const speeds = [0.75, 1.0, 1.25, 1.5]
   const cycleSpeed = () => {

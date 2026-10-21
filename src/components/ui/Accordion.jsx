@@ -27,7 +27,7 @@ function Item({ question, answer, index, open, onToggle }) {
             </span>
           </div>
           <div
-            className={`h-8 w-8 sm:h-9 sm:w-9 rounded-[999px] flex items-center justify-center shrink-0 transition-all duration-300 ${
+            className={`h-8 w-8 sm:h-9 sm:w-9 rounded-[2px] flex items-center justify-center shrink-0 transition-all duration-300 ${
               open
                 ? 'bg-[#D7C7A8] text-[#2C2925] shadow-xs'
                 : 'border border-dashed border-[#B29D68] text-[#B29D68] group-hover:border-[#8C7A58] group-hover:text-[#8C7A58]'

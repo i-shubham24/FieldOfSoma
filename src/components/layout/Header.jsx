@@ -52,40 +52,47 @@ export default function Header() {
 
   // Track scroll position to ensure crisp contrast AND scroll logo upwards out of sight past Pillars
   useEffect(() => {
+    let rafId = null
+
     const handleScroll = () => {
-      // 1. Dark sections contrast detection
-      const darkSections = document.querySelectorAll('[data-theme="dark"]')
-      let isDark = false
-      const headerY = 45 // Center height of fixed top bar
+      if (rafId) return
+      rafId = requestAnimationFrame(() => {
+        rafId = null
 
-      for (const section of darkSections) {
-        const rect = section.getBoundingClientRect()
-        if (rect.top <= headerY && rect.bottom >= headerY) {
-          isDark = true
-          break
+        // 1. Dark sections contrast detection
+        const darkSections = document.querySelectorAll('[data-theme="dark"]')
+        let isDark = false
+        const headerY = 45 // Center height of fixed top bar
+
+        for (const section of darkSections) {
+          const rect = section.getBoundingClientRect()
+          if (rect.top <= headerY && rect.bottom >= headerY) {
+            isDark = true
+            break
+          }
         }
-      }
-      setOverDark(isDark)
+        setOverDark((prev) => (prev !== isDark ? isDark : prev))
 
-      // 2. Logo name visibility:
-      // - On mobile screens (< 640px): keep fixed and visible at all times
-      // - On all other pages: visible from the start, only hide just before hitting footer
-      // - On home: additionally hide past Pillars exit point on desktop
-      if (window.innerWidth < 640) {
-        setHideLogo(false)
-        return
-      }
+        // 2. Logo name visibility:
+        // - On mobile screens (< 640px): keep fixed and visible at all times
+        // - On all other pages: visible from the start, only hide just before hitting footer
+        // - On home: additionally hide past Pillars exit point on desktop
+        if (window.innerWidth < 640) {
+          setHideLogo((prev) => (prev ? false : prev))
+          return
+        }
 
-      const footer = document.querySelector('footer')
-      const nearFooter = footer ? footer.getBoundingClientRect().top <= 140 : false
+        const footer = document.querySelector('footer')
+        const nearFooter = footer ? footer.getBoundingClientRect().top <= 140 : false
 
-      if (location.pathname === '/') {
-        const exitPoint = document.getElementById('pillars-exit-point')
-        const pastPillars = exitPoint ? exitPoint.getBoundingClientRect().top <= 100 : false
-        setHideLogo(pastPillars || nearFooter)
-      } else {
-        setHideLogo(nearFooter)
-      }
+        let shouldHide = nearFooter
+        if (location.pathname === '/') {
+          const exitPoint = document.getElementById('pillars-exit-point')
+          const pastPillars = exitPoint ? exitPoint.getBoundingClientRect().top <= 100 : false
+          shouldHide = pastPillars || nearFooter
+        }
+        setHideLogo((prev) => (prev !== shouldHide ? shouldHide : prev))
+      })
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -93,6 +100,7 @@ export default function Header() {
     handleScroll()
 
     return () => {
+      if (rafId) cancelAnimationFrame(rafId)
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleScroll)
     }

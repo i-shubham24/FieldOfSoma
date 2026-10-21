@@ -15,10 +15,10 @@ export default function RevealLines({ as = 'h1', lines, delay = 0, className }) 
           className="-mx-[0.08em] -mb-[0.18em] block overflow-hidden px-[0.08em] pb-[0.18em]"
         >
           <motion.span
-            className={line.italic ? 'block font-normal italic' : 'block'}
+            className={line.italic ? 'block font-normal italic transform-gpu' : 'block transform-gpu'}
             initial={reduce ? false : { y: '115%' }}
             animate={{ y: 0 }}
-            transition={{ duration: 1.4, delay: delay + i * 0.14, ease: EASE }}
+            transition={{ duration: 0.95, delay: delay + i * 0.1, ease: EASE }}
           >
             {line.text}
           </motion.span>

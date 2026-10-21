@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import AmbientSound from '../shared/AmbientSound'
 import Footer from './Footer'
 import Header from './Header'
 import SmoothScroll from './SmoothScroll'
+import { EASE } from '../../lib/motion'
 
 // Ensures each page loads from the top, unless directed to an intentional section anchor.
 function useScrollRestore() {
@@ -69,6 +71,8 @@ function useScrollRestore() {
 
 export default function PageShell() {
   useScrollRestore()
+  const { pathname } = useLocation()
+  const reduce = useReducedMotion()
 
   return (
     <SmoothScroll>
@@ -81,7 +85,15 @@ export default function PageShell() {
       <Header />
       <div id="page">
         <main id="main" className="min-h-[85dvh]">
-          <Outlet />
+          <motion.div
+            key={pathname}
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.38, ease: EASE }}
+            className="w-full"
+          >
+            <Outlet />
+          </motion.div>
         </main>
         <Footer />
       </div>

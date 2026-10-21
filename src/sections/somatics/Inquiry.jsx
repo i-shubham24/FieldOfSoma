@@ -175,7 +175,6 @@ export default function Inquiry() {
   const sectionRef = useRef(null)
   const cardBodyRef = useRef(null)
   const listRef = useRef(null)
-  const [translateY, setTranslateY] = useState(0)
   const [maxOverflow, setMaxOverflow] = useState(0)
 
   // Smoothly dock section flush to top: 0 if user interacts while it is partially scrolled
@@ -229,26 +228,34 @@ export default function Inquiry() {
   // Scroll tracking: calculate scroll progress when section is sticky at top: 0
   useEffect(() => {
     if (maxOverflow <= 0) {
-      setTranslateY(0)
+      if (listRef.current) {
+        listRef.current.style.transform = 'translate3d(0, 0, 0)'
+      }
       return undefined
     }
 
     const scrollDistance = Math.round(maxOverflow * 1.5)
+    let rafId = null
 
     const updateScroll = () => {
-      if (!sectionRef.current) return
-      const rect = sectionRef.current.getBoundingClientRect()
-      // Section is sticky at top: 0, so progress begins immediately when rect.top <= 0
-      const scrolledPast = -rect.top
+      if (rafId) return
+      rafId = requestAnimationFrame(() => {
+        rafId = null
+        if (!sectionRef.current || !listRef.current) return
+        const rect = sectionRef.current.getBoundingClientRect()
+        const scrolledPast = -rect.top
 
-      if (scrolledPast <= 0) {
-        setTranslateY(0)
-      } else if (scrolledPast >= scrollDistance) {
-        setTranslateY(-maxOverflow)
-      } else {
-        const progress = scrolledPast / scrollDistance
-        setTranslateY(-progress * maxOverflow)
-      }
+        let targetY = 0
+        if (scrolledPast <= 0) {
+          targetY = 0
+        } else if (scrolledPast >= scrollDistance) {
+          targetY = -maxOverflow
+        } else {
+          const progress = scrolledPast / scrollDistance
+          targetY = -progress * maxOverflow
+        }
+        listRef.current.style.transform = `translate3d(0, ${Math.round(targetY * 10) / 10}px, 0)`
+      })
     }
 
     window.addEventListener('scroll', updateScroll, { passive: true })
@@ -260,6 +267,7 @@ export default function Inquiry() {
     updateScroll()
 
     return () => {
+      if (rafId) cancelAnimationFrame(rafId)
       window.removeEventListener('scroll', updateScroll)
       if (lenis && typeof lenis.off === 'function') {
         lenis.off('scroll', updateScroll)
@@ -417,10 +425,7 @@ export default function Inquiry() {
                       >
                         <div
                           ref={listRef}
-                          style={{
-                            transform: `translate3d(0, ${translateY}px, 0)`,
-                          }}
-                          className="space-y-5 pt-3 pb-6 will-change-transform"
+                          className="space-y-5 pt-3 pb-6 will-change-transform transform-gpu"
                         >
                           {notes.map((area) => (
                             <div

@@ -5,8 +5,8 @@ import { EASE } from '../../lib/motion'
 export default function Reveal({
   as = 'div',
   delay = 0,
-  y = 22,
-  amount = 0.2,
+  y = 16,
+  amount = 0.1,
   className,
   children,
   ...rest
@@ -16,11 +16,11 @@ export default function Reveal({
 
   return (
     <Tag
-      className={className}
+      className={className ? `${className} transform-gpu` : 'transform-gpu'}
       initial={reduce ? false : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount }}
-      transition={{ duration: 1.1, delay, ease: EASE }}
+      transition={{ duration: 0.85, delay, ease: EASE }}
       {...rest}
     >
       {children}

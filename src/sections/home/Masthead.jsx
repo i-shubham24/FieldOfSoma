@@ -13,15 +13,15 @@ export default function Masthead() {
   const settle = (delay) => ({
     initial: reduce ? false : { opacity: 0, y: 14 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 1.2, delay, ease: EASE },
+    transition: { duration: 0.85, delay, ease: EASE },
   })
 
   return (
     <section className="pt-[calc(4.5rem+3.5rem)] md:pt-[calc(4.5rem+4.5rem)]">
       <div className="shell text-center">
         <motion.p
-          {...settle(0.1)}
-          className="text-label font-medium text-soma-clay-deep uppercase"
+          {...settle(0.05)}
+          className="text-label font-medium text-soma-clay-deep uppercase transform-gpu"
         >
           {hero.label}
         </motion.p>
@@ -29,20 +29,20 @@ export default function Masthead() {
         <RevealLines
           as="h1"
           lines={hero.headline}
-          delay={0.2}
+          delay={0.1}
           className="mt-7 text-display"
         />
 
         <motion.p
-          {...settle(0.8)}
-          className="mx-auto mt-8 max-w-[46ch] text-lede font-light text-soma-ink/80"
+          {...settle(0.35)}
+          className="mx-auto mt-8 max-w-[46ch] text-lede font-light text-soma-ink/80 transform-gpu"
         >
           {hero.subtext}
         </motion.p>
 
         <motion.div
-          {...settle(0.95)}
-          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          {...settle(0.48)}
+          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row transform-gpu"
         >
           <Button to={hero.primary.to} arrow>
             {hero.primary.label}

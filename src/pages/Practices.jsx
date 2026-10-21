@@ -95,13 +95,13 @@ function Session({ item }) {
         {item.session.map((part) => (
           <li
             key={part.title}
-            className="grid grid-cols-[5.5rem_1fr] gap-x-4 border-b border-soma-ink/15 py-5 sm:grid-cols-[7rem_1fr]"
+            className="group grid grid-cols-[5.5rem_1fr] gap-x-4 border-b border-soma-ink/15 py-5 sm:grid-cols-[7rem_1fr] px-2 -mx-2 transition-colors duration-300 hover:bg-soma-sand/20 rounded-[2px]"
           >
             <p className="pt-1.5 text-[0.8125rem] text-soma-clay-deep tabular-nums">
               {part.time} min
             </p>
             <div>
-              <p className="font-display text-[1.375rem] leading-[1.25] font-medium">
+              <p className="font-display text-[1.375rem] leading-[1.25] font-medium transition-colors group-hover:text-soma-moss">
                 {part.title}
               </p>
               <p className="mt-1.5 max-w-[46ch] text-[0.9375rem] leading-[1.75] text-soma-ink/80">

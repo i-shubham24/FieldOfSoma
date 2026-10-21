@@ -41,7 +41,7 @@ function Intro() {
 
 function ClassCard({ item, isPurchased, onEnroll, onPreview, onPlayFullVideo }) {
   return (
-    <article className="group flex flex-col justify-between h-full border border-soma-sand/90 bg-soma-paper p-6 sm:p-7 shadow-2xs transition-shadow duration-500 hover:shadow-sm">
+    <article className="group flex flex-col justify-between h-full border border-soma-sand/90 bg-soma-paper p-6 sm:p-7 shadow-2xs transition-all duration-500 ease-soma hover:shadow-md hover:-translate-y-1 transform-gpu">
       <div>
         {/* Card Thumbnail with Play Preview */}
         <div className="relative overflow-hidden bg-soma-sand aspect-[16/10]">

@@ -13,7 +13,6 @@ import { calendar } from '../content/calendar'
 import { site } from '../content/site'
 import { sendMessage } from '../lib/contact'
 import { PAGE_TOP } from '../lib/layout'
-import { useDragScroll } from '../lib/useDragScroll'
 import useTitle from '../lib/useTitle'
 
 function Intro() {
@@ -52,8 +51,6 @@ function BookingModal({ config, onClose }) {
   const [notes, setNotes] = useState('')
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
-
-  const scrollRef = useDragScroll()
 
   useEffect(() => {
     window.__lenis?.stop()
@@ -110,7 +107,6 @@ function BookingModal({ config, onClose }) {
       />
 
       <motion.div
-        ref={scrollRef}
         initial={{ opacity: 0, y: 24, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 16, scale: 0.98 }}

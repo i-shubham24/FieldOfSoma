@@ -141,8 +141,8 @@ export const images = {
     alt: 'Kirti Verma in mindful somatic presence in a wild field of grain under an open sky',
   },
   contactScenery: {
-    src: '/photos/contact-scenery-mountain-mist.jpg',
-    alt: 'Tranquil misty mountain valley with pine trees in soft morning light',
+    src: '/photos/contact-scenery-pine-mist.jpg',
+    alt: 'Tranquil alpine lake surrounded by evergreen pine forests and misty mountain peaks in morning light',
   },
   neckShoulderFreedom: photo(
     '1506126613408-eca07ce68773',

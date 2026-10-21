@@ -19,7 +19,7 @@ function Stanza({ item, index, active, onCentre }) {
     <article
       ref={ref}
       // Phone: image above text. Tablet: image beside text. Wide: text only, beside the fixed frame.
-      className={`py-12 first:pt-0 last:pb-0 md:grid md:grid-cols-12 md:items-center md:gap-x-8 md:py-16 lg:flex lg:min-h-[78vh] lg:flex-col lg:items-stretch lg:justify-center lg:py-0 lg:transition-opacity lg:duration-1000 lg:ease-soma lg:focus-within:opacity-100 ${
+      className={`py-12 first:pt-0 last:pb-0 md:grid md:grid-cols-12 md:items-center md:gap-x-8 md:py-16 lg:flex lg:min-h-[78vh] lg:flex-col lg:items-stretch lg:justify-center lg:py-0 lg:transition-opacity lg:duration-500 lg:ease-soma lg:focus-within:opacity-100 ${
         active ? '' : 'lg:opacity-40'
       }`}
     >
@@ -74,10 +74,10 @@ export default function Pillars() {
                 {pillars.items.map((item, i) => (
                   <motion.div
                     key={item.id}
-                    className="absolute inset-0"
+                    className="absolute inset-0 transform-gpu"
                     initial={false}
                     animate={{ opacity: i === active ? 1 : 0 }}
-                    transition={{ duration: 1.4, ease: EASE }}
+                    transition={{ duration: 0.7, ease: EASE }}
                   >
                     <img
                       src={item.image.src}

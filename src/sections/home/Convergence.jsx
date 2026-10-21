@@ -366,11 +366,11 @@ export default function Convergence() {
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeLens.id}
-                    initial={reduce ? false : { opacity: 0, y: 10 }}
+                    initial={reduce ? false : { opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.5, ease: EASE }}
-                    className="mt-6"
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.28, ease: EASE }}
+                    className="mt-6 transform-gpu"
                   >
                     <h3 className="font-display text-[2rem] leading-[1.15] text-soma-ink">
                       {activeLens.title}

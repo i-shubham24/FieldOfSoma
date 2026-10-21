@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRightIcon as ArrowRight } from '@phosphor-icons/react/dist/csr/ArrowRight'
 
 const base =
-  'group inline-flex items-center justify-center gap-3 rounded-[2px] font-medium tracking-[0.02em] whitespace-nowrap transition-colors duration-500 ease-soma active:translate-y-px'
+  'group inline-flex items-center justify-center gap-3 rounded-[2px] font-medium tracking-[0.02em] whitespace-nowrap cursor-pointer transition-all duration-300 ease-soma hover:shadow-xs active:translate-y-px active:scale-[0.99]'
 
 const sizes = {
   md: 'h-12 px-7 text-[0.875rem]',
