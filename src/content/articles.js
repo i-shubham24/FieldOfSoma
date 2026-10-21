@@ -19,7 +19,7 @@ export const articles = {
     excerpt:
       'A tight muscle is not a short muscle. It is a muscle receiving an instruction. Until the instruction changes, pulling on it only invites the body to pull back.',
     length: '7 minute read',
-    image: images.himalayanCedarForest,
+    image: images.forest,
     paragraphs: [
       'When a muscle feels permanently short, our common impulse is to pull on it. We fold forward, anchor a heel, and demand that the tissue yield to tension. But a tight muscle is not a short muscle: it is a muscle receiving a continuous, subconscious message from the nervous system to remain engaged.',
       'Thomas Hanna called this Sensory Motor Amnesia: the brain gradually forgetting how to let go. In involuntary contraction, the stretch reflex is activated whenever we pull too hard. The body perceives forced lengthening as a threat, tightening further to protect the joint.',
@@ -35,7 +35,6 @@ export const articles = {
       excerpt:
         'Pandiculation is nature’s reset button for the neuromuscular system. When we consciously contract and release at half speed, biological ease returns.',
       length: '5 min',
-      image: images.morningLight,
       paragraphs: [
         'Watch a cat wake from sleep. It arches its spine, extends its claws, and lengthens through the paws with a luxurious sigh before resting back onto the floor. It does not stretch: it pandiculates.',
         'Pandiculation is nature’s reset button for the neuromuscular system. When we consciously contract a tight muscle and then release it at half speed, we restore biological ease. You can do this at your desk: contract the shoulder blades gently, feel the grip, and let them melt downward over ten slow counts.',
@@ -48,7 +47,6 @@ export const articles = {
       excerpt:
         'Zhan Zhuang looks motionless from outside. Internally, it is an active dance of continuous calibration, rooting into the earth while branches sway.',
       length: '4 min',
-      image: images.ancientTree,
       paragraphs: [
         'In Tai Chi, Zhan Zhuang (standing meditation) looks completely motionless to an observer. Yet internally, it is an active dance of continuous calibration.',
         'To stand like a tree is not to freeze into wood. It is to let the roots settle deep into the soles while the branches sway gently in the breeze. When the legs carry the weight and the hips unlock, the shoulders finally surrender the unnecessary duty of holding up the world.',
@@ -61,7 +59,6 @@ export const articles = {
       excerpt:
         'When there is no choreography and no audience, the body remembers how to move from curiosity rather than obedience.',
       length: '6 min',
-      image: images.danceShadow,
       paragraphs: [
         'Most adults stop moving freely the moment they learn how their movement looks to others. We internalize posture, propriety, and the performance of correctness.',
         'Creative movement is an invitation to forget the mirror. When there is no choreography and no audience, the body remembers how to move from curiosity rather than obedience. Five minutes of unplanned, honest motion can loosen emotional armoring that months of discipline failed to reach.',
@@ -74,7 +71,6 @@ export const articles = {
       excerpt:
         'Under stress, the body curls in protection. When chronic, we walk around partially curled. Somatic inquiry shows the nervous system the emergency has passed.',
       length: '8 min',
-      image: images.mistCalm,
       paragraphs: [
         'A sudden noise makes the shoulders rise, the head pull forward, the abdomen tighten, and the breath catch. This is the primal Red Light reflex: the body curling in protection.',
         'When chronic stress becomes the background hum of daily life, the startle reflex never fully turns off. We walk around partially curled, wondering why the upper back aches and the chest feels narrow. Somatic inquiry allows us to show the nervous system that the emergency has passed.',
@@ -87,7 +83,6 @@ export const articles = {
       excerpt:
         'When you decrease effort from one hundred percent to twenty percent, sensitivity increases tenfold. Progress is measured by what you can cease doing.',
       length: '3 min',
-      image: images.calmWaterRipple,
       paragraphs: [
         'Our modern instinct is to add: more repetitions, heavier loads, longer holds. In somatics, progress is measured by what you can cease doing.',
         'When you decrease effort from one hundred percent to twenty percent, sensitivity increases tenfold. The quieter the nervous system becomes, the more subtle the corrections it can perceive. Real transformation begins the moment you stop trying so hard.',

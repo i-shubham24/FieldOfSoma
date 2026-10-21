@@ -6,7 +6,6 @@ import RevealLines from '../components/motion/RevealLines'
 import DraftNote from '../components/ui/DraftNote'
 import { articles } from '../content/articles'
 import { PAGE_TOP } from '../lib/layout'
-import { useDragScroll } from '../lib/useDragScroll'
 import useTitle from '../lib/useTitle'
 import NewsletterForm from '../sections/home/NewsletterForm'
 
@@ -90,62 +89,33 @@ function Index({ onSelect }) {
             </span>
           </div>
 
-          <div className="mt-12 grid gap-8 sm:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-8 border-t border-soma-sand/80">
             {articles.list.map((item, i) => (
               <Reveal
-                as="article"
-                key={item.id}
-                delay={i * 0.08}
-                className="group flex flex-col justify-between border border-soma-sand/80 bg-soma-paper p-5 sm:p-6 shadow-2xs transition-shadow duration-500 hover:shadow-sm"
+                as="li"
+                key={item.id || item.title}
+                delay={i * 0.05}
+                className="border-b border-soma-sand/80"
               >
-                <div>
-                  {item.image ? (
-                    <div className="relative overflow-hidden bg-soma-sand aspect-[16/10]">
-                      <img
-                        src={item.image.src}
-                        alt={item.image.alt || item.title}
-                        className="h-full w-full object-cover transition-transform duration-700 ease-soma group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    </div>
-                  ) : null}
-
-                  <div className="mt-5 flex items-center justify-between text-xs">
-                    <span className="font-display text-sm italic text-soma-moss">
-                      {item.topic}
-                    </span>
-                    <span className="text-soma-clay-deep tabular-nums">
-                      {item.length}
-                    </span>
-                  </div>
-
-                  <h3 className="mt-2.5 font-display text-[clamp(1.25rem,2vw,1.5rem)] font-normal leading-[1.25] text-soma-ink transition-colors group-hover:text-soma-moss">
+                <button
+                  type="button"
+                  onClick={() => onSelect(item)}
+                  className="group w-full text-left py-7 grid gap-2 md:grid-cols-12 md:items-baseline md:gap-8 cursor-pointer transition-colors hover:bg-soma-sand/20 px-2"
+                >
+                  <p className="font-display text-[1.125rem] leading-[1.3] text-soma-moss italic md:col-span-3">
+                    {item.topic}
+                  </p>
+                  <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.2] text-soma-ink transition-colors group-hover:text-soma-moss md:col-span-7">
                     {item.title}
                   </h3>
-
-                  {item.excerpt ? (
-                    <p className="mt-3 text-sm font-light leading-relaxed text-soma-clay-deep">
-                      {item.excerpt}
-                    </p>
-                  ) : null}
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-soma-sand/70 flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={() => onSelect(item)}
-                    className="cursor-pointer font-sans text-xs font-medium uppercase tracking-wider text-soma-moss transition-colors hover:text-soma-ink flex items-center gap-1.5"
-                  >
-                    <span>Read essay</span>
+                  <div className="flex items-center justify-between md:col-span-2 md:justify-end gap-3 text-[0.875rem] text-soma-clay-deep tabular-nums">
+                    <span>{item.length}</span>
                     <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
-                  </button>
-                  <span className="text-[0.6875rem] font-medium uppercase tracking-wider text-soma-clay-deep">
-                    Essay
-                  </span>
-                </div>
+                  </div>
+                </button>
               </Reveal>
             ))}
-          </div>
+          </ul>
 
           {articles.placeholder ? <DraftNote className="mt-6">{articles.note}</DraftNote> : null}
         </div>
@@ -190,8 +160,6 @@ function Letters() {
 }
 
 function ArticleReader({ article, onClose }) {
-  const scrollRef = useDragScroll()
-
   useEffect(() => {
     if (!article) return undefined
 
@@ -223,7 +191,6 @@ function ArticleReader({ article, onClose }) {
           className="absolute inset-0 bg-soma-ink/40 backdrop-blur-xs"
         />
         <motion.div
-          ref={scrollRef}
           initial={{ opacity: 0, y: 24, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 16, scale: 0.98 }}

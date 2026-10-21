@@ -42,7 +42,7 @@ export const pillars = {
       audience: 'For improving posture, preserving vital energy, and gaining confidence through your body and stance.',
       link: { to: '/practices#tai-chi', label: 'About Tai Chi' },
       tone: 'moss',
-      image: images.taiChiStanding,
+      image: images.kirtiTaiChiCloudHands,
     },
     {
       id: 'creative-movement',

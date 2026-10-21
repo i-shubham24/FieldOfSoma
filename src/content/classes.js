@@ -35,7 +35,7 @@ export const classes = {
       ratingCount: 148,
       studentsCount: 390,
       lastUpdated: 'October 2026',
-      image: images.neckShoulderFreedom,
+      image: images.reach,
       overview: [
         'When you sit at a desk, work under deadline pressure, or carry emotional strain, your nervous system triggers the startle reflex: tightening the trapezius, elevating the shoulders, and shortening the front of the neck. Over weeks and months, the brain forgets how to fully relax these muscles, a state Thomas Hanna identified as Sensory Motor Amnesia.',
         'Stretching tight neck muscles often triggers the protective stretch reflex, causing the tissue to grip back harder. This guided somatic class uses pandiculation: conscious contraction followed by decelerated, mindful lengthening. You learn to remind your motor cortex how to let the shoulder blades drop down into gravity without force.',
@@ -104,7 +104,7 @@ export const classes = {
       ratingCount: 162,
       studentsCount: 420,
       lastUpdated: 'October 2026',
-      image: images.kirtiSomaticWorkshop,
+      image: images.lowerBackRelease,
       overview: [
         'Chronic lower back stiffness is rarely a spine problem: it is an action pattern. The Landau reflex contracts the extensor muscles along the lumbar vertebrae whenever we brace for productivity, stand for hours, or hurry through the day.',
         'In this class, you practice the foundational somatic movements of the pelvis and lumbar spine. Through slow, pleasurable pandiculations, your brain regains voluntary motor control over the erector spinae and quadratus lumborum, restoring natural curve and pain-free movement.',
@@ -173,7 +173,7 @@ export const classes = {
       ratingCount: 110,
       studentsCount: 295,
       lastUpdated: 'September 2026',
-      image: images.kirtiTaiChiCloudHands,
+      image: images.taiChiStanding,
       overview: [
         'Zhan Zhuang (standing meditation) is the cornerstone of internal martial arts. By standing in alignment without rigid tension, the skeletal frame carries the body weight and muscles are allowed to release into gravity.',
         'This 25-minute practice teaches you how to sink your weight into the feet, unlock the hips (the Kua), and allow the diaphragm to drop naturally. You discover stillness that does not feel stiff, but vibrantly alive.',
@@ -232,7 +232,7 @@ export const classes = {
       ratingCount: 88,
       studentsCount: 210,
       lastUpdated: 'October 2026',
-      image: images.kirtiStageLunge,
+      image: images.fluidMovement,
       overview: [
         'Your spine is a cascade of twenty-four vertebrae designed for waves, spirals, and expressive storytelling. Modern life often flattens this movement into rigid columns of posture.',
         'Spine Stories is an invitation to move without mirrors or choreography. Guided prompts gently invite each segment of your spine into curious, playful motion, shaking loose emotional holding patterns.',
@@ -291,7 +291,7 @@ export const classes = {
       ratingCount: 135,
       studentsCount: 340,
       lastUpdated: 'September 2026',
-      image: images.kirtiTaiChiHorseStance,
+      image: images.sideBend,
       overview: [
         'Deep breathing cannot happen in a tight ribcage. When the intercostal muscles and diaphragm are held in chronic tension from anxiety, forcing deep breaths only causes fatigue.',
         'This somatic sequence guides you through gentle pandiculations for the chest, side body, and abdominal wall, giving the diaphragm space to expand freely on its own.',
@@ -350,7 +350,7 @@ export const classes = {
       ratingCount: 95,
       studentsCount: 260,
       lastUpdated: 'October 2026',
-      image: images.kirtiTaiChiSingleWhipBw,
+      image: images.taiChiWall,
       overview: [
         'Learn a continuous sequence of eight essential Tai Chi postures designed for daily morning practice. Every movement is broken down step by step with close attention to foot placement, waist turning, and breath.',
         'This class bridges the gap between mechanical exercise and moving meditation, leaving you grounded, centered, and physically coordinated.',

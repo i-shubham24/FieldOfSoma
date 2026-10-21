@@ -4,16 +4,11 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowLeftIcon } from '@phosphor-icons/react/dist/csr/ArrowLeft'
 import { ArrowRightIcon } from '@phosphor-icons/react/dist/csr/ArrowRight'
 import { CheckIcon } from '@phosphor-icons/react/dist/csr/Check'
-import { HandSwipeLeftIcon } from '@phosphor-icons/react/dist/csr/HandSwipeLeft'
 import { PlayIcon } from '@phosphor-icons/react/dist/csr/Play'
-import { RowsIcon } from '@phosphor-icons/react/dist/csr/Rows'
-import { SquaresFourIcon } from '@phosphor-icons/react/dist/csr/SquaresFour'
 import { VideoCameraIcon } from '@phosphor-icons/react/dist/csr/VideoCamera'
 import ClosingCall from '../components/layout/ClosingCall'
-import Frame from '../components/media/Frame'
 import Reveal from '../components/motion/Reveal'
 import RevealLines from '../components/motion/RevealLines'
-import Button from '../components/ui/Button'
 import DraftNote from '../components/ui/DraftNote'
 import { classes } from '../content/classes'
 import { PAGE_TOP } from '../lib/layout'
@@ -44,33 +39,22 @@ function Intro() {
   )
 }
 
-function ClassCard({ item, isPurchased, isDragging, onEnroll, onPreview, onPlayFullVideo }) {
-  const handleClick = (e) => {
-    if (isDragging) {
-      e.preventDefault()
-      e.stopPropagation()
-    }
-  }
-
+function ClassCard({ item, isPurchased, onEnroll, onPreview, onPlayFullVideo }) {
   return (
-    <article className="group flex flex-col justify-between h-full border border-soma-sand/90 bg-soma-paper p-6 sm:p-7 shadow-2xs transition-shadow duration-500 hover:shadow-sm select-none">
+    <article className="group flex flex-col justify-between h-full border border-soma-sand/90 bg-soma-paper p-6 sm:p-7 shadow-2xs transition-shadow duration-500 hover:shadow-sm">
       <div>
         {/* Card Thumbnail with Play Preview */}
         <div className="relative overflow-hidden bg-soma-sand aspect-[16/10]">
           <Link
             to={`/classes/${item.id}`}
-            onClick={handleClick}
-            draggable={false}
             className="block h-full w-full"
-            tabIndex={isDragging ? -1 : 0}
           >
             <img
               src={item.image.src}
               srcSet={item.image.srcSet}
               alt={item.image.alt || item.title}
-              className="h-full w-full object-cover transition-transform duration-700 ease-soma group-hover:scale-105 pointer-events-none select-none"
+              className="h-full w-full object-cover transition-transform duration-700 ease-soma group-hover:scale-105"
               loading="lazy"
-              draggable={false}
             />
           </Link>
 
@@ -78,11 +62,10 @@ function ClassCard({ item, isPurchased, isDragging, onEnroll, onPreview, onPlayF
             <button
               type="button"
               onClick={(e) => {
-                if (isDragging) return
                 e.stopPropagation()
                 onPlayFullVideo(item)
               }}
-              className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-soma-moss px-3 py-1.5 text-[0.6875rem] font-medium text-soma-paper uppercase tracking-wider backdrop-blur-xs transition-colors hover:bg-soma-moss-light"
+              className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-soma-moss px-3 py-1.5 text-[0.6875rem] font-medium text-soma-paper uppercase tracking-wider backdrop-blur-xs transition-colors hover:bg-soma-moss-light cursor-pointer"
             >
               <PlayIcon size={12} weight="fill" />
               <span>Play Video</span>
@@ -91,11 +74,10 @@ function ClassCard({ item, isPurchased, isDragging, onEnroll, onPreview, onPlayF
             <button
               type="button"
               onClick={(e) => {
-                if (isDragging) return
                 e.stopPropagation()
                 onPreview(item)
               }}
-              className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-soma-ink/85 px-3 py-1.5 text-[0.6875rem] font-medium text-white uppercase tracking-wider backdrop-blur-xs transition-colors hover:bg-soma-moss"
+              className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-soma-ink/85 px-3 py-1.5 text-[0.6875rem] font-medium text-white uppercase tracking-wider backdrop-blur-xs transition-colors hover:bg-soma-moss cursor-pointer"
             >
               <PlayIcon size={12} weight="fill" />
               <span>Sample</span>
@@ -122,7 +104,6 @@ function ClassCard({ item, isPurchased, isDragging, onEnroll, onPreview, onPlayF
         {/* Title */}
         <Link
           to={`/classes/${item.id}`}
-          onClick={handleClick}
           className="mt-2 block"
         >
           <h3 className="text-[clamp(1.375rem,2vw,1.75rem)] leading-[1.2] transition-colors group-hover:text-soma-moss">
@@ -177,7 +158,6 @@ function ClassCard({ item, isPurchased, isDragging, onEnroll, onPreview, onPlayF
             <button
               type="button"
               onClick={(e) => {
-                if (isDragging) return
                 e.stopPropagation()
                 onPlayFullVideo(item)
               }}
@@ -189,7 +169,6 @@ function ClassCard({ item, isPurchased, isDragging, onEnroll, onPreview, onPlayF
             <button
               type="button"
               onClick={(e) => {
-                if (isDragging) return
                 e.stopPropagation()
                 onEnroll(item)
               }}
@@ -201,9 +180,7 @@ function ClassCard({ item, isPurchased, isDragging, onEnroll, onPreview, onPlayF
 
           <Link
             to={`/classes/${item.id}`}
-            onClick={handleClick}
-            draggable={false}
-            className="flex items-center justify-center border border-soma-sand py-2.5 text-center text-xs font-medium uppercase tracking-wider text-soma-ink transition-colors hover:border-soma-ink select-none"
+            className="flex items-center justify-center border border-soma-sand py-2.5 text-center text-xs font-medium uppercase tracking-wider text-soma-ink transition-colors hover:border-soma-ink"
           >
             {isPurchased ? 'Syllabus' : 'Details'}
           </Link>
@@ -350,13 +327,8 @@ function Library() {
   const [selectedCheckoutCourse, setSelectedCheckoutCourse] = useState(null)
   const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null)
   const [selectedFullVideoCourse, setSelectedFullVideoCourse] = useState(null)
-  const [isDragging, setIsDragging] = useState(false)
 
   const carouselRef = useRef(null)
-  const isDownRef = useRef(false)
-  const startXRef = useRef(0)
-  const scrollLeftRef = useRef(0)
-  const hasMovedRef = useRef(false)
   const reduce = useReducedMotion()
 
   // Sync tab query parameter if present
@@ -404,51 +376,6 @@ function Library() {
     })
   }
 
-  const onMouseDown = (e) => {
-    if (e.button !== 0 || !carouselRef.current) return
-    isDownRef.current = true
-    hasMovedRef.current = false
-    startXRef.current = e.pageX - carouselRef.current.offsetLeft
-    scrollLeftRef.current = carouselRef.current.scrollLeft
-  }
-
-  const onMouseMove = (e) => {
-    if (!isDownRef.current || !carouselRef.current) return
-    const currentX = e.pageX - carouselRef.current.offsetLeft
-    const walk = (currentX - startXRef.current) * 1.35
-    if (Math.abs(currentX - startXRef.current) > 5) {
-      if (!hasMovedRef.current) {
-        hasMovedRef.current = true
-        setIsDragging(true)
-      }
-      e.preventDefault()
-      carouselRef.current.scrollLeft = scrollLeftRef.current - walk
-    }
-  }
-
-  const onMouseUp = () => {
-    if (!isDownRef.current) return
-    isDownRef.current = false
-    if (hasMovedRef.current) {
-      setTimeout(() => {
-        setIsDragging(false)
-        hasMovedRef.current = false
-      }, 90)
-    } else {
-      setIsDragging(false)
-    }
-  }
-
-  const onMouseLeave = () => {
-    if (isDownRef.current) {
-      isDownRef.current = false
-      setTimeout(() => {
-        setIsDragging(false)
-        hasMovedRef.current = false
-      }, 90)
-    }
-  }
-
   return (
     <section className="py-20 md:py-28 min-h-[85vh] flex flex-col justify-center">
       {/* Top Filter and View Mode Switcher */}
@@ -490,7 +417,7 @@ function Library() {
                     : 'text-soma-clay-deep hover:text-soma-ink'
                 }`}
               >
-                Touch Slider
+                Carousel
               </button>
               <button
                 type="button"
@@ -563,20 +490,16 @@ function Library() {
         </div>
       ) : null}
 
-      {/* MODE 1: Touch-Draggable Horizontal Carousel */}
+      {/* MODE 1: Horizontal Carousel */}
       {viewMode === 'carousel' && visible.length > 0 ? (
         <div className="w-full">
-          {/* Header Controls with touch hint and arrows */}
+          {/* Header Controls with count and arrows */}
           <div className="shell mb-6">
             <div className="mx-auto max-w-6xl flex items-center justify-between text-xs text-soma-clay-deep">
+              <span className="tabular-nums">
+                {visible.length} {visible.length === 1 ? 'class' : 'classes'} shown
+              </span>
               <div className="flex items-center gap-2">
-                <HandSwipeLeftIcon size={16} className="text-soma-moss" />
-                <span>Swipe or drag cards horizontally</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="tabular-nums mr-2">
-                  {visible.length} {visible.length === 1 ? 'class' : 'classes'} shown
-                </span>
                 <button
                   type="button"
                   onClick={() => scrollStep(-1)}
@@ -597,17 +520,13 @@ function Library() {
             </div>
           </div>
 
-          {/* Draggable & Touch-Scrollable Motion Track */}
+          {/* Clean Scrollable Motion Track */}
           <div
             ref={carouselRef}
             data-lenis-prevent="true"
             data-lenis-prevent-touch="true"
             data-lenis-prevent-wheel="true"
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}
-            onMouseLeave={onMouseLeave}
-            className="w-full overflow-x-auto scrollbar-none select-none cursor-grab active:cursor-grabbing pb-4 touch-pan-x"
+            className="w-full overflow-x-auto scrollbar-none pb-4 touch-pan-x cursor-default"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
@@ -623,7 +542,6 @@ function Library() {
                   <ClassCard
                     item={item}
                     isPurchased={isPurchased(item.id)}
-                    isDragging={isDragging}
                     onEnroll={(course) => setSelectedCheckoutCourse(course)}
                     onPreview={(course) => setSelectedPreviewCourse(course)}
                     onPlayFullVideo={(course) => setSelectedFullVideoCourse(course)}
@@ -669,7 +587,6 @@ function Library() {
                     <ClassCard
                       item={item}
                       isPurchased={isPurchased(item.id)}
-                      isDragging={false}
                       onEnroll={(course) => setSelectedCheckoutCourse(course)}
                       onPreview={(course) => setSelectedPreviewCourse(course)}
                       onPlayFullVideo={(course) => setSelectedFullVideoCourse(course)}

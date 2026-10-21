@@ -25,10 +25,10 @@ export const images = {
     src: '/photos/kirti-tai-chi-lake.jpg',
     alt: 'Kirti Verma practicing Tai Chi single whip stance on a rock by the tranquil lake with water reflection',
   },
-  taiChiWall: {
-    src: '/photos/kirti-tai-chi-lake.jpg',
-    alt: 'Kirti Verma practicing Tai Chi single whip stance on a rock by the tranquil lake with water reflection',
-  },
+  taiChiWall: photo(
+    '1616246672038-82ce1e3a9f72',
+    'A man seen from behind, practising beside an old wall and climbing plants',
+  ),
   taiChiForm: {
     src: '/photos/kirti-tai-chi-lake.jpg',
     alt: 'Kirti Verma practicing Tai Chi single whip stance on a rock by the tranquil lake with water reflection',
@@ -104,19 +104,10 @@ export const images = {
     src: '/photos/kirti-forest-grounding.jpg',
     alt: 'Kirti Verma seated in calm somatic grounding among forest ferns with hand resting gently over her heart',
   },
-  sideBend: {
-    src: '/photos/kirti-forest-grounding.jpg',
-    alt: 'Kirti Verma seated in calm somatic grounding among forest ferns with hand resting gently over her heart',
-  },
-  reach: {
-    src: '/photos/kirti-field-soma.jpg',
-    alt: 'Kirti Verma reaching upward with open arms in an expansive wild field of grasses under an open sky',
-  },
+  sideBend: photo('1597586594276-456f8c50b82d', 'A woman seated on the floor in a slow side bend'),
+  reach: photo('1620242736370-bfb4ce9ebf3e', 'A woman reaching both arms overhead in window light'),
   notebook: photo('1504542227056-9178533a9175', 'A notebook and pen on a pale desk'),
-  forest: {
-    src: '/photos/himalayan-cedar-forest.jpg',
-    alt: 'Sunlight filtering through ancient Himalayan cedar and pine trees in morning mist',
-  },
+  forest: photo('1606458669574-2f4de395e078', 'Morning light through a forest'),
   somaticGround: {
     src: '/photos/somatic-constructive-rest.jpg',
     alt: 'A student lying in peaceful constructive rest on a wooden studio floor, hands resting on the abdomen in somatic release',
@@ -125,18 +116,18 @@ export const images = {
     src: '/photos/kirti-somatic-teaching.jpg',
     alt: 'Kirti Verma offering hands-on somatic facilitation to students resting on a sunlit studio floor',
   },
-  lowerBackRelease: {
-    src: '/photos/somatic-constructive-rest.jpg',
-    alt: 'A student resting on the floor in gentle somatic release, releasing chronic spinal tension',
-  },
-  taiChiStanding: {
-    src: '/photos/kirti-tai-chi-cloud-hands.jpg',
-    alt: 'Kirti Verma demonstrating Tai Chi standing posture by the lake with mindful hand alignment',
-  },
-  fluidMovement: {
-    src: '/photos/kirti-creative-dance.jpg',
-    alt: 'Kirti Verma moving barefoot in creative dance on a wooden stage in warm light',
-  },
+  lowerBackRelease: photo(
+    '1545205597-3d9d02c29597',
+    'A person resting with ease on a mat in a sunlit room, gentle spinal release',
+  ),
+  taiChiStanding: photo(
+    '1599447421416-3414500d18a5',
+    'A tai chi practitioner standing in quiet, grounded contemplation',
+  ),
+  fluidMovement: photo(
+    '1508700115892-45ecd05ae2ad',
+    'A dancer moving with expressive fluidity and graceful spinal articulation',
+  ),
   sanctuaryInterior: photo(
     '1513694203232-719a280e022f',
     'A serene minimalist room with warm natural materials and soft light',
