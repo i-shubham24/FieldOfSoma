@@ -13,11 +13,11 @@ export const practices = {
   items: [
     {
       id: 'somatics',
-      name: 'Clinical Somatics',
+      name: 'Somatic Movement Therapy',
       verbs: 'Heal, sense',
       image: images.somaticRelease,
       intention:
-        'To give you back the control of muscles that have been working without your consent. Sessions are quiet, precise and unhurried, and you leave knowing a few movements well enough to repeat them at home.',
+        'Derived from approaches like the Feldenkrais method, Body-Mind Centering, Abhyas Somatics, and Somatic Intelligence. We work with sensitising into the body, creating safety and grounding in the bones. As the body grounds and becomes present, we progress into exploration through guided prompts. Listening and presence is developed while the body starts to realign itself.',
       session: [
         {
           time: '0 to 10',
@@ -42,9 +42,11 @@ export const practices = {
       ],
       serves: [
         'Chronic back, neck, hip or shoulder tension',
-        'Stiffness after injury or long hours at a desk',
         'Stress that shows up as tightness, poor sleep or shallow breath',
-        'Athletes, dancers and musicians refining control',
+        'People looking for better stability in body and clarity in mind',
+        'People looking to develop a better relationship with their body',
+        'Spinal decompression and better gait',
+        'Transitioning from urgency to a calm state of mind',
       ],
       format: 'Private sessions and small groups, in person and online',
       cta: 'Book a Somatics session',
@@ -60,7 +62,7 @@ export const practices = {
       verbs: 'Ground, flow',
       image: images.taiChiForm,
       intention:
-        'To find strength that does not depend on tension. Tai Chi trains you to stand, shift weight and turn from the centre, so that movement is carried by the legs and the breath, not by effort in the shoulders.',
+        'A gentle internal martial art practiced as a moving meditation, based on Taoism and Traditional Chinese Medicine. The body is gently loaded through your own body weight to work with gravity, alignment and sustained posture. As we learn to carry our weight, balance improves and the central axis aligns physically and energetically. Movements flow vital energy in the whole body to remove tension patterns, cultivating sustainable strength and focus.',
       session: [
         {
           time: '0 to 10',
@@ -84,10 +86,11 @@ export const practices = {
         },
       ],
       serves: [
-        'Anyone wanting better balance and steadier legs',
-        'People who find seated meditation difficult',
-        'Those rebuilding energy after illness or burnout',
-        'Movers who want strength without strain',
+        'People looking to improve their posture',
+        'Learning how to preserve and cultivate your vital energy',
+        'Gaining confidence through your body and stance',
+        'Better gait, balance and physical stability',
+        'Those seeking quiet strength and moving meditation without strain',
       ],
       format: 'Weekly group classes, in person and online',
       cta: 'Join a Tai Chi class',

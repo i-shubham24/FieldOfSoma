@@ -5,15 +5,18 @@ import { images } from './images'
 
 export const hero = {
   label: 'Movement and Somatic Education',
-  headline: [{ text: 'Find your way back' }, { text: 'into your body.', italic: true }],
+  headline: [
+    { text: 'Our bodies are inherently' },
+    { text: 'an intelligent ecosystem.', italic: true },
+  ],
   subtext:
-    'Through Somatic healing, Tai Chi, and Creative Movement, rediscover the quiet intelligence your body already holds.',
+    'It knows. It guides. It heals. We must listen and tend to it.',
   primary: { to: '/practices', label: 'Explore the Practices' },
   image: images.floorLight,
 }
 
 export const manifesto = {
-  text: 'Your body is not a problem to fix. It is a living field of intelligence, capable of its own restoration, its own expression, its own quiet wisdom.',
+  text: 'Find your way back into the body. It is not a problem to fix, but a living field of intelligence, capable of its own restoration, its own expression, and its own quiet wisdom.',
 }
 
 export const pillars = {
@@ -23,11 +26,11 @@ export const pillars = {
   items: [
     {
       id: 'somatics',
-      name: 'Clinical Somatics',
+      name: 'Somatic Movement Therapy',
       verbs: 'Heal, sense',
-      body: 'Slow, attentive movements that retrain the brain’s control of muscles held tight for years. Nothing is forced or stretched. You learn to release the tension yourself, and to keep it released.',
-      audience: 'For chronic pain, stiffness, and bodies worn down by stress.',
-      link: { to: '/practices#somatics', label: 'About Clinical Somatics' },
+      body: 'Slow, gentle movements that retrain muscles braced from years of tightness. Nothing is forced or stretched. You learn to release excess tension and bring the body back into equilibrium.',
+      audience: 'For chronic back, neck, hip or shoulder tension. For stability in body and clarity in mind.',
+      link: { to: '/practices#somatics', label: 'About Somatic Movement Therapy' },
       tone: 'clay',
       image: images.somaticGround,
     },
@@ -35,8 +38,8 @@ export const pillars = {
       id: 'tai-chi',
       name: 'Tai Chi',
       verbs: 'Ground, flow',
-      body: 'A gentle internal martial art, practised as moving meditation. Weight settles into the legs, the spine lengthens, and the breath follows a slow, circular form. Balance arrives without bracing.',
-      audience: 'For steadiness, quiet strength and focus.',
+      body: 'A gentle internal martial art practiced as moving meditation. Rooted in Taoism and Traditional Chinese Medicine, it strengthens the body from the inside out to develop structure, balance and sensitivity to qi.',
+      audience: 'For improving posture, preserving vital energy, and gaining confidence through your body and stance.',
       link: { to: '/practices#tai-chi', label: 'About Tai Chi' },
       tone: 'moss',
       image: images.taiChiTrees, // PLACEHOLDER: stock photograph
