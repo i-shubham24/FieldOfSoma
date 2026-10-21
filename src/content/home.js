@@ -32,7 +32,7 @@ export const pillars = {
       audience: 'For chronic back, neck, hip or shoulder tension. For stability in body and clarity in mind.',
       link: { to: '/practices#somatics', label: 'About Somatic Movement Therapy' },
       tone: 'clay',
-      image: images.somaticGround,
+      image: images.somaticConstructiveRest,
     },
     {
       id: 'tai-chi',
@@ -42,7 +42,7 @@ export const pillars = {
       audience: 'For improving posture, preserving vital energy, and gaining confidence through your body and stance.',
       link: { to: '/practices#tai-chi', label: 'About Tai Chi' },
       tone: 'moss',
-      image: images.taiChiTrees, // PLACEHOLDER: stock photograph
+      image: images.taiChiTrees,
     },
     {
       id: 'creative-movement',
@@ -52,7 +52,7 @@ export const pillars = {
       audience: 'For feeling alive, expressive and unguarded in your own skin.',
       link: { to: '/practices#creative-movement', label: 'About Creative Movement' },
       tone: 'sand',
-      image: images.danceTurn, // PLACEHOLDER: stock photograph
+      image: images.danceTurn,
     },
   ],
 }

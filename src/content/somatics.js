@@ -8,7 +8,7 @@ export const somatics = {
     label: 'Discover Somatics',
     headline: [{ text: 'We live from' }, { text: 'the neck up.', italic: true }],
     lede: 'Most of us think our way through the day and notice the body only when it hurts. Somatics is the practice of noticing sooner, and of using that attention to undo tension at its source.',
-    image: images.handShadow,
+    image: images.kirtiFieldMeadowFlow,
   },
 
   problem: {
@@ -78,7 +78,7 @@ export const somatics = {
 
   grounding: {
     heading: 'What changes underneath',
-    image: images.back,
+    image: images.kirtiForestGrounding,
     items: [
       {
         title: 'The nervous system settles',

@@ -26,9 +26,6 @@ const CORE_DISCIPLINES = [
   { to: '/practices#somatics', label: 'Clinical Somatics' },
   { to: '/practices#tai-chi', label: 'Tai Chi Form' },
   { to: '/practices#creative-movement', label: 'Creative Movement' },
-  { to: '/classes', label: 'Recorded Library' },
-  { to: '/calendar', label: 'Weekly Timetable' },
-  { to: '/about', label: 'Ideology and Lineage' },
 ]
 
 const CONNECT_LINKS = [

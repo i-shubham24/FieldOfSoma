@@ -26,17 +26,19 @@ function Intro() {
           {lede}
         </Reveal>
       </div>
-      <div className="shell mt-16 md:mt-20">
-        <Frame
-          image={image}
-          ratio="aspect-[4/5]"
-          sizes="(min-width: 640px) 26rem, 100vw"
-          priority
-          drift
-          unveil
-          delay={0.4}
-          className="mx-auto max-w-[26rem]"
-        />
+      <div className="shell mt-14 md:mt-18">
+        <div className="mx-auto max-w-3xl">
+          <Frame
+            image={image}
+            ratio="aspect-[840/642]"
+            sizes="(min-width: 768px) 48rem, 100vw"
+            priority
+            drift
+            unveil
+            delay={0.3}
+            className="w-full shadow-sm"
+          />
+        </div>
       </div>
     </section>
   )

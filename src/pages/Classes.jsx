@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowLeftIcon } from '@phosphor-icons/react/dist/csr/ArrowLeft'
 import { ArrowRightIcon } from '@phosphor-icons/react/dist/csr/ArrowRight'
 import { CheckIcon } from '@phosphor-icons/react/dist/csr/Check'
@@ -19,7 +19,6 @@ import { classes } from '../content/classes'
 import { PAGE_TOP } from '../lib/layout'
 import { EASE } from '../lib/motion'
 import { usePurchasedClasses } from '../lib/purchases'
-import { useDragScroll } from '../lib/useDragScroll'
 import useTitle from '../lib/useTitle'
 import { CheckoutModal, FullVideoPlayerModal, VideoPreviewModal } from './ClassDetail'
 
@@ -49,17 +48,19 @@ function ClassCard({ item, isPurchased, isDragging, onEnroll, onPreview, onPlayF
   const handleClick = (e) => {
     if (isDragging) {
       e.preventDefault()
+      e.stopPropagation()
     }
   }
 
   return (
-    <article className="group flex flex-col justify-between h-full border border-soma-sand/90 bg-soma-paper p-6 sm:p-7 shadow-2xs transition-shadow duration-500 hover:shadow-sm">
+    <article className="group flex flex-col justify-between h-full border border-soma-sand/90 bg-soma-paper p-6 sm:p-7 shadow-2xs transition-shadow duration-500 hover:shadow-sm select-none">
       <div>
         {/* Card Thumbnail with Play Preview */}
         <div className="relative overflow-hidden bg-soma-sand aspect-[16/10]">
           <Link
             to={`/classes/${item.id}`}
             onClick={handleClick}
+            draggable={false}
             className="block h-full w-full"
             tabIndex={isDragging ? -1 : 0}
           >
@@ -67,8 +68,9 @@ function ClassCard({ item, isPurchased, isDragging, onEnroll, onPreview, onPlayF
               src={item.image.src}
               srcSet={item.image.srcSet}
               alt={item.image.alt || item.title}
-              className="h-full w-full object-cover transition-transform duration-700 ease-soma group-hover:scale-105"
+              className="h-full w-full object-cover transition-transform duration-700 ease-soma group-hover:scale-105 pointer-events-none select-none"
               loading="lazy"
+              draggable={false}
             />
           </Link>
 
@@ -200,7 +202,8 @@ function ClassCard({ item, isPurchased, isDragging, onEnroll, onPreview, onPlayF
           <Link
             to={`/classes/${item.id}`}
             onClick={handleClick}
-            className="flex items-center justify-center border border-soma-sand py-2.5 text-center text-xs font-medium uppercase tracking-wider text-soma-ink transition-colors hover:border-soma-ink"
+            draggable={false}
+            className="flex items-center justify-center border border-soma-sand py-2.5 text-center text-xs font-medium uppercase tracking-wider text-soma-ink transition-colors hover:border-soma-ink select-none"
           >
             {isPurchased ? 'Syllabus' : 'Details'}
           </Link>
@@ -348,11 +351,12 @@ function Library() {
   const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null)
   const [selectedFullVideoCourse, setSelectedFullVideoCourse] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
-  const [dragConstraint, setDragConstraint] = useState(0)
 
   const carouselRef = useRef(null)
-  const trackRef = useRef(null)
-  const x = useMotionValue(0)
+  const isDownRef = useRef(false)
+  const startXRef = useRef(0)
+  const scrollLeftRef = useRef(0)
+  const hasMovedRef = useRef(false)
   const reduce = useReducedMotion()
 
   // Sync tab query parameter if present
@@ -379,29 +383,11 @@ function Library() {
     ? classes.items
     : classes.items.filter((item) => item.practice === filter)
 
-  // Measure track and container for drag constraints
-  useEffect(() => {
-    const measure = () => {
-      if (carouselRef.current && trackRef.current) {
-        const containerWidth = carouselRef.current.offsetWidth
-        const trackWidth = trackRef.current.scrollWidth
-        const maxDrag = Math.min(0, containerWidth - trackWidth)
-        setDragConstraint(maxDrag)
-
-        if (x.get() < maxDrag) {
-          animate(x, maxDrag, { duration: 0.35 })
-        }
-      }
-    }
-
-    measure()
-    window.addEventListener('resize', measure)
-    return () => window.removeEventListener('resize', measure)
-  }, [visible, viewMode, x])
-
   const handleFilterChange = (id) => {
     setFilter(id)
-    animate(x, 0, { duration: 0.4 })
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' })
+    }
     if (id === 'my-videos') {
       setSearchParams({ tab: 'my-videos' })
     } else {
@@ -410,10 +396,57 @@ function Library() {
   }
 
   const scrollStep = (direction) => {
-    const stepSize = 440
-    const current = x.get()
-    const target = Math.max(dragConstraint, Math.min(0, current + direction * stepSize))
-    animate(x, target, { duration: 0.5, ease: [0.16, 1, 0.3, 1] })
+    if (!carouselRef.current) return
+    const stepSize = 460
+    carouselRef.current.scrollBy({
+      left: direction * stepSize,
+      behavior: 'smooth',
+    })
+  }
+
+  const onMouseDown = (e) => {
+    if (e.button !== 0 || !carouselRef.current) return
+    isDownRef.current = true
+    hasMovedRef.current = false
+    startXRef.current = e.pageX - carouselRef.current.offsetLeft
+    scrollLeftRef.current = carouselRef.current.scrollLeft
+  }
+
+  const onMouseMove = (e) => {
+    if (!isDownRef.current || !carouselRef.current) return
+    const currentX = e.pageX - carouselRef.current.offsetLeft
+    const walk = (currentX - startXRef.current) * 1.35
+    if (Math.abs(currentX - startXRef.current) > 5) {
+      if (!hasMovedRef.current) {
+        hasMovedRef.current = true
+        setIsDragging(true)
+      }
+      e.preventDefault()
+      carouselRef.current.scrollLeft = scrollLeftRef.current - walk
+    }
+  }
+
+  const onMouseUp = () => {
+    if (!isDownRef.current) return
+    isDownRef.current = false
+    if (hasMovedRef.current) {
+      setTimeout(() => {
+        setIsDragging(false)
+        hasMovedRef.current = false
+      }, 90)
+    } else {
+      setIsDragging(false)
+    }
+  }
+
+  const onMouseLeave = () => {
+    if (isDownRef.current) {
+      isDownRef.current = false
+      setTimeout(() => {
+        setIsDragging(false)
+        hasMovedRef.current = false
+      }, 90)
+    }
   }
 
   return (
@@ -546,7 +579,7 @@ function Library() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => scrollStep(1)}
+                  onClick={() => scrollStep(-1)}
                   aria-label="Previous classes"
                   className="flex h-9 w-9 cursor-pointer items-center justify-center border border-soma-sand bg-soma-paper text-soma-ink transition-colors hover:border-soma-ink"
                 >
@@ -554,7 +587,7 @@ function Library() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => scrollStep(-1)}
+                  onClick={() => scrollStep(1)}
                   aria-label="Next classes"
                   className="flex h-9 w-9 cursor-pointer items-center justify-center border border-soma-sand bg-soma-paper text-soma-ink transition-colors hover:border-soma-ink"
                 >
@@ -564,24 +597,24 @@ function Library() {
             </div>
           </div>
 
-          {/* Draggable Motion Track */}
+          {/* Draggable & Touch-Scrollable Motion Track */}
           <div
             ref={carouselRef}
-            className="w-full overflow-hidden select-none touch-pan-y"
+            data-lenis-prevent="true"
+            data-lenis-prevent-touch="true"
+            data-lenis-prevent-wheel="true"
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+            onMouseLeave={onMouseLeave}
+            className="w-full overflow-x-auto scrollbar-none select-none cursor-grab active:cursor-grabbing pb-4 touch-pan-x"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch',
+            }}
           >
-            <motion.div
-              ref={trackRef}
-              style={{ x }}
-              drag="x"
-              dragConstraints={{ right: 0, left: dragConstraint }}
-              dragElastic={0.12}
-              dragTransition={{ power: 0.25, timeConstant: 220 }}
-              onDragStart={() => setIsDragging(true)}
-              onDragEnd={() => {
-                setTimeout(() => setIsDragging(false), 80)
-              }}
-              className="flex gap-6 sm:gap-8 px-6 sm:px-10 md:px-14 lg:px-20 py-4 cursor-grab active:cursor-grabbing"
-            >
+            <div className="flex gap-6 sm:gap-8 px-6 sm:px-10 md:px-14 lg:px-20 py-2 w-max min-w-full">
               {visible.map((item) => (
                 <div
                   key={item.id}
@@ -597,7 +630,7 @@ function Library() {
                   />
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
       ) : null}

@@ -43,6 +43,8 @@ function setJsonLd(schema) {
   script.textContent = JSON.stringify(schema)
 }
 
+const DEFAULT_OG_IMAGE = 'https://fieldofsoma.com/photos/kirti-forest-hero.jpg'
+
 // Sets page title, meta description, OpenGraph tags, canonical link, breadcrumbs and JSON-LD schema.
 export default function useTitle(titleOrOptions, maybeOptions = {}) {
   const options =
@@ -72,11 +74,12 @@ export default function useTitle(titleOrOptions, maybeOptions = {}) {
     setMeta('property', 'og:title', fullTitle)
     setMeta('property', 'og:description', description)
     setMeta('property', 'og:url', `${BASE_URL}${path}`)
-    if (image) setMeta('property', 'og:image', image)
+    const shareImage = image || DEFAULT_OG_IMAGE
+    setMeta('property', 'og:image', shareImage)
 
     setMeta('name', 'twitter:title', fullTitle)
     setMeta('name', 'twitter:description', description)
-    if (image) setMeta('name', 'twitter:image', image)
+    setMeta('name', 'twitter:image', shareImage)
 
     setCanonical(`${BASE_URL}${path}`)
 

@@ -7,8 +7,8 @@ export const about = {
     label: 'About',
     headline: [{ text: 'Kirti Verma' }],
     lede: 'Movement and Somatic Educator. Her teaching brings together Clinical Somatics, Tai Chi and creative movement drawn from dance.',
-    image: images.leafShadow,
-    caption: 'Quiet observation and natural light in the studio.',
+    image: images.kirtiPortrait,
+    caption: 'Kirti Verma, movement and somatic educator.',
   },
 
   story: {
@@ -19,7 +19,7 @@ export const about = {
       'Her work is informed by Somatic Movement Therapy: drawing from approaches like the Feldenkrais method, Body-Mind Centering, Abhyas Somatics, and Somatic Intelligence to create safety, presence, and grounding in the bones. Tai Chi brings an internal martial art discipline rooted in Taoism and Traditional Chinese Medicine, training structure, balance, and sensitivity to vital energy. Creative movement invites spontaneous expression and playful exploration.',
       'Today she teaches these distinct practices side by side. Some students arrive with chronic pain, and some arrive seeking stillness. Most discover that the same patient quality of attention serves both.',
     ],
-    image: images.arches,
+    image: images.kirtiContemplationLeaves,
   },
 
   lineage: {

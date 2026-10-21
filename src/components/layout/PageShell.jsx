@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import AmbientSound from '../shared/AmbientSound'
 import Footer from './Footer'
 import Header from './Header'
 import SmoothScroll from './SmoothScroll'
 
-// Each new page opens at the top always, or at the anchor section if hashed.
+// Ensures each page loads from the top, unless directed to an intentional section anchor.
 function useScrollRestore() {
   const { pathname, hash } = useLocation()
 
@@ -15,25 +16,54 @@ function useScrollRestore() {
   }, [])
 
   useEffect(() => {
-    if (hash) {
-      const id = hash.slice(1)
-      const target = document.getElementById(id)
-      if (target) {
-        if (window.__lenis) {
-          window.__lenis.scrollTo(target, { immediate: false, offset: -80 })
-        } else {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const isAnchor = hash && hash !== '#main' && hash.length > 1
+    const targetId = isAnchor ? hash.slice(1) : null
+
+    if (targetId) {
+      const scrollAttempt = () => {
+        const target = document.getElementById(targetId)
+        if (target) {
+          if (window.__lenis) {
+            window.__lenis.scrollTo(target, { immediate: false, offset: -80 })
+          } else {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+          return true
         }
-        return
+        return false
       }
+
+      if (!scrollAttempt()) {
+        const timer1 = setTimeout(scrollAttempt, 60)
+        const timer2 = setTimeout(scrollAttempt, 180)
+        return () => {
+          clearTimeout(timer1)
+          clearTimeout(timer2)
+        }
+      }
+      return undefined
     }
-    // Always load every page from the absolute top immediately
-    if (window.__lenis) {
-      window.__lenis.scrollTo(0, { immediate: true })
+
+    // Load page from the absolute top immediately if not directed intentionally to a section
+    const resetToTop = () => {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(0, { immediate: true })
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
     }
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
+
+    resetToTop()
+
+    // Counteract any layout shift from lazy route chunk mounting
+    const t1 = setTimeout(resetToTop, 50)
+    const t2 = setTimeout(resetToTop, 160)
+
+    return () => {
+      clearTimeout(t1)
+      clearTimeout(t2)
+    }
   }, [pathname, hash])
 }
 
@@ -55,6 +85,9 @@ export default function PageShell() {
         </main>
         <Footer />
       </div>
+
+      {/* Persistent ambient sound player and bottom right switch */}
+      <AmbientSound />
     </SmoothScroll>
   )
 }

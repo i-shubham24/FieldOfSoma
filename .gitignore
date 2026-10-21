@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 .agents
 project_management_tracker.csv
+client_photos/
+gdrive_files.json

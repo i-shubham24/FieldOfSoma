@@ -15,7 +15,7 @@ export const practices = {
       id: 'somatics',
       name: 'Somatic Movement Therapy',
       verbs: 'Heal, sense',
-      image: images.somaticRelease,
+      image: images.kirtiSomaticTeaching,
       intention:
         'Derived from approaches like the Feldenkrais method, Body-Mind Centering, Abhyas Somatics, and Somatic Intelligence. We work with sensitising into the body, creating safety and grounding in the bones. As the body grounds and becomes present, we progress into exploration through guided prompts. Listening and presence is developed while the body starts to realign itself.',
       session: [
@@ -60,7 +60,7 @@ export const practices = {
       id: 'tai-chi',
       name: 'Tai Chi',
       verbs: 'Ground, flow',
-      image: images.taiChiForm,
+      image: images.kirtiTaiChiBlueSky,
       intention:
         'A gentle internal martial art practiced as a moving meditation, based on Taoism and Traditional Chinese Medicine. The body is gently loaded through your own body weight to work with gravity, alignment and sustained posture. As we learn to carry our weight, balance improves and the central axis aligns physically and energetically. Movements flow vital energy in the whole body to remove tension patterns, cultivating sustainable strength and focus.',
       session: [
@@ -104,7 +104,7 @@ export const practices = {
       id: 'creative-movement',
       name: 'Creative Movement',
       verbs: 'Express, play',
-      image: images.danceReach,
+      image: images.kirtiDanceMotionBlur,
       intention:
         'To let the body move before the mind decides how it should look. There is no choreography, no mirror and no audience. Simple prompts open the door, and what follows is yours.',
       session: [

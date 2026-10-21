@@ -197,7 +197,7 @@ export default function Contact() {
               ratio="aspect-[3/2]"
               sizes="(min-width: 1024px) 30rem, 100vw"
               drift
-              className="mt-14 hidden lg:block"
+              className="mt-10 sm:mt-12 lg:mt-14 w-full shadow-2xs"
             />
           </div>
 

@@ -78,39 +78,75 @@ function Featured({ onSelect }) {
 
 function Index({ onSelect }) {
   return (
-    <section className="py-28 md:py-40">
+    <section className="py-24 md:py-36">
       <div className="shell">
         <div className="mx-auto max-w-6xl">
-          <Reveal as="h2" className="text-heading">
-            More essays
-          </Reveal>
-          <ul className="mt-12 border-t border-soma-sand">
+          <div className="flex items-baseline justify-between border-b border-soma-sand/80 pb-5">
+            <Reveal as="h2" className="text-heading">
+              More essays
+            </Reveal>
+            <span className="text-xs text-soma-clay-deep tracking-wider uppercase font-medium">
+              {articles.list.length} reflections
+            </span>
+          </div>
+
+          <div className="mt-12 grid gap-8 sm:gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {articles.list.map((item, i) => (
               <Reveal
-                as="li"
-                key={item.title}
-                delay={i * 0.05}
-                className="border-b border-soma-sand"
+                as="article"
+                key={item.id}
+                delay={i * 0.08}
+                className="group flex flex-col justify-between border border-soma-sand/80 bg-soma-paper p-5 sm:p-6 shadow-2xs transition-shadow duration-500 hover:shadow-sm"
               >
-                <button
-                  type="button"
-                  onClick={() => onSelect(item)}
-                  className="group w-full text-left py-7 grid gap-2 md:grid-cols-12 md:items-baseline md:gap-8 cursor-pointer transition-colors hover:bg-soma-sand/20 px-2"
-                >
-                  <p className="font-display text-[1.125rem] leading-[1.3] text-soma-moss italic md:col-span-3">
-                    {item.topic}
-                  </p>
-                  <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.2] text-soma-ink transition-colors group-hover:text-soma-moss md:col-span-7">
+                <div>
+                  {item.image ? (
+                    <div className="relative overflow-hidden bg-soma-sand aspect-[16/10]">
+                      <img
+                        src={item.image.src}
+                        alt={item.image.alt || item.title}
+                        className="h-full w-full object-cover transition-transform duration-700 ease-soma group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : null}
+
+                  <div className="mt-5 flex items-center justify-between text-xs">
+                    <span className="font-display text-sm italic text-soma-moss">
+                      {item.topic}
+                    </span>
+                    <span className="text-soma-clay-deep tabular-nums">
+                      {item.length}
+                    </span>
+                  </div>
+
+                  <h3 className="mt-2.5 font-display text-[clamp(1.25rem,2vw,1.5rem)] font-normal leading-[1.25] text-soma-ink transition-colors group-hover:text-soma-moss">
                     {item.title}
                   </h3>
-                  <div className="flex items-center justify-between md:col-span-2 md:justify-end gap-3 text-[0.875rem] text-soma-clay-deep tabular-nums">
-                    <span>{item.length}</span>
+
+                  {item.excerpt ? (
+                    <p className="mt-3 text-sm font-light leading-relaxed text-soma-clay-deep">
+                      {item.excerpt}
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-soma-sand/70 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={() => onSelect(item)}
+                    className="cursor-pointer font-sans text-xs font-medium uppercase tracking-wider text-soma-moss transition-colors hover:text-soma-ink flex items-center gap-1.5"
+                  >
+                    <span>Read essay</span>
                     <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
-                  </div>
-                </button>
+                  </button>
+                  <span className="text-[0.6875rem] font-medium uppercase tracking-wider text-soma-clay-deep">
+                    Essay
+                  </span>
+                </div>
               </Reveal>
             ))}
-          </ul>
+          </div>
+
           {articles.placeholder ? <DraftNote className="mt-6">{articles.note}</DraftNote> : null}
         </div>
       </div>
@@ -213,6 +249,16 @@ function ArticleReader({ article, onClose }) {
               Close [Esc]
             </button>
           </div>
+
+          {article.image ? (
+            <div className="mt-6 aspect-[16/9] w-full overflow-hidden bg-soma-sand border border-soma-sand/60">
+              <img
+                src={article.image.src}
+                alt={article.image.alt || article.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          ) : null}
 
           <h2 className="mt-6 font-display text-[clamp(1.75rem,3.2vw,2.5rem)] font-normal leading-[1.15] text-soma-ink">
             {article.title}

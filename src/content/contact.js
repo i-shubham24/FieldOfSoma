@@ -8,7 +8,7 @@ export const contact = {
     label: 'Contact',
     headline: [{ text: 'Begin with' }, { text: 'a few words.', italic: true }],
     lede: 'Questions about a practice, a session or a class are all welcome. Kirti reads and answers every message herself.',
-    image: images.curtain,
+    image: images.contactScenery,
   },
 
   details: [
