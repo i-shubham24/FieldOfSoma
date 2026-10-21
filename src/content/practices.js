@@ -60,7 +60,7 @@ export const practices = {
       id: 'tai-chi',
       name: 'Tai Chi',
       verbs: 'Ground, flow',
-      image: images.kirtiTaiChiBlueSky,
+      image: images.kirtiTaiChiLake,
       intention:
         'A gentle internal martial art practiced as a moving meditation, based on Taoism and Traditional Chinese Medicine. The body is gently loaded through your own body weight to work with gravity, alignment and sustained posture. As we learn to carry our weight, balance improves and the central axis aligns physically and energetically. Movements flow vital energy in the whole body to remove tension patterns, cultivating sustainable strength and focus.',
       session: [

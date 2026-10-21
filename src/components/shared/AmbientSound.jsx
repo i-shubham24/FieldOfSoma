@@ -117,7 +117,7 @@ export default function AmbientSound() {
     <>
       <audio
         ref={audioRef}
-        src="/audio/ambient-soma.wav?v=3"
+        src="/audio/ambient-soma.wav?v=4"
         preload="auto"
         loop
         aria-hidden="true"
