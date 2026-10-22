@@ -1,75 +1,81 @@
 import { useEffect, useRef, useState } from 'react'
 
 const STORAGE_KEY = 'soma_ambient_sound'
-const TARGET_VOLUME = 0.40
+const TARGET_VOLUME = 0.4
 
+// Storage can be blocked (private windows, strict settings); sound is a nicety, so never throw.
+const readPref = () => {
+  try {
+    return localStorage.getItem(STORAGE_KEY)
+  } catch {
+    return null
+  }
+}
+const writePref = (value) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, value)
+  } catch {
+    // ignore
+  }
+}
+
+// Ambient flute that starts on the visitor's first click or key press (browsers only allow
+// sound after a real gesture), unless they have turned it off before. The file is not
+// downloaded until then.
 export default function AmbientSound() {
   const audioRef = useRef(null)
+  const fadeRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
 
-  // Initialize and attempt auto-play on whole site
-  useEffect(() => {
+  const fadeTo = (target, done) => {
+    const audio = audioRef.current
+    clearInterval(fadeRef.current)
+    fadeRef.current = setInterval(() => {
+      const step = target > audio.volume ? 0.04 : -0.06
+      const next = Math.min(1, Math.max(0, audio.volume + step))
+      audio.volume = next
+      if ((step > 0 && next >= target) || (step < 0 && next <= target)) {
+        clearInterval(fadeRef.current)
+        done?.()
+      }
+    }, 40)
+  }
+
+  const start = () => {
     const audio = audioRef.current
     if (!audio) return
-
     audio.volume = 0
-    audio.loop = true
+    audio
+      .play()
+      .then(() => {
+        setIsPlaying(true)
+        fadeTo(TARGET_VOLUME)
+      })
+      .catch(() => {})
+  }
 
-    const savedPref = localStorage.getItem(STORAGE_KEY)
-    if (savedPref === 'off') {
-      setIsPlaying(false)
-      return
+  useEffect(() => {
+    if (readPref() === 'off') return undefined
+
+    const onFirstGesture = (event) => {
+      // A click on the sound button itself is handled by the button.
+      if (event.target.closest?.('[data-ambient-toggle]')) return
+      remove()
+      start()
     }
-
-    // Smooth fade in helper
-    const fadeIn = () => {
-      let currentVol = 0
-      audio.volume = 0
-      const fadeInterval = setInterval(() => {
-        if (currentVol < TARGET_VOLUME) {
-          currentVol = Math.min(TARGET_VOLUME, currentVol + 0.04)
-          audio.volume = currentVol
-        } else {
-          clearInterval(fadeInterval)
-        }
-      }, 40)
+    const remove = () => {
+      window.removeEventListener('click', onFirstGesture)
+      window.removeEventListener('keydown', onFirstGesture)
     }
+    window.addEventListener('click', onFirstGesture)
+    window.addEventListener('keydown', onFirstGesture)
 
-    // Attempt direct autoplay
-    const promise = audio.play()
-    if (promise !== undefined) {
-      promise
-        .then(() => {
-          setIsPlaying(true)
-          fadeIn()
-        })
-        .catch(() => {
-          // Browser prevented autoplay before user interaction:
-          // Listen for the very first interaction anywhere on page
-          const onFirstInteraction = () => {
-            const currentPref = localStorage.getItem(STORAGE_KEY)
-            if (currentPref === 'off') return
-
-            audio
-              .play()
-              .then(() => {
-                setIsPlaying(true)
-                fadeIn()
-              })
-              .catch(() => {})
-
-            window.removeEventListener('pointerdown', onFirstInteraction)
-            window.removeEventListener('click', onFirstInteraction)
-            window.removeEventListener('scroll', onFirstInteraction)
-            window.removeEventListener('keydown', onFirstInteraction)
-          }
-
-          window.addEventListener('pointerdown', onFirstInteraction, { passive: true })
-          window.addEventListener('click', onFirstInteraction, { passive: true })
-          window.addEventListener('scroll', onFirstInteraction, { passive: true })
-          window.addEventListener('keydown', onFirstInteraction, { passive: true })
-        })
+    return () => {
+      remove()
+      clearInterval(fadeRef.current)
     }
+    // start is stable enough here: it only reads refs
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const toggleSound = () => {
@@ -77,39 +83,14 @@ export default function AmbientSound() {
     if (!audio) return
 
     if (isPlaying) {
-      // Fade out smoothly and pause
-      let vol = audio.volume
-      const fadeOut = setInterval(() => {
-        if (vol > 0.05) {
-          vol = Math.max(0, vol - 0.06)
-          audio.volume = vol
-        } else {
-          clearInterval(fadeOut)
-          audio.pause()
-          setIsPlaying(false)
-          localStorage.setItem(STORAGE_KEY, 'off')
-        }
-      }, 35)
+      writePref('off')
+      fadeTo(0, () => {
+        audio.pause()
+        setIsPlaying(false)
+      })
     } else {
-      // Start and fade in smoothly
-      audio.volume = 0
-      audio
-        .play()
-        .then(() => {
-          setIsPlaying(true)
-          localStorage.setItem(STORAGE_KEY, 'on')
-          let vol = 0
-          const fadeIn = setInterval(() => {
-            if (vol < TARGET_VOLUME) {
-              vol = Math.min(TARGET_VOLUME, vol + 0.04)
-              audio.volume = vol
-            } else {
-              audio.volume = TARGET_VOLUME
-              clearInterval(fadeIn)
-            }
-          }, 40)
-        })
-        .catch(() => {})
+      writePref('on')
+      start()
     }
   }
 
@@ -117,24 +98,25 @@ export default function AmbientSound() {
     <>
       <audio
         ref={audioRef}
-        src="/audio/ambient-soma.wav?v=4"
-        preload="auto"
+        src="/audio/ambient-soma.wav?v=5"
+        preload="none"
         loop
         aria-hidden="true"
       />
 
-      {/* Minimal aesthetic audio button: zero background, zero border, large dark bold */}
+      {/* Sits under the menu (z-40) and dialogs (z-55), so it never covers them */}
       <aside
-        aria-label="Ambient sound controller"
-        className="fixed bottom-7 right-7 z-50 select-none print:hidden"
+        aria-label="Ambient sound"
+        className="fixed right-3 bottom-3 z-30 select-none sm:right-7 sm:bottom-7 print:hidden"
       >
         <button
           type="button"
+          data-ambient-toggle
           onClick={toggleSound}
           aria-pressed={isPlaying}
           aria-label={isPlaying ? 'Mute ambient sound' : 'Play ambient sound'}
           title={isPlaying ? 'Ambient sound playing: click to mute' : 'Ambient sound muted: click to play'}
-          className="group relative flex h-12 w-12 cursor-pointer items-center justify-center bg-transparent border-0 shadow-none text-soma-ink hover:scale-110 active:scale-95 transition-transform duration-300 focus:outline-none"
+          className="group relative flex h-12 w-12 cursor-pointer items-center justify-center bg-transparent border-0 shadow-none text-soma-ink hover:scale-110 active:scale-95 transition-transform duration-300 focus:outline-none focus-visible:ring-1 focus-visible:ring-soma-ink"
         >
           <div className="relative flex h-8 w-8 items-center justify-center">
             {isPlaying ? (

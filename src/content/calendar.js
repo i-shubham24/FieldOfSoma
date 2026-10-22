@@ -1,37 +1,39 @@
 import { images } from './images'
 
 // Calendar and Booking. The weekly schedule is a PLACEHOLDER for Kirti to replace.
-// The request block is where a Cal.com or Calendly embed will sit.
+//
+// Live booking: set VITE_BOOKING_URL in Vercel to Kirti's Cal.com or Calendly link
+// (for example https://cal.com/kirti-verma). The "Choose a time" section then shows
+// her real calendar. Without it, visitors send a request and Kirti replies.
 
 export const calendar = {
   intro: {
     label: 'Calendar and Booking',
     headline: [{ text: 'Find a time' }, { text: 'to practise.', italic: true }],
-    lede: 'Two ways to work with Kirti: privately, for attention to your own patterns, or in a small weekly group.',
+    lede: 'You can work with Kirti one to one, or join a small weekly group.',
   },
 
   paths: [
     {
       id: 'private',
       title: 'Private sessions',
-      meta: ['60 to 75 minutes', 'One to one', 'In person or online'],
-      body: 'An unhurried session built around your body: a look at how you stand and move, guided pandiculation for the patterns that show up, and a short practice to take home.',
+      meta: ['One to one', 'In person or online'],
+      body: 'A session shaped around you. Kirti looks at how you stand and move, guides you through gentle work for what she sees, and gives you a little practice to take home.',
       includes: [
-        'Movement and posture assessment',
-        'Guided, hands-off somatic work',
-        'A personal home practice of 10 to 15 minutes',
+        'A look at how you stand and move',
+        'Gentle, guided somatic work',
+        'A short practice to do at home',
       ],
       cta: 'Request a private session',
     },
     {
       id: 'group',
       title: 'Weekly group classes',
-      meta: ['60 minutes', 'Small groups', 'Live online and in person'],
-      body: 'Regular classes in Tai Chi and somatic movement. Small enough for individual attention, steady enough to build a practice that lasts.',
+      meta: ['Small groups', 'In person and online'],
+      body: 'Regular classes in Somatic Movement Therapy and Tai Chi, and a monthly Creative Movement session. Small enough that Kirti can see everyone, regular enough to build a habit.',
       includes: [
-        'Tai Chi form, taught progressively',
+        'Tai Chi, taught step by step',
         'Somatic movement for the whole body',
-        'Drop in, or join for a full term',
       ],
       cta: 'Ask to join a class',
     },
@@ -40,20 +42,39 @@ export const calendar = {
   schedule: {
     placeholder: true,
     heading: 'The week',
-    note: 'Days and times are placeholders.',
+    note: 'Draft: days and times are examples until Kirti confirms her schedule.',
     rows: [
-      { day: 'Monday', time: '7:00 am', title: 'Somatic Movement', format: 'Online' },
-      { day: 'Wednesday', time: '6:30 pm', title: 'Tai Chi', format: 'In person' },
-      { day: 'Friday', time: '7:00 am', title: 'Tai Chi', format: 'Online' },
-      { day: 'Saturday', time: '10:00 am', title: 'Creative Movement', format: 'In person, monthly' },
+      { id: 'mon-somatics', day: 'Monday', time: '7:00 am', title: 'Somatic Movement Therapy', format: 'Online' },
+      { id: 'wed-tai-chi', day: 'Wednesday', time: '6:30 pm', title: 'Tai Chi', format: 'In person' },
+      { id: 'fri-tai-chi', day: 'Friday', time: '7:00 am', title: 'Tai Chi', format: 'Online' },
+      { id: 'sat-creative', day: 'Saturday', time: '10:00 am', title: 'Creative Movement', format: 'In person, monthly' },
     ],
   },
 
   request: {
     heading: 'Choose a time',
-    body: 'The live booking calendar will sit here once it is connected. Until then, write with two or three times that suit you, and Kirti will confirm one.',
-    cta: 'Write to book',
-    subject: 'Booking request',
-    image: images.studio,
+    body: 'Not sure what to ask for? Pick what fits below and send it to Kirti. She will reply to find a time that works.',
+    bookingBody: 'Pick a time that suits you. You will get a confirmation by email.',
+    image: images.taiChiGroupClass,
+  },
+
+  form: {
+    private: {
+      label: 'One to one',
+      heading: 'Request a private session',
+      focusOptions: ['Somatic Movement Therapy', 'Tai Chi', 'Creative Movement', 'Not sure yet'],
+      formatOptions: ['In person', 'Online'],
+      submit: 'Send request',
+    },
+    group: {
+      label: 'Weekly class',
+      heading: 'Ask to join a class',
+      submit: 'Send request',
+    },
+    timeOptions: ['Weekday morning', 'Weekday evening', 'Saturday morning'],
+    success: {
+      heading: 'Thank you.',
+      body: 'Your request is with Kirti. She will email you to confirm a time.',
+    },
   },
 }

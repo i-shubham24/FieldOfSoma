@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import { site } from '../../content/site'
+import { EASE } from '../../lib/motion'
 
 const DISCIPLINES = [
-  { to: '/practices#somatics', label: 'Clinical Somatics' },
-  { to: '/practices#tai-chi', label: 'Tai Chi Form' },
+  { to: '/practices#somatics', label: 'Somatic Movement Therapy' },
+  { to: '/practices#tai-chi', label: 'Tai Chi' },
   { to: '/practices#creative-movement', label: 'Creative Movement' },
-  { to: '/practices', label: 'Spoken Audio Guidance' },
-  { to: '/somatics', label: 'Sensory Body Map' },
-  { to: '/calendar', label: 'Private Consultations' },
+  { to: '/calendar', label: 'Private Sessions' },
 ]
 
 const EXPLORE = [
@@ -20,6 +20,8 @@ const EXPLORE = [
 ]
 
 export default function Footer() {
+  const reduce = useReducedMotion()
+
   return (
     <footer className="overflow-hidden border-t border-soma-sand/70 bg-[#EAE7E1] text-soma-ink">
       <div className="shell pt-20 pb-10 sm:pt-28 sm:pb-14 lg:pt-32 lg:pb-14">
@@ -33,8 +35,8 @@ export default function Footer() {
                 Body-based practices for living healing.
               </p>
               <p className="font-display text-xl sm:text-2xl lg:text-[1.75rem] font-normal leading-[1.3] text-soma-ink">
-                Informed by Somatics, Tai Chi,<br />
-                and Creative Movement from dance.
+                Informed by Somatics and Tai Chi,<br />
+                with creative movement from dance.
               </p>
               <p className="font-sans text-[0.875rem] font-normal leading-[1.6] text-soma-clay-deep max-w-[38ch]">
                 Cultivating felt presence and coming back to the body&apos;s innate capacity to heal, steady, and express.
@@ -93,7 +95,7 @@ export default function Footer() {
                     to="/contact"
                     className="text-soma-ink transition-colors duration-300 hover:text-soma-moss"
                   >
-                    Contact Studio
+                    Contact
                   </Link>
                 </li>
                 <li>
@@ -127,17 +129,28 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Section: Field of Soma lettering across bottom-left + copyright baseline on right */}
-        <div className="mt-14 flex flex-col justify-between gap-6 border-t border-soma-ink/15 pt-8 sm:mt-18 lg:mt-20 lg:flex-row lg:items-end">
-          <div className="select-none">
-            <span className="block font-display text-[clamp(3.75rem,11vw,9.5rem)] font-semibold tracking-tight leading-none text-soma-ink uppercase">
-              SOMA
-            </span>
-          </div>
+        {/* Bottom: a large italic "Soma" that settles down from above as the footer comes into view */}
+        <div className="mt-14 flex flex-col justify-between gap-6 overflow-hidden border-t border-soma-ink/15 pt-8 sm:mt-18 lg:mt-20 lg:flex-row lg:items-end">
+          <Link to="/" aria-label={`${site.name}, home`} className="self-start">
+            <motion.span
+              aria-hidden="true"
+              initial={reduce ? false : { opacity: 0, y: '-45%' }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 1.2, ease: EASE }}
+              className="block font-display text-[clamp(4.5rem,15vw,11rem)] leading-[0.9] tracking-[-0.02em] text-soma-ink italic select-none"
+            >
+              Soma
+            </motion.span>
+          </Link>
 
-          <div className="pb-1 text-left sm:text-right lg:pb-2">
+          <div className="max-w-[46ch] space-y-2 text-left lg:text-right">
+            <p className="font-sans text-[0.8125rem] leading-[1.6] text-soma-clay-deep">
+              Somatic education is not medical treatment. Please keep seeing your doctor or
+              therapist for any medical condition.
+            </p>
             <p className="font-sans text-[0.8125rem] tracking-[0.04em] text-soma-clay-deep">
-              © {new Date().getFullYear()} Field of Soma, All Rights Reserved.
+              © {new Date().getFullYear()} {site.name}
             </p>
           </div>
         </div>

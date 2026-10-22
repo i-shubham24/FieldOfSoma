@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/sitemap.mjs && vite build",
+    "sitemap": "node scripts/sitemap.mjs",
     "preview": "vite preview",
     "check:copy": "node scripts/check-copy.mjs"
   },

@@ -1,29 +1,30 @@
 import { images } from './images'
 
-// Writing and newsletter. Essay titles and excerpts are PLACEHOLDERS: they show the
-// shape of the page until Kirti's own writing is added. Article pages come with it.
+// Writing and newsletter. These short pieces are PLACEHOLDERS written for the site so the
+// page has a shape. They are marked as drafts until Kirti replaces them with her own
+// writing. Each piece has its own page at /articles/<id>.
 
 export const articles = {
   intro: {
     label: 'Writing',
-    headline: [{ text: 'Essays on sensing,' }, { text: 'moving and resting.', italic: true }],
-    lede: 'Longer pieces on somatic philosophy, the biology of movement and the practice of paying attention.',
+    headline: [{ text: 'Notes on sensing,' }, { text: 'moving and resting.', italic: true }],
+    lede: 'Short pieces about the practices, and about paying attention to the body.',
   },
 
-  placeholder: false,
+  placeholder: true,
+  note: 'Draft: these pieces are samples for the layout. Kirti will replace them with her own writing.',
 
   featured: {
     id: 'why-stretching-does-not-undo-a-habit',
     topic: 'Somatics',
     title: 'Why stretching does not undo a habit',
     excerpt:
-      'A tight muscle is not a short muscle. It is a muscle receiving an instruction. Until the instruction changes, pulling on it only invites the body to pull back.',
-    length: '7 minute read',
-    image: images.forest,
+      'A tight muscle is often not a short one. It has learned to stay switched on, and pulling on it rarely teaches it to let go.',
+    image: images.himalayanCedarForest,
     paragraphs: [
-      'When a muscle feels permanently short, our common impulse is to pull on it. We fold forward, anchor a heel, and demand that the tissue yield to tension. But a tight muscle is not a short muscle: it is a muscle receiving a continuous, subconscious message from the nervous system to remain engaged.',
-      'Thomas Hanna called this Sensory Motor Amnesia: the brain gradually forgetting how to let go. In involuntary contraction, the stretch reflex is activated whenever we pull too hard. The body perceives forced lengthening as a threat, tightening further to protect the joint.',
-      'The somatic antidote is pandiculation. By consciously contracting into the tension just slightly more, sensing where the brain has maintained grip, and then releasing with decelerated control, the motor cortex recalibrates. The muscle lengthens on its own, without force.',
+      'When a muscle feels tight, most of us want to stretch it. We lean, pull and hold. Sometimes it helps for an hour, and then the tightness comes back.',
+      'That is because the tightness is often a habit, not a length. Over months and years, the brain learns to keep certain muscles a little bit on. We stop feeling it, so we cannot simply decide to relax.',
+      'In Somatics we work with the habit itself. You gently tighten the muscle a little more, notice what that feels like, and then let it go very slowly. Done with attention, this helps the brain feel the muscle again, and it can begin to rest.',
     ],
   },
 
@@ -32,67 +33,70 @@ export const articles = {
       id: 'the-yawn-you-do-on-purpose',
       topic: 'Somatics',
       title: 'The yawn you do on purpose',
-      excerpt:
-        'Pandiculation is nature’s reset button for the neuromuscular system. When we consciously contract and release at half speed, biological ease returns.',
-      length: '5 min',
+      excerpt: 'Watch a cat wake up. It does not stretch. It tightens, then slowly lets go.',
+      image: images.kirtiSomaticTeaching,
       paragraphs: [
-        'Watch a cat wake from sleep. It arches its spine, extends its claws, and lengthens through the paws with a luxurious sigh before resting back onto the floor. It does not stretch: it pandiculates.',
-        'Pandiculation is nature’s reset button for the neuromuscular system. When we consciously contract a tight muscle and then release it at half speed, we restore biological ease. You can do this at your desk: contract the shoulder blades gently, feel the grip, and let them melt downward over ten slow counts.',
+        'Watch a cat wake up. It arches its back, spreads its paws, holds for a moment, and then slowly softens back down. This is called pandiculation, and we do it too when we yawn.',
+        'You can try a small version now. Gently draw your shoulder blades together. Notice the effort. Then let them go as slowly as you can, over a count of ten. Notice how your shoulders feel afterwards.',
       ],
     },
     {
       id: 'standing-like-a-tree',
       topic: 'Tai Chi',
       title: 'Standing like a tree',
-      excerpt:
-        'Zhan Zhuang looks motionless from outside. Internally, it is an active dance of continuous calibration, rooting into the earth while branches sway.',
-      length: '4 min',
+      excerpt: 'Standing practice looks still from the outside. Inside, a lot is happening.',
+      image: images.kirtiTaiChiHorseStance,
       paragraphs: [
-        'In Tai Chi, Zhan Zhuang (standing meditation) looks completely motionless to an observer. Yet internally, it is an active dance of continuous calibration.',
-        'To stand like a tree is not to freeze into wood. It is to let the roots settle deep into the soles while the branches sway gently in the breeze. When the legs carry the weight and the hips unlock, the shoulders finally surrender the unnecessary duty of holding up the world.',
+        'In Tai Chi, standing practice looks completely still. But inside, the body is always making small adjustments to stay balanced.',
+        'Standing like a tree does not mean going stiff. The feet settle into the ground, the knees stay soft, and the upper body can relax because the legs are doing the carrying. Many people find their shoulders drop on their own.',
       ],
     },
     {
-      id: 'dancing-with-nobody-watching',
+      id: 'moving-with-nobody-watching',
       topic: 'Creative Movement',
-      title: 'Dancing with nobody watching',
-      excerpt:
-        'When there is no choreography and no audience, the body remembers how to move from curiosity rather than obedience.',
-      length: '6 min',
+      title: 'Moving with nobody watching',
+      excerpt: 'Without steps to follow or anyone looking, the body often finds its own way to move.',
+      image: images.kirtiStageLunge,
       paragraphs: [
-        'Most adults stop moving freely the moment they learn how their movement looks to others. We internalize posture, propriety, and the performance of correctness.',
-        'Creative movement is an invitation to forget the mirror. When there is no choreography and no audience, the body remembers how to move from curiosity rather than obedience. Five minutes of unplanned, honest motion can loosen emotional armoring that months of discipline failed to reach.',
+        'Many of us stop moving freely once we start to worry about how we look. We learn to sit still and stand straight, and we forget what it was like to move for fun.',
+        'Creative movement is a chance to forget the mirror for a few minutes. There are no steps to learn and nobody to impress. You follow what feels good, and see where it goes.',
       ],
     },
     {
-      id: 'what-the-startle-reflex-leaves-behind',
+      id: 'what-stress-leaves-behind',
       topic: 'Somatics',
-      title: 'What the startle reflex leaves behind',
-      excerpt:
-        'Under stress, the body curls in protection. When chronic, we walk around partially curled. Somatic inquiry shows the nervous system the emergency has passed.',
-      length: '8 min',
+      title: 'What stress leaves behind',
+      excerpt: 'A sudden fright makes us curl in. Long stress can leave us a little curled for good.',
+      image: images.kirtiContemplationLeaves,
       paragraphs: [
-        'A sudden noise makes the shoulders rise, the head pull forward, the abdomen tighten, and the breath catch. This is the primal Red Light reflex: the body curling in protection.',
-        'When chronic stress becomes the background hum of daily life, the startle reflex never fully turns off. We walk around partially curled, wondering why the upper back aches and the chest feels narrow. Somatic inquiry allows us to show the nervous system that the emergency has passed.',
+        'A sudden loud noise makes the shoulders rise, the head pull forward and the breath catch. It is a natural way of protecting ourselves.',
+        'When stress goes on for a long time, that response may never fully switch off. We walk around slightly curled and wonder why the upper back aches. Gentle somatic work helps the body notice this, and slowly let it go.',
       ],
     },
     {
       id: 'on-doing-less',
       topic: 'Practice',
       title: 'On doing less',
-      excerpt:
-        'When you decrease effort from one hundred percent to twenty percent, sensitivity increases tenfold. Progress is measured by what you can cease doing.',
-      length: '3 min',
+      excerpt: 'When you use less effort, you can feel more.',
+      image: images.kirtiFieldMeadowFlow,
       paragraphs: [
-        'Our modern instinct is to add: more repetitions, heavier loads, longer holds. In somatics, progress is measured by what you can cease doing.',
-        'When you decrease effort from one hundred percent to twenty percent, sensitivity increases tenfold. The quieter the nervous system becomes, the more subtle the corrections it can perceive. Real transformation begins the moment you stop trying so hard.',
+        'We are used to doing more: more repetitions, longer holds, more effort. In somatic practice, it often works the other way round.',
+        'When you move with less effort, you can feel more. Small changes become noticeable. That is often where real change begins.',
       ],
     },
   ],
 
   letters: {
-    heading: 'Letters, twice a month',
-    body: 'Field Notes is a short letter from Kirti: one idea to try in your body, one thing she has been reading, and news of classes before it goes anywhere else.',
-    image: images.notebook,
+    heading: 'Field Notes',
+    body: 'A short letter from Kirti now and then: something to try in your body, and news of classes before anyone else.',
+    image: images.kirtiFieldPresence,
   },
+}
+
+export const allArticles = [articles.featured, ...articles.list]
+
+// Rough reading time at about 200 words a minute, never less than one minute.
+export const readingTime = (article) => {
+  const words = article.paragraphs.join(' ').split(/\s+/).length
+  return `${Math.max(1, Math.round(words / 200))} min read`
 }

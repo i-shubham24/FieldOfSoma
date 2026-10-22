@@ -1,23 +1,31 @@
 import { images } from './images'
 
-// The Practices page: three offerings, each with its intention, the shape of a
-// 60-minute session, and who it serves. Session timings are a guide for Kirti to adjust.
+// The Practices page: two distinct practices, each with Kirti's own summary, about text,
+// who it serves and (for Somatics) possible results, from her "Website notes" doc.
+// The 60-minute session outlines are not hers yet: a guide for Kirti to adjust.
+// Creative Movement is shown as a third practice for now; its text is not Kirti's yet
+// and will be replaced when she shares her writing.
 
 export const practices = {
   intro: {
     label: 'The Practices',
-    headline: [{ text: 'Three ways' }, { text: 'into the same body.', italic: true }],
-    lede: 'Clinical Somatics, Tai Chi and Creative Movement are taught as separate practices. Choose one, or let them inform each other.',
+    headline: [{ text: 'Find your way back' }, { text: 'into the body.', italic: true }],
+    lede: 'Somatic Movement Therapy and Tai Chi are two distinct practices. Creative movement, drawn from dance, adds a third, freer way in.',
   },
 
   items: [
     {
       id: 'somatics',
       name: 'Somatic Movement Therapy',
-      verbs: 'Heal, sense',
+      verbs: 'Release, sense',
       image: images.kirtiSomaticTeaching,
       intention:
-        'Derived from approaches like the Feldenkrais method, Body-Mind Centering, Abhyas Somatics, and Somatic Intelligence. We work with sensitising into the body, creating safety and grounding in the bones. As the body grounds and becomes present, we progress into exploration through guided prompts. Listening and presence is developed while the body starts to realign itself.',
+        'Slow, gentle movement that retrains the muscles braced from years of tightness. Nothing is forced or stretched. You learn to release the excess tension and bring the body back into a state of equilibrium.',
+      about: [
+        'Drawing on approaches such as the Feldenkrais Method, Body-Mind Centering, Abhyas Somatics and Somatic Intelligence, we work with sensitising into the body, creating safety and grounding in the bones.',
+        'As the body grounds and becomes present, we progress into exploration through guided prompts.',
+        'Listening and presence develop while the body starts to realign itself.',
+      ],
       session: [
         {
           time: '0 to 10',
@@ -45,9 +53,8 @@ export const practices = {
         'Stress that shows up as tightness, poor sleep or shallow breath',
         'People looking for better stability in body and clarity in mind',
         'People looking to develop a better relationship with their body',
-        'Spinal decompression and better gait',
-        'Transitioning from urgency to a calm state of mind',
       ],
+      results: ['Spinal decompression', 'Better gait', 'From urgency to a calm state of mind'],
       format: 'Private sessions and small groups, in person and online',
       cta: 'Book a Somatics session',
       audioCue: {
@@ -62,7 +69,12 @@ export const practices = {
       verbs: 'Ground, flow',
       image: images.kirtiTaiChiLake,
       intention:
-        'A gentle internal martial art practiced as a moving meditation, based on Taoism and Traditional Chinese Medicine. The body is gently loaded through your own body weight to work with gravity, alignment and sustained posture. As we learn to carry our weight, balance improves and the central axis aligns physically and energetically. Movements flow vital energy in the whole body to remove tension patterns, cultivating sustainable strength and focus.',
+        'A gentle internal martial art practised as a moving meditation. Based on the philosophy of Taoism and Traditional Chinese Medicine, it strengthens your body from the inside out: an internal training to develop structure, balance and sensitivity to your qi, the vital force.',
+      about: [
+        'The body is gently loaded through its own weight to work with gravity, alignment and sustained posture. It is a way to learn that strength can be developed with our own body weight when the body is organised in an aligned manner. As we learn to carry our weight, our balance improves and our central axis aligns with our whole being, physically and energetically.',
+        'A set of movements is designed to let vital energy flow through the whole body, removing tension patterns and blockages.',
+        'Sustainable strength and focus develop while you move in a graceful manner.',
+      ],
       session: [
         {
           time: '0 to 10',
@@ -87,10 +99,9 @@ export const practices = {
       ],
       serves: [
         'People looking to improve their posture',
-        'Learning how to preserve and cultivate your vital energy',
+        'Learning how to preserve and cultivate your energy',
         'Gaining confidence through your body and stance',
-        'Better gait, balance and physical stability',
-        'Those seeking quiet strength and moving meditation without strain',
+        'Better gait and stability',
       ],
       format: 'Weekly group classes, in person and online',
       cta: 'Join a Tai Chi class',

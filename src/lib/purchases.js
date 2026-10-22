@@ -1,63 +1,64 @@
 import { useEffect, useState } from 'react'
 
-const STORAGE_KEY = 'field_of_soma_purchases'
+// Orders and the classes they unlock, kept in this browser for now. When real accounts
+// arrive (Supabase or Clerk), these move to the server and follow the person's login.
+const PURCHASES_KEY = 'field_of_soma_purchases'
+const ORDERS_KEY = 'field_of_soma_orders'
+const EVENT = 'soma_purchases_changed'
 
-export function getPurchasedClasses() {
+const read = (key) => {
   try {
-    const data = localStorage.getItem(STORAGE_KEY)
-    return data ? JSON.parse(data) : []
+    const data = JSON.parse(localStorage.getItem(key) ?? '[]')
+    return Array.isArray(data) ? data : []
   } catch {
     return []
   }
 }
 
-export function addPurchasedClass(classId) {
+const write = (key, value) => {
   try {
-    const current = getPurchasedClasses()
-    if (!current.includes(classId)) {
-      const updated = [...current, classId]
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
-      window.dispatchEvent(new Event('soma_purchases_changed'))
-      return updated
-    }
-    return current
-  } catch {
-    return []
-  }
-}
-
-export function isClassPurchased(classId) {
-  return getPurchasedClasses().includes(classId)
-}
-
-export function clearPurchasedClasses() {
-  try {
-    localStorage.removeItem(STORAGE_KEY)
-    window.dispatchEvent(new Event('soma_purchases_changed'))
+    localStorage.setItem(key, JSON.stringify(value))
   } catch {
     // ignore
   }
 }
 
+export function getPurchasedClasses() {
+  return read(PURCHASES_KEY)
+}
+
+export function getOrders() {
+  return read(ORDERS_KEY)
+}
+
+export function getOrder(id) {
+  return getOrders().find((order) => order.id === id)
+}
+
+// Saves a paid order and unlocks its classes. `order` is
+// { id, classIds, total, name, email, paymentId, mode, createdAt }.
+export function recordOrder(order) {
+  write(ORDERS_KEY, [order, ...getOrders()])
+  const owned = getPurchasedClasses()
+  write(PURCHASES_KEY, [...owned, ...order.classIds.filter((id) => !owned.includes(id))])
+  window.dispatchEvent(new Event(EVENT))
+}
+
 export function usePurchasedClasses() {
-  const [purchases, setPurchases] = useState(() => getPurchasedClasses())
+  const [purchases, setPurchases] = useState(getPurchasedClasses)
 
   useEffect(() => {
-    const handleUpdate = () => {
-      setPurchases(getPurchasedClasses())
-    }
-    window.addEventListener('soma_purchases_changed', handleUpdate)
-    window.addEventListener('storage', handleUpdate)
+    const update = () => setPurchases(getPurchasedClasses())
+    window.addEventListener(EVENT, update)
+    window.addEventListener('storage', update)
     return () => {
-      window.removeEventListener('soma_purchases_changed', handleUpdate)
-      window.removeEventListener('storage', handleUpdate)
+      window.removeEventListener(EVENT, update)
+      window.removeEventListener('storage', update)
     }
   }, [])
 
   return {
     purchases,
     isPurchased: (id) => purchases.includes(id),
-    purchase: (id) => addPurchasedClass(id),
-    clearPurchases: () => clearPurchasedClasses(),
   }
 }

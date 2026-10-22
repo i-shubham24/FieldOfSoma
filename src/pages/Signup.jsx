@@ -4,7 +4,7 @@ import { images } from '../content/images'
 import useTitle from '../lib/useTitle'
 
 export default function Signup() {
-  useTitle('Create Account')
+  useTitle('Create Account', { noindex: true })
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -64,12 +64,12 @@ export default function Signup() {
           <div className="rounded-xl border border-stone-200/80 overflow-hidden bg-white p-2 shadow-xs max-w-sm">
             <div className="h-32 sm:h-38 w-full overflow-hidden rounded-lg bg-soma-linen">
               <img
-                src={images.sanctuaryInterior.src}
-                alt={images.sanctuaryInterior.alt}
+                src={images.himalayanCedarForest.src}
+                alt={images.himalayanCedarForest.alt}
                 className="h-full w-full object-cover"
               />
             </div>
-            <div className="pt-2 pb-0.5 px-1.5 flex justify-between items-center text-[0.625rem] tracking-[0.18em] text-soma-clay-deep font-sans uppercase">
+            <div className="pt-2 pb-0.5 px-1.5 flex justify-between items-center text-[0.75rem] tracking-[0.18em] text-soma-clay-deep font-sans uppercase">
               <span>Est. 2026</span>
               <span>Dharamshala : Online</span>
             </div>
@@ -104,7 +104,7 @@ export default function Signup() {
                 <div>
                   <label
                     htmlFor="fullName"
-                    className="mb-1 block font-sans text-[0.625rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
+                    className="mb-1 block font-sans text-[0.75rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
                   >
                     Full Name
                   </label>
@@ -122,7 +122,7 @@ export default function Signup() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="mb-1 block font-sans text-[0.625rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
+                    className="mb-1 block font-sans text-[0.75rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
                   >
                     Email Address
                   </label>
@@ -140,7 +140,7 @@ export default function Signup() {
                 <div>
                   <label
                     htmlFor="createPassword"
-                    className="mb-1 block font-sans text-[0.625rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
+                    className="mb-1 block font-sans text-[0.75rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
                   >
                     Create Password
                   </label>
@@ -159,7 +159,7 @@ export default function Signup() {
                 <div>
                   <label
                     htmlFor="confirmPassword"
-                    className="mb-1 block font-sans text-[0.625rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
+                    className="mb-1 block font-sans text-[0.75rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
                   >
                     Confirm Password
                   </label>
@@ -176,7 +176,7 @@ export default function Signup() {
                 </div>
 
                 {/* Micro-copy information note from Knotless */}
-                <div className="flex items-center gap-2 rounded-lg border border-stone-200/70 bg-[#FAF8F5] px-3 py-1.5 text-[0.6875rem] text-soma-clay-deep">
+                <div className="flex items-center gap-2 rounded-lg border border-stone-200/70 bg-[#FAF8F5] px-3 py-1.5 text-[0.75rem] text-soma-clay-deep">
                   <span className="shrink-0 text-soma-moss font-medium">ⓘ</span>
                   <p>Clarify, respect silence, and contribute authentic knowledge.</p>
                 </div>

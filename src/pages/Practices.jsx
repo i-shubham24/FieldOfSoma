@@ -83,6 +83,13 @@ function Heading({ item }) {
       >
         {item.intention}
       </Reveal>
+      {item.about ? (
+        <Reveal delay={0.18} className="mt-8 max-w-[46ch] space-y-4 text-lede font-light text-soma-ink/80">
+          {item.about.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </Reveal>
+      ) : null}
     </>
   )
 }
@@ -124,6 +131,16 @@ function Serves({ item }) {
           <li key={line}>{line}</li>
         ))}
       </ul>
+      {item.results ? (
+        <>
+          <h3 className="mt-12 text-[1.75rem] leading-[1.2]">Possible results</h3>
+          <ul className="mt-5 space-y-2.5 text-[0.9375rem] leading-[1.7] text-soma-ink/85">
+            {item.results.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        </>
+      ) : null}
       <p className="mt-7 text-[0.8125rem] text-soma-clay-deep">{item.format}</p>
       <TextLink to={booking.to} className="mt-7">
         {item.cta}
@@ -215,9 +232,9 @@ export default function Practices() {
       {
         '@type': 'Service',
         position: 1,
-        name: 'Clinical Somatics',
+        name: 'Somatic Movement Therapy',
         description:
-          'Neuromuscular movement therapy based on pandiculation to reverse sensory-motor amnesia and relieve chronic tension.',
+          'Slow, gentle movement that retrains muscles braced from years of tightness, releasing excess tension and bringing the body back into equilibrium.',
         provider: { '@id': 'https://fieldofsoma.com/#organization' },
       },
       {
@@ -225,26 +242,25 @@ export default function Practices() {
         position: 2,
         name: 'Tai Chi',
         description:
-          'Gentle internal martial art practiced as moving meditation for balance, quiet strength, and rooting.',
+          'A gentle internal martial art practised as a moving meditation, developing structure, balance and sensitivity to qi.',
         provider: { '@id': 'https://fieldofsoma.com/#organization' },
       },
       {
         '@type': 'Service',
         position: 3,
         name: 'Creative Movement',
-        description:
-          'Unchoreographed movement inquiry drawn from dance to restore natural bodily expression, play, and curiosity.',
+        description: 'Open movement drawn from dance, with no choreography and nothing to perform.',
         provider: { '@id': 'https://fieldofsoma.com/#organization' },
       },
     ],
   }
 
-  useTitle('The Practices: Clinical Somatics, Tai Chi, Creative Movement', {
+  useTitle('The Practices: Somatic Movement Therapy, Tai Chi and Creative Movement', {
     description:
-      'Explore the three core disciplines at Field of Soma: Clinical Somatics for tension release, Tai Chi for grounded stillness, and Creative Movement for free expression.',
+      'Two distinct practices with Kirti Verma: Somatic Movement Therapy to release held tension and return to equilibrium, and Tai Chi for structure, balance and sustainable strength.',
     path: '/practices',
     keywords:
-      'Clinical Somatics, Tai Chi, Creative Movement, moving meditation, somatic nervous system, sensory motor amnesia release',
+      'Somatic Movement Therapy, Tai Chi, Feldenkrais, Body-Mind Centering, moving meditation, creative movement',
     breadcrumbs: [{ name: 'Practices', path: '/practices' }],
     schema: serviceSchema,
   })

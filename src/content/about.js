@@ -1,18 +1,19 @@
 import { images } from './images'
 
-// About page. Everything marked placeholder is draft wording until Kirti supplies her own.
+// About page. Sections with a `note` are draft wording until Kirti supplies her own;
+// the note shows on the page so nobody mistakes it for her words.
 
 export const about = {
   intro: {
     label: 'About',
     headline: [{ text: 'Kirti Verma' }],
-    lede: 'Movement and Somatic Educator. Her teaching brings together Clinical Somatics, Tai Chi and creative movement drawn from dance.',
+    lede: 'Movement and Somatic Educator. Her teaching brings together Somatic Movement Therapy and Tai Chi, with elements of creative movement drawn from dance.',
     image: images.kirtiPortrait,
     caption: 'Kirti Verma, movement and somatic educator.',
   },
 
   story: {
-    placeholder: false,
+    note: 'Draft: Kirti will share her own story.',
     heading: 'A practice that began with listening',
     paragraphs: [
       'Kirti came to body-based practice the way many of her students do: through a body that was asking to be heard. What began as a personal search for relief became a long study of how people sense, hold and move.',
@@ -23,7 +24,7 @@ export const about = {
   },
 
   lineage: {
-    placeholder: false,
+    note: 'Draft: trainings, teachers and years to be confirmed by Kirti.',
     heading: 'Training and lineage',
     rows: [
       {
@@ -64,7 +65,7 @@ export const about = {
       },
       {
         title: 'Your pace sets the pace',
-        body: 'The teaching is trauma-informed. You choose how far to go, when to pause and when to stop, and nothing needs explaining.',
+        body: 'You choose how far to go, when to pause and when to stop. Nothing needs explaining.',
       },
       {
         title: 'You are the authority',
@@ -74,7 +75,7 @@ export const about = {
   },
 
   experience: {
-    placeholder: false,
+    note: 'Sample reviews, to be replaced with words from Kirti’s students.',
     heading: 'In the room',
     body: 'Kirti teaches private clients and small groups, in person and online: people living with chronic pain, dancers and performers, and many who have never thought of themselves as physical.',
     quotes: [

@@ -7,15 +7,15 @@ import { site } from '../../content/site'
 import { EASE } from '../../lib/motion'
 
 const FOCUSES = [
-  { id: 'somatics', label: 'Clinical Somatics', note: 'Release chronic pain and holding patterns' },
+  { id: 'somatics', label: 'Somatic Movement Therapy', note: 'Release held tension and return to equilibrium' },
   { id: 'taichi', label: 'Tai Chi', note: 'Rooted balance, circular flow and quiet focus' },
-  { id: 'creative', label: 'Creative Movement', note: 'Dance-based freedom and emotional aliveness' },
+  { id: 'creative', label: 'Creative Movement', note: 'Free movement drawn from dance' },
   { id: 'exploratory', label: 'Not sure yet', note: 'Let Kirti recommend a way in based on your body' },
 ]
 
 const FORMATS = [
-  { id: 'private', label: 'Private session', time: '60 to 75 minutes', setting: 'Online or in person' },
-  { id: 'group', label: 'Small group class', time: '60 minutes', setting: 'Weekly schedule' },
+  { id: 'private', label: 'Private session', setting: 'One to one, online or in person' },
+  { id: 'group', label: 'Small group class', setting: 'From the weekly schedule' },
 ]
 
 const TIMES = ['Weekday morning', 'Weekday evening', 'Saturday morning']
@@ -32,7 +32,7 @@ export default function ConsultationBuilder() {
 
   // Pre-composed thoughtful consultation email message
   const subject = `Consultation request: ${selectedFocus.label} (${selectedFormat.label})`
-  const bodyText = `Hello Kirti,\n\nI would like to request a consultation with you for ${selectedFocus.label}.\n\nPreferred format: ${selectedFormat.label} (${selectedFormat.time})\nPreferred timing: ${time}\n\nA few notes on what my body is experiencing:\n[Please share a few lines here]\n\nWarmly,`
+  const bodyText = `Hello Kirti,\n\nI would like to request a consultation with you for ${selectedFocus.label}.\n\nPreferred format: ${selectedFormat.label}\nPreferred timing: ${time}\n\nA few notes on what my body is experiencing:\n[Please share a few lines here]\n\nWarmly,`
   const mailtoLink = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`
 
   return (
@@ -51,10 +51,10 @@ export default function ConsultationBuilder() {
 
       <div className="mt-8 space-y-8">
         {/* Step 1: Practice focus */}
-        <div>
-          <label className="block font-sans text-label font-medium tracking-[0.14em] text-soma-clay-deep uppercase">
+        <fieldset>
+          <legend className="block font-sans text-label font-medium tracking-[0.14em] text-soma-clay-deep uppercase">
             1. Focus of practice
-          </label>
+          </legend>
           <div className="mt-3.5 grid gap-2.5 sm:grid-cols-2">
             {FOCUSES.map((item) => {
               const active = focus === item.id
@@ -62,6 +62,7 @@ export default function ConsultationBuilder() {
                 <button
                   key={item.id}
                   type="button"
+                  aria-pressed={active}
                   onClick={() => setFocus(item.id)}
                   className={`flex flex-col rounded-[2px] border p-3.5 text-left transition-colors duration-500 ease-soma ${
                     active
@@ -78,13 +79,13 @@ export default function ConsultationBuilder() {
               )
             })}
           </div>
-        </div>
+        </fieldset>
 
         {/* Step 2: Format */}
-        <div>
-          <label className="block font-sans text-label font-medium tracking-[0.14em] text-soma-clay-deep uppercase">
+        <fieldset>
+          <legend className="block font-sans text-label font-medium tracking-[0.14em] text-soma-clay-deep uppercase">
             2. Session format
-          </label>
+          </legend>
           <div className="mt-3.5 grid gap-2.5 sm:grid-cols-2">
             {FORMATS.map((item) => {
               const active = format === item.id
@@ -92,6 +93,7 @@ export default function ConsultationBuilder() {
                 <button
                   key={item.id}
                   type="button"
+                  aria-pressed={active}
                   onClick={() => setFormat(item.id)}
                   className={`flex flex-col rounded-[2px] border p-3.5 text-left transition-colors duration-500 ease-soma ${
                     active
@@ -101,20 +103,19 @@ export default function ConsultationBuilder() {
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-display text-[1.125rem] font-medium">{item.label}</span>
-                    <span className="text-[0.75rem] text-soma-clay-deep">{item.time}</span>
                   </div>
                   <span className="mt-1 text-[0.8125rem] text-soma-clay-deep">{item.setting}</span>
                 </button>
               )
             })}
           </div>
-        </div>
+        </fieldset>
 
         {/* Step 3: Preferred time */}
-        <div>
-          <label className="block font-sans text-label font-medium tracking-[0.14em] text-soma-clay-deep uppercase">
+        <fieldset>
+          <legend className="block font-sans text-label font-medium tracking-[0.14em] text-soma-clay-deep uppercase">
             3. Preferred timing
-          </label>
+          </legend>
           <div className="mt-3.5 flex flex-wrap gap-2.5">
             {TIMES.map((item) => {
               const active = time === item
@@ -122,8 +123,9 @@ export default function ConsultationBuilder() {
                 <button
                   key={item}
                   type="button"
+                  aria-pressed={active}
                   onClick={() => setTime(item)}
-                  className={`rounded-[2px] border px-4 py-2 text-[0.8125rem] transition-colors duration-500 ease-soma ${
+                  className={`rounded-[2px] border h-11 px-4 text-[0.8125rem] transition-colors duration-500 ease-soma ${
                     active
                       ? 'border-soma-moss bg-soma-moss text-soma-paper'
                       : 'border-soma-sand bg-transparent text-soma-ink hover:border-soma-ink'
@@ -134,7 +136,7 @@ export default function ConsultationBuilder() {
               )
             })}
           </div>
-        </div>
+        </fieldset>
 
         {/* Prepared request action */}
         <div className="border-t border-soma-sand/80 pt-6">
@@ -165,7 +167,8 @@ export default function ConsultationBuilder() {
               </button>
 
               <Link
-                to={`/contact?query=${encodeURIComponent(bodyText)}`}
+                to="/contact"
+                state={{ message: bodyText, practice: selectedFocus.label }}
                 className="inline-flex h-11 items-center justify-center gap-2.5 rounded-[2px] bg-soma-moss px-6 text-[0.8125rem] font-medium text-soma-paper transition-colors duration-500 ease-soma hover:bg-soma-moss-light"
               >
                 <span>Send via form</span>
@@ -179,7 +182,7 @@ export default function ConsultationBuilder() {
             <a href={mailtoLink} className="underline hover:text-soma-ink">
               open in your mail app
             </a>
-            . Kirti personally replies within 24 to 48 hours to confirm slot availability.
+            . Kirti will reply to confirm a time.
           </p>
         </div>
       </div>

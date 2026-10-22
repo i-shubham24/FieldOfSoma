@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { Link } from 'react-router-dom'
 import Frame from '../components/media/Frame'
 import Reveal from '../components/motion/Reveal'
 import RevealLines from '../components/motion/RevealLines'
 import DraftNote from '../components/ui/DraftNote'
-import { articles } from '../content/articles'
+import TextLink from '../components/ui/TextLink'
+import { articles, readingTime } from '../content/articles'
 import { PAGE_TOP } from '../lib/layout'
 import useTitle from '../lib/useTitle'
 import NewsletterForm from '../sections/home/NewsletterForm'
@@ -33,8 +33,8 @@ function Intro() {
   )
 }
 
-function Featured({ onSelect }) {
-  const { topic, title, excerpt, length, image } = articles.featured
+function Featured() {
+  const { id, topic, title, excerpt, image } = articles.featured
 
   return (
     <section className="pt-20 md:pt-28">
@@ -54,19 +54,19 @@ function Featured({ onSelect }) {
             <p className="font-display text-[1.25rem] leading-[1.2] text-soma-moss italic">
               {topic}
             </p>
-            <h2 className="mt-3 text-heading">{title}</h2>
+            <h2 className="mt-3 text-heading">
+              <Link to={`/articles/${id}`} className="transition-colors hover:text-soma-moss">
+                {title}
+              </Link>
+            </h2>
             <p className="mt-6 font-display text-[clamp(1.25rem,1.8vw,1.5rem)] leading-[1.45] text-soma-ink/85">
               {excerpt}
             </p>
             <div className="mt-6 flex items-center justify-between">
-              <span className="text-[0.875rem] text-soma-clay-deep">{length}</span>
-              <button
-                type="button"
-                onClick={() => onSelect(articles.featured)}
-                className="cursor-pointer font-sans text-[0.875rem] font-medium text-soma-moss transition-colors hover:text-soma-ink"
-              >
-                Read essay &rarr;
-              </button>
+              <span className="text-[0.875rem] text-soma-clay-deep">
+                {readingTime(articles.featured)}
+              </span>
+              <TextLink to={`/articles/${id}`}>Read</TextLink>
             </div>
           </Reveal>
         </article>
@@ -75,18 +75,15 @@ function Featured({ onSelect }) {
   )
 }
 
-function Index({ onSelect }) {
+function Index() {
   return (
     <section className="py-24 md:py-36">
       <div className="shell">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-baseline justify-between border-b border-soma-sand/80 pb-5">
             <Reveal as="h2" className="text-heading">
-              More essays
+              More to read
             </Reveal>
-            <span className="text-xs text-soma-clay-deep tracking-wider uppercase font-medium">
-              {articles.list.length} reflections
-            </span>
           </div>
 
           <ul className="mt-8 border-t border-soma-sand/80">
@@ -97,10 +94,9 @@ function Index({ onSelect }) {
                 delay={i * 0.05}
                 className="border-b border-soma-sand/80"
               >
-                <button
-                  type="button"
-                  onClick={() => onSelect(item)}
-                  className="group w-full text-left py-7 grid gap-2 md:grid-cols-12 md:items-baseline md:gap-8 cursor-pointer transition-colors hover:bg-soma-sand/20 px-2"
+                <Link
+                  to={`/articles/${item.id}`}
+                  className="group grid w-full gap-2 px-2 py-7 text-left transition-colors hover:bg-soma-sand/20 md:grid-cols-12 md:items-baseline md:gap-8"
                 >
                   <p className="font-display text-[1.125rem] leading-[1.3] text-soma-moss italic md:col-span-3">
                     {item.topic}
@@ -109,10 +105,12 @@ function Index({ onSelect }) {
                     {item.title}
                   </h3>
                   <div className="flex items-center justify-between md:col-span-2 md:justify-end gap-3 text-[0.875rem] text-soma-clay-deep tabular-nums">
-                    <span>{item.length}</span>
-                    <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
+                    <span>{readingTime(item)}</span>
+                    <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+                      &rarr;
+                    </span>
                   </div>
-                </button>
+                </Link>
               </Reveal>
             ))}
           </ul>
@@ -159,129 +157,28 @@ function Letters() {
   )
 }
 
-function ArticleReader({ article, onClose }) {
-  useEffect(() => {
-    if (!article) return undefined
-
-    window.__lenis?.stop()
-    document.body.style.overflow = 'hidden'
-
-    const onKey = (e) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', onKey)
-
-    return () => {
-      window.__lenis?.start()
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [article, onClose])
-
-  if (!article) return null
-
-  return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="absolute inset-0 bg-soma-ink/40 backdrop-blur-xs"
-        />
-        <motion.div
-          initial={{ opacity: 0, y: 24, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 16, scale: 0.98 }}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          data-lenis-prevent="true"
-          data-lenis-prevent-wheel="true"
-          data-lenis-prevent-touch="true"
-          onWheel={(e) => e.stopPropagation()}
-          onTouchMove={(e) => e.stopPropagation()}
-          className="relative z-10 max-h-[88vh] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-none border border-soma-sand bg-soma-paper p-6 sm:p-10 shadow-xl touch-pan-y"
-        >
-          <div className="flex items-center justify-between border-b border-soma-sand/70 pb-4">
-            <div className="flex items-center gap-3">
-              <span className="font-display text-sm italic text-soma-moss">{article.topic}</span>
-              <span className="text-xs text-soma-clay-deep">/</span>
-              <span className="text-xs text-soma-clay-deep">{article.length}</span>
-            </div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="cursor-pointer text-xs font-medium uppercase tracking-wider text-soma-clay-deep transition-colors hover:text-soma-ink"
-            >
-              Close [Esc]
-            </button>
-          </div>
-
-          {article.image ? (
-            <div className="mt-6 aspect-[16/9] w-full overflow-hidden bg-soma-sand border border-soma-sand/60">
-              <img
-                src={article.image.src}
-                alt={article.image.alt || article.title}
-                className="h-full w-full object-cover"
-              />
-            </div>
-          ) : null}
-
-          <h2 className="mt-6 font-display text-[clamp(1.75rem,3.2vw,2.5rem)] font-normal leading-[1.15] text-soma-ink">
-            {article.title}
-          </h2>
-
-          <div className="mt-8 space-y-5 text-[1.0625rem] leading-[1.8] text-soma-ink/90 font-light">
-            {article.paragraphs?.map((p, idx) => (
-              <p key={idx}>{p}</p>
-            ))}
-          </div>
-
-          <div className="mt-10 border-t border-soma-sand/70 pt-5 flex items-center justify-between">
-            <span className="text-xs text-soma-clay-deep uppercase tracking-widest">
-              Field of Soma Writing
-            </span>
-            <button
-              type="button"
-              onClick={onClose}
-              className="cursor-pointer text-xs font-medium text-soma-moss uppercase tracking-wider hover:text-soma-ink"
-            >
-              Back to essays &rarr;
-            </button>
-          </div>
-        </motion.div>
-      </div>
-    </AnimatePresence>
-  )
-}
-
 export default function Articles() {
   const articlesSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Writing and Somatic Reflections',
-    description:
-      'Essays on somatic philosophy, the biology of movement, pandiculation, and the practice of embodied attention by Kirti Verma.',
+    name: 'Writing by Kirti Verma',
+    description: 'Short pieces about Somatics, Tai Chi and paying attention to the body.',
     url: 'https://fieldofsoma.com/articles',
   }
 
-  useTitle('Writing and Essays on Somatics, Movement and Rest', {
+  useTitle('Writing on Somatics, Tai Chi and Rest', {
     description:
-      'Read essays on somatic education, sensory-motor amnesia, pandiculation, and embodied stillness by Kirti Verma. Subscribe to Field Notes.',
+      'Short pieces by Kirti Verma about Somatics, Tai Chi and paying attention to the body. Sign up for Field Notes.',
     path: '/articles',
     schema: articlesSchema,
   })
-  const [activeArticle, setActiveArticle] = useState(null)
 
   return (
     <>
       <Intro />
-      <Featured onSelect={setActiveArticle} />
+      <Featured />
       <Letters />
-      <Index onSelect={setActiveArticle} />
-      {activeArticle ? (
-        <ArticleReader article={activeArticle} onClose={() => setActiveArticle(null)} />
-      ) : null}
+      <Index />
     </>
   )
 }

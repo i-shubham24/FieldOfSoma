@@ -1,46 +1,15 @@
 @import "tailwindcss";
 
 /*
-  Field of Soma Bespoke Typography:
-  1. Astralaga: distinctive artistic display (logo & brand marks)
-  2. Playfair Display: elegant, readable editorial serif (titles and italics)
-  3. Labil Grotesk: avant-garde Swiss/editorial grotesk (body & navigation)
+  Typography, all open-licence Google Fonts loaded in index.html:
+  1. Cormorant Garamond: the wordmark
+  2. Playfair Display: editorial serif for titles and italics
+  3. Plus Jakarta Sans: body and navigation
 */
-@font-face {
-  font-family: 'Astralaga';
-  src: url('https://framerusercontent.com/assets/srelVpxD1welA0w16Q8gqerTU.woff2') format('woff2');
-  font-display: swap;
-  font-style: normal;
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: 'Labil Grotesk';
-  src: url('https://framerusercontent.com/assets/uzy1kHL5Kn3hXRXmRhkkzR80ao.woff2') format('woff2');
-  font-display: swap;
-  font-style: normal;
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'Labil Grotesk';
-  src: url('https://framerusercontent.com/assets/TourEzPFNmIKIwclKrlyWZMqSg.woff2') format('woff2');
-  font-display: swap;
-  font-style: normal;
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: 'Labil Grotesk';
-  src: url('https://framerusercontent.com/assets/FtcyPkI7LWcvSzlCggtYe28aGk.woff2') format('woff2');
-  font-display: swap;
-  font-style: normal;
-  font-weight: 700;
-}
 
 /*
   Field of Soma: design tokens.
-  Colours and fonts with Playfair Display editorial serif and Labil Grotesk body.
+  Colours and fonts: Playfair Display editorial serif, Plus Jakarta Sans body.
   Layers (z-index): header 50, mobile menu 40, paper grain 60.
 */
 @theme {
@@ -56,8 +25,8 @@
 
   --font-serif: "Playfair Display", "Cormorant Garamond", Georgia, serif;
   --font-display: "Playfair Display", "Cormorant Garamond", Georgia, serif;
-  --font-brand: "Astralaga", "Playfair Display", serif;
-  --font-sans: "Labil Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-brand: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
 
   --text-display: clamp(2.5rem, 6.6vw, 6rem);
   --text-display--line-height: 1.04;
@@ -73,7 +42,7 @@
   --text-lede: 1.0625rem;
   --text-lede--line-height: 1.75;
 
-  --text-label: 0.6875rem;
+  --text-label: 0.75rem;
   --text-label--line-height: 1.4;
   --text-label--letter-spacing: 0.18em;
 

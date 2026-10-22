@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import useTitle from '../lib/useTitle'
 
 export default function Login() {
-  useTitle('Member Login')
+  useTitle('Member Login', { noindex: true })
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [submitted, setSubmitted] = useState(false)
@@ -59,7 +59,7 @@ export default function Login() {
           <h1 className="mt-3 font-serif text-[1.625rem] sm:text-[1.75rem] font-normal tracking-tight text-soma-ink leading-tight">
             Field of Soma
           </h1>
-          <p className="mt-1 font-sans text-[0.6875rem] font-medium tracking-[0.22em] text-soma-clay-deep uppercase">
+          <p className="mt-1 font-sans text-[0.75rem] font-medium tracking-[0.22em] text-soma-clay-deep uppercase">
             The Somatic Archive
           </p>
         </div>
@@ -91,7 +91,7 @@ export default function Login() {
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-1.5 block font-sans text-[0.6875rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
+                  className="mb-1.5 block font-sans text-[0.75rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
                 >
                   Email Address
                 </label>
@@ -110,7 +110,7 @@ export default function Login() {
                 <div className="mb-1.5 flex items-center justify-between">
                   <label
                     htmlFor="password"
-                    className="block font-sans text-[0.6875rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
+                    className="block font-sans text-[0.75rem] font-semibold tracking-[0.14em] text-soma-clay-deep uppercase"
                   >
                     Password
                   </label>

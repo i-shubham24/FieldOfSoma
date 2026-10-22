@@ -8,8 +8,11 @@ const Somatics = lazy(() => import('./pages/Somatics'))
 const Practices = lazy(() => import('./pages/Practices'))
 const Classes = lazy(() => import('./pages/Classes'))
 const ClassDetail = lazy(() => import('./pages/ClassDetail'))
+const Cart = lazy(() => import('./pages/Cart'))
+const Checkout = lazy(() => import('./pages/Checkout'))
 const Calendar = lazy(() => import('./pages/Calendar'))
 const Articles = lazy(() => import('./pages/Articles'))
+const Article = lazy(() => import('./pages/Article'))
 const Contact = lazy(() => import('./pages/Contact'))
 const Login = lazy(() => import('./pages/Login'))
 const Signup = lazy(() => import('./pages/Signup'))
@@ -33,8 +36,11 @@ export default function App() {
             <Route path="practices" element={<Practices />} />
             <Route path="classes" element={<Classes />} />
             <Route path="classes/:id" element={<ClassDetail />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="articles" element={<Articles />} />
+            <Route path="articles/:id" element={<Article />} />
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Route>

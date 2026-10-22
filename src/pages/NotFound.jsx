@@ -4,7 +4,8 @@ import TextLink from '../components/ui/TextLink'
 import useTitle from '../lib/useTitle'
 
 export default function NotFound() {
-  useTitle('Page not found')
+  // The app answers every address with 200, so keep this page out of search results
+  useTitle('Page not found', { noindex: true })
 
   return (
     <section className="pt-[calc(4.5rem+5rem)] pb-28 text-center md:pt-[calc(4.5rem+8rem)] md:pb-40">

@@ -11,10 +11,10 @@ function Intro() {
   const { label, headline, lede, image, caption } = about.intro
 
   return (
-    <section className={`${PAGE_TOP} pb-20 sm:pb-28 lg:pb-32`}>
+    <section className={`${PAGE_TOP} pb-12 sm:pb-16 lg:pb-20`}>
       <div className="shell">
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 lg:pb-28">
             <Reveal as="p" className="text-label font-medium text-soma-clay-deep uppercase">
               {label}
             </Reveal>
@@ -36,7 +36,7 @@ function Intro() {
               priority
               unveil
               delay={0.25}
-              className="w-full max-h-[46vh] object-cover"
+              className="w-full"
             />
           </div>
         </div>
@@ -49,7 +49,7 @@ function Story() {
   const { heading, paragraphs, note, image } = about.story
 
   return (
-    <section className="py-28 md:py-40">
+    <section className="pt-12 pb-28 sm:pt-16 md:pb-40">
       <div className="shell">
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-12 lg:gap-8">
           <Frame

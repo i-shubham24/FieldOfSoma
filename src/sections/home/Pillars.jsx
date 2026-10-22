@@ -105,9 +105,6 @@ export default function Pillars() {
             ))}
           </div>
         </div>
-
-        {/* Boundary anchor when the last fixed image completes and scrolls to the next section */}
-        <div id="pillars-exit-point" className="h-0 w-full" aria-hidden="true" />
       </div>
     </section>
   )

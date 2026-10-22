@@ -32,19 +32,8 @@ export default function SmoothScroll({ children }) {
       allowNestedScroll: true,
     })
 
+    // Dialogs and scroll areas opt out through `prevent` above, so their own scrolling works
     window.__lenis = lenis
-
-    // Prevent Lenis from intercepting or swallowing wheel & touch on nested modals and scroll areas
-    const stopLenisCapture = (e) => {
-      const isNestedScroll = e.target.closest?.(
-        '[data-lenis-prevent], [role="dialog"], [data-modal], .overflow-y-auto, .overflow-auto'
-      )
-      if (isNestedScroll) {
-        e.stopPropagation()
-      }
-    }
-    window.addEventListener('wheel', stopLenisCapture, { capture: true, passive: true })
-    window.addEventListener('touchmove', stopLenisCapture, { capture: true, passive: true })
 
     let rafId
     function raf(time) {
@@ -55,8 +44,6 @@ export default function SmoothScroll({ children }) {
 
     return () => {
       cancelAnimationFrame(rafId)
-      window.removeEventListener('wheel', stopLenisCapture, { capture: true })
-      window.removeEventListener('touchmove', stopLenisCapture, { capture: true })
       lenis.destroy()
       window.__lenis = null
     }

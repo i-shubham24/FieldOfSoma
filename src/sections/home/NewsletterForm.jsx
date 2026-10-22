@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import Button from '../../components/ui/Button'
+import SendFallback from '../../components/ui/SendFallback'
 import { invitation } from '../../content/home'
-import { isEmail, subscribe } from '../../lib/newsletter'
+import { isEmail, subscribe } from '../../lib/forms'
 
 export default function NewsletterForm() {
   const { newsletter } = invitation
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState('idle') // idle | invalid | sending | done
+  const [status, setStatus] = useState('idle') // idle | invalid | sending | done | fallback
+  const [mailto, setMailto] = useState('')
 
   const onSubmit = async (event) => {
     event.preventDefault()
@@ -15,8 +17,13 @@ export default function NewsletterForm() {
       return
     }
     setStatus('sending')
-    await subscribe(email)
-    setStatus('done')
+    const result = await subscribe(email)
+    if (result.ok) {
+      setStatus('done')
+    } else {
+      setMailto(result.mailto)
+      setStatus('fallback')
+    }
   }
 
   return (
@@ -24,7 +31,9 @@ export default function NewsletterForm() {
       <h3 className="text-[2rem] leading-[1.15]">{newsletter.title}</h3>
       <p className="mt-3 text-[0.9375rem] text-soma-ink/80">{newsletter.body}</p>
 
-      {status === 'done' ? (
+      {status === 'fallback' ? (
+        <SendFallback mailto={mailto} className="mt-9 min-h-[9.5rem]" />
+      ) : status === 'done' ? (
         <p role="status" className="mt-9 min-h-[9.5rem] font-display text-[1.5rem] leading-[1.3] italic">
           {newsletter.success}
         </p>

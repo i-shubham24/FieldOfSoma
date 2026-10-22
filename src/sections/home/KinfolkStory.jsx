@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import { images } from '../../content/images'
+import { booking } from '../../content/site'
 
 export default function KinfolkStory() {
   const containerRef = useRef(null)
@@ -37,8 +38,12 @@ export default function KinfolkStory() {
           {/* Editorial portrait backdrop with serene face and graceful movement visible */}
           <div className="relative h-full w-full">
             <img
-              src={images.kinfolkStory.src}
-              alt={images.kinfolkStory.alt}
+              src={images.kirtiFieldPresence.src}
+              srcSet={images.kirtiFieldPresence.srcSet}
+              sizes="100vw"
+              alt={images.kirtiFieldPresence.alt}
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover object-[center_10%] sm:object-[center_top] filter brightness-[0.85] contrast-[1.06]"
             />
             {/* Subtle atmospheric vignette */}
@@ -62,23 +67,23 @@ export default function KinfolkStory() {
               Listening to the Sensing Body
             </h2>
 
-            {/* Bottom bar matching Kinfolk login/subscribe strip sitting flush at bottom edge */}
+            {/* Bottom bar sitting flush at the bottom edge */}
             <div className="flex flex-col gap-3 border-t border-soma-paper/20 pt-3 sm:flex-row sm:items-center sm:justify-between sm:pt-4">
               <p className="font-sans text-[0.8125rem] text-soma-paper/75 sm:text-[0.875rem]">
-                Gentle neuromuscular repatterning for chronic tension and nervous system ease.
+                Gentle movement to ease tension the body has held for a long time.
               </p>
               <div className="flex items-center gap-5 shrink-0">
                 <Link
                   to="/login"
-                  className="font-sans text-[0.8125rem] font-medium tracking-[0.06em] text-soma-paper/90 transition-colors hover:text-white"
+                  className="inline-flex min-h-11 items-center font-sans text-[0.8125rem] font-medium tracking-[0.06em] text-soma-paper/90 transition-colors hover:text-white"
                 >
                   Login
                 </Link>
                 <Link
-                  to="/calendar"
-                  className="border border-soma-paper/40 bg-soma-paper/10 px-4 py-2 font-sans text-[0.8125rem] font-medium text-soma-paper backdrop-blur-sm transition-all hover:bg-soma-paper hover:text-soma-ink"
+                  to={booking.to}
+                  className="inline-flex min-h-11 items-center border border-soma-paper/40 bg-soma-paper/10 px-4 font-sans text-[0.8125rem] font-medium text-soma-paper backdrop-blur-sm transition-all hover:bg-soma-paper hover:text-soma-ink"
                 >
-                  Book Session
+                  {booking.label}
                 </Link>
               </div>
             </div>

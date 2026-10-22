@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import Frame from '../components/media/Frame'
 import Reveal from '../components/motion/Reveal'
 import RevealLines from '../components/motion/RevealLines'
 import Button from '../components/ui/Button'
 import Field from '../components/ui/Field'
+import SendFallback from '../components/ui/SendFallback'
 import { contact } from '../content/contact'
-import { sendMessage } from '../lib/contact'
+import { isEmail, sendForm } from '../lib/forms'
 import { PAGE_TOP } from '../lib/layout'
-import { isEmail } from '../lib/newsletter'
 import useTitle from '../lib/useTitle'
 
 const EMPTY = { name: '', email: '', practice: contact.form.practice.options[0], message: '' }
@@ -23,9 +23,12 @@ function validate(values) {
 
 function MessageForm() {
   const { form } = contact
+  // A message typed elsewhere (the menu, the consultation builder) arrives in router
+  // state, never in the URL. Only the practice, which is not personal, rides in the query.
+  const { state } = useLocation()
   const [searchParams] = useSearchParams()
-  const initialQuery = searchParams.get('query') || searchParams.get('message') || ''
-  const initialPractice = searchParams.get('practice') || contact.form.practice.options[0]
+  const initialQuery = state?.message || ''
+  const initialPractice = state?.practice || searchParams.get('practice') || form.practice.options[0]
 
   const [values, setValues] = useState(() => ({
     ...EMPTY,
@@ -35,7 +38,8 @@ function MessageForm() {
       : contact.form.practice.options[0],
   }))
   const [errors, setErrors] = useState({})
-  const [status, setStatus] = useState('idle') // idle | sending | done
+  const [status, setStatus] = useState('idle') // idle | sending | done | fallback
+  const [mailto, setMailto] = useState('')
   const thanks = useRef(null)
 
   // Once sent, bring the confirmation into view and tell assistive technology.
@@ -45,13 +49,10 @@ function MessageForm() {
     thanks.current?.scrollIntoView({ block: 'center' })
   }, [status])
 
-  // Sync if query parameter changes while on page
+  // A new message from the menu while already on this page
   useEffect(() => {
-    const q = searchParams.get('query') || searchParams.get('message')
-    if (q) {
-      setValues((current) => ({ ...current, message: q }))
-    }
-  }, [searchParams])
+    if (state?.message) setValues((current) => ({ ...current, message: state.message }))
+  }, [state])
 
   const set = (key) => (event) => {
     setValues((current) => ({ ...current, [key]: event.target.value }))
@@ -68,9 +69,16 @@ function MessageForm() {
       return
     }
     setStatus('sending')
-    await sendMessage(values)
-    setStatus('done')
+    const result = await sendForm(`Message from ${values.name.trim()}`, values)
+    if (result.ok) {
+      setStatus('done')
+    } else {
+      setMailto(result.mailto)
+      setStatus('fallback')
+    }
   }
+
+  if (status === 'fallback') return <SendFallback mailto={mailto} className="min-h-[20rem]" />
 
   if (status === 'done') {
     return (

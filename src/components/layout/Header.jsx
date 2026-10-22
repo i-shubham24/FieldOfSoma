@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { HandbagSimpleIcon } from '@phosphor-icons/react/dist/csr/HandbagSimple'
 import { images } from '../../content/images'
 import { site } from '../../content/site'
-import { EASE } from '../../lib/motion'
+import { useCart } from '../../lib/cart'
+import { lockScroll, unlockScroll } from '../../lib/useDialog'
 import SomaticPause from '../interactive/SomaticPause'
 import Wordmark from './Wordmark'
 
@@ -18,13 +20,13 @@ const EDITORIAL_CATEGORIES = [
   { to: '/calendar', label: 'Calendar and Booking' },
   { to: '/about', label: 'About Kirti' },
   { to: '/articles', label: 'Writing and Essays' },
-  { to: '/contact', label: 'Contact and Studio' },
+  { to: '/contact', label: 'Contact' },
 ]
 
 // Curated core disciplines (middle column in sans-serif)
 const CORE_DISCIPLINES = [
-  { to: '/practices#somatics', label: 'Clinical Somatics' },
-  { to: '/practices#tai-chi', label: 'Tai Chi Form' },
+  { to: '/practices#somatics', label: 'Somatic Movement Therapy' },
+  { to: '/practices#tai-chi', label: 'Tai Chi' },
   { to: '/practices#creative-movement', label: 'Creative Movement' },
 ]
 
@@ -34,23 +36,18 @@ const CONNECT_LINKS = [
 ]
 
 export default function Header() {
-  const [settled, setSettled] = useState(false)
   const [open, setOpen] = useState(false)
   const [pauseOpen, setPauseOpen] = useState(false)
   const [query, setQuery] = useState('')
   const reduce = useReducedMotion()
-  const { scrollY } = useScroll()
   const navigate = useNavigate()
+  const { count: cartCount } = useCart()
   const location = useLocation()
-
-  // Track scroll position to tint background subtly when scrolling past masthead
-  useMotionValueEvent(scrollY, 'change', (value) => setSettled(value > 24))
 
   const [overDark, setOverDark] = useState(false)
   const [hideLogo, setHideLogo] = useState(false)
-  const [scrollbarPad, setScrollbarPad] = useState(0)
 
-  // Track scroll position to ensure crisp contrast AND scroll logo upwards out of sight past Pillars
+  // Track scroll position for contrast over dark bands, and tuck the logo away near the footer
   useEffect(() => {
     let rafId = null
 
@@ -73,10 +70,7 @@ export default function Header() {
         }
         setOverDark((prev) => (prev !== isDark ? isDark : prev))
 
-        // 2. Logo name visibility:
-        // - On mobile screens (< 640px): keep fixed and visible at all times
-        // - On all other pages: visible from the start, only hide just before hitting footer
-        // - On home: additionally hide past Pillars exit point on desktop
+        // 2. Logo visibility: always shown on phones, elsewhere hidden just before the footer
         if (window.innerWidth < 640) {
           setHideLogo((prev) => (prev ? false : prev))
           return
@@ -85,13 +79,7 @@ export default function Header() {
         const footer = document.querySelector('footer')
         const nearFooter = footer ? footer.getBoundingClientRect().top <= 140 : false
 
-        let shouldHide = nearFooter
-        if (location.pathname === '/') {
-          const exitPoint = document.getElementById('pillars-exit-point')
-          const pastPillars = exitPoint ? exitPoint.getBoundingClientRect().top <= 100 : false
-          shouldHide = pastPillars || nearFooter
-        }
-        setHideLogo((prev) => (prev !== shouldHide ? shouldHide : prev))
+        setHideLogo((prev) => (prev !== nearFooter ? nearFooter : prev))
       })
     }
 
@@ -106,34 +94,22 @@ export default function Header() {
     }
   }, [location.pathname])
 
-  // Accessible keyboard control and body scroll locking without shifting layout
+  // Escape closes, the page behind goes inert, and scroll is locked. The root keeps a
+  // stable scrollbar gutter (index.css), so locking does not shift the layout.
   useEffect(() => {
-    if (!open) {
-      setScrollbarPad(0)
-      return undefined
-    }
+    if (!open) return undefined
 
-    window.__lenis?.stop()
+    lockScroll()
     const page = document.getElementById('page')
     const onKeyDown = (event) => {
       if (event.key === 'Escape') setOpen(false)
     }
 
-    // Preserve scrollbar width to prevent ANY layout shift on systems
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-    if (scrollbarWidth > 0) {
-      setScrollbarPad(scrollbarWidth)
-      document.documentElement.style.paddingRight = `${scrollbarWidth}px`
-    }
-    document.documentElement.style.overflow = 'hidden'
     page?.setAttribute('inert', '')
     window.addEventListener('keydown', onKeyDown)
 
     return () => {
-      window.__lenis?.start()
-      document.documentElement.style.overflow = ''
-      document.documentElement.style.paddingRight = ''
-      setScrollbarPad(0)
+      unlockScroll()
       page?.removeAttribute('inert')
       window.removeEventListener('keydown', onKeyDown)
     }
@@ -145,7 +121,9 @@ export default function Header() {
     e.preventDefault()
     if (query.trim()) {
       close()
-      navigate(`/contact?query=${encodeURIComponent(query)}`)
+      // Passed in router state, not the URL, so what someone types never lands in history or logs
+      navigate('/contact', { state: { message: query.trim() } })
+      setQuery('')
     }
   }
 
@@ -160,7 +138,6 @@ export default function Header() {
               ? 'bg-soma-ink/90 border-b border-soma-sand/20 backdrop-blur-md shadow-2xs sm:bg-transparent sm:border-transparent sm:shadow-none sm:backdrop-blur-none'
               : 'bg-soma-paper/95 border-b border-soma-sand/50 backdrop-blur-md shadow-2xs sm:bg-transparent sm:border-transparent sm:shadow-none sm:backdrop-blur-none'
         }`}
-        style={scrollbarPad > 0 ? { paddingRight: `${scrollbarPad}px` } : undefined}
       >
         {/* Masthead posture: compact on mobile, generous editorial on tabs and laptops */}
         <div
@@ -186,7 +163,20 @@ export default function Header() {
             <Wordmark className="text-[1.25rem] sm:text-[1.375rem] text-inherit" />
           </Link>
 
-          {/* Right: Iconic 2-line hamburger that expands on hover and morphs into a centered cross when open */}
+          {/* Right: the cart (once something is in it), then the menu button */}
+          <div className="flex items-center gap-1 sm:gap-3">
+          {cartCount > 0 && !open ? (
+            <Link
+              to="/cart"
+              aria-label={`Cart, ${cartCount} ${cartCount === 1 ? 'class' : 'classes'}`}
+              className="relative flex h-11 w-11 items-center justify-center text-inherit focus:outline-none focus-visible:ring-1 focus-visible:ring-current"
+            >
+              <HandbagSimpleIcon size={24} weight="light" aria-hidden="true" />
+              <span className="absolute top-1.5 right-1 flex h-[1.125rem] min-w-[1.125rem] items-center justify-center bg-soma-moss px-1 text-[0.6875rem] leading-none font-medium text-soma-paper tabular-nums">
+                {cartCount}
+              </span>
+            </Link>
+          ) : null}
           <button
             type="button"
             className="group relative flex h-11 w-11 cursor-pointer items-center justify-center text-inherit focus:outline-none focus-visible:ring-1 focus-visible:ring-current"
@@ -214,6 +204,7 @@ export default function Header() {
               />
             </div>
           </button>
+          </div>
         </div>
       </header>
 
@@ -226,7 +217,6 @@ export default function Header() {
             aria-modal="true"
             aria-label="Site navigation menu"
             className="fixed inset-0 z-40 h-[100dvh] max-h-[100dvh] overflow-y-auto lg:overflow-hidden bg-gradient-to-b from-[#D4D8CF] via-[#DCE0D7] to-[#E3E6DF] text-soma-ink select-none"
-            style={scrollbarPad > 0 ? { paddingRight: `${scrollbarPad}px` } : undefined}
             initial={reduce ? false : { y: '-100%' }}
             animate={{ y: 0 }}
             exit={{ y: '-100%' }}
@@ -254,13 +244,13 @@ export default function Header() {
                     <div className="flex gap-4 items-center">
                       <div className="h-20 w-16 shrink-0 overflow-hidden bg-soma-linen">
                         <img
-                          src={images.wallWalk.src}
-                          alt="Somatic practice with Kirti Verma"
+                          src={images.kirtiSomaticWorkshop.src}
+                          alt={images.kirtiSomaticWorkshop.alt}
                           className="photo h-full w-full object-cover"
                         />
                       </div>
                       <div>
-                        <p className="font-sans text-[0.6875rem] font-medium tracking-[0.16em] text-soma-moss uppercase">
+                        <p className="font-sans text-[0.75rem] font-medium tracking-[0.16em] text-soma-moss uppercase">
                           Practice with Kirti
                         </p>
                         <p className="mt-1 font-display text-[1.125rem] leading-[1.2] font-medium text-soma-ink">
@@ -277,7 +267,7 @@ export default function Header() {
                         onClick={close}
                         className="link-grow text-[0.8125rem] font-medium text-soma-ink"
                       >
-                        Book a Session
+                        Book a Consultation
                       </Link>
                       <Link
                         to="/about"
@@ -385,6 +375,7 @@ export default function Header() {
                       </Link>
                     </div>
                   </motion.div>
+
                 </div>
 
                 {/* Right column: Large Serif Editorial Navigation & Inquire form anchored bottom-right */}
@@ -432,7 +423,7 @@ export default function Header() {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Type here to inquire"
-                        className="w-full bg-transparent font-sans text-[0.8125rem] text-soma-ink placeholder:text-soma-clay-deep focus:outline-none"
+                        className="w-full bg-transparent font-sans text-base text-soma-ink placeholder:text-soma-clay-deep focus:outline-none"
                       />
                       <button
                         type="submit"

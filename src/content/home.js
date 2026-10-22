@@ -1,7 +1,7 @@
 import { images } from './images'
 
-// Home page copy. Headline, subtext and manifesto are from the design handover.
-// Anything marked PLACEHOLDER is sample wording until Kirti supplies her own.
+// Home page copy. The headline, subtext and practice summaries are Kirti's own words
+// (her "Website notes" doc). She asked for a minimal first page, so keep descriptions short.
 
 export const hero = {
   label: 'Movement and Somatic Education',
@@ -12,9 +12,10 @@ export const hero = {
   subtext:
     'It knows. It guides. It heals. We must listen and tend to it.',
   primary: { to: '/practices', label: 'Explore the Practices' },
-  image: images.floorLight,
+  image: images.kirtiForestHero,
 }
 
+// The first sentence is Kirti's own ("Find your way back into the body").
 export const manifesto = {
   text: 'Find your way back into the body. It is not a problem to fix, but a living field of intelligence, capable of its own restoration, its own expression, and its own quiet wisdom.',
 }
@@ -27,32 +28,30 @@ export const pillars = {
     {
       id: 'somatics',
       name: 'Somatic Movement Therapy',
-      verbs: 'Heal, sense',
-      body: 'Slow, gentle movements that retrain muscles braced from years of tightness. Nothing is forced or stretched. You learn to release excess tension and bring the body back into equilibrium.',
+      verbs: 'Release, sense',
+      body: 'Slow, gentle movement that retrains the muscles braced from years of tightness. Nothing is forced or stretched. You learn to release the excess tension and bring the body back into a state of equilibrium.',
       audience: 'For chronic back, neck, hip or shoulder tension. For stability in body and clarity in mind.',
       link: { to: '/practices#somatics', label: 'About Somatic Movement Therapy' },
-      tone: 'clay',
       image: images.somaticConstructiveRest,
     },
     {
       id: 'tai-chi',
       name: 'Tai Chi',
       verbs: 'Ground, flow',
-      body: 'A gentle internal martial art practiced as moving meditation. Rooted in Taoism and Traditional Chinese Medicine, it strengthens the body from the inside out to develop structure, balance and sensitivity to qi.',
-      audience: 'For improving posture, preserving vital energy, and gaining confidence through your body and stance.',
+      body: 'A gentle internal martial art practised as a moving meditation. Based on the philosophy of Taoism and Traditional Chinese Medicine, it strengthens your body from the inside out.',
+      audience: 'For better posture, steady energy, and confidence in your body and stance.',
       link: { to: '/practices#tai-chi', label: 'About Tai Chi' },
-      tone: 'moss',
       image: images.kirtiTaiChiCloudHands,
     },
     {
+      // Placeholder wording until Kirti shares her writing on Creative Movement.
       id: 'creative-movement',
       name: 'Creative Movement',
       verbs: 'Express, play',
       body: 'Open movement inquiry drawn from dance. There is no choreography and nothing to perform. You follow sensation, rhythm and curiosity, and let the body say what it has been holding.',
       audience: 'For feeling alive, expressive and unguarded in your own skin.',
       link: { to: '/practices#creative-movement', label: 'About Creative Movement' },
-      tone: 'sand',
-      image: images.danceTurn,
+      image: images.kirtiCreativeDance,
     },
   ],
 }
@@ -75,13 +74,15 @@ export const windowSection = {
 
 export const voices = {
   heading: 'Student words',
-  placeholder: false,
+  // Demo reviews: replace with real words from Kirti's students (with their permission).
+  placeholder: true,
+  placeholderNote: 'Sample reviews, to be replaced with words from Kirti’s students.',
   items: [
     {
       quote:
         'For the first time in years I could feel my lower back let go, and I was the one doing it.',
       name: 'Priya M.',
-      context: 'Clinical Somatics, private sessions',
+      context: 'Somatic Movement Therapy, private sessions',
     },
     {
       quote:
@@ -97,23 +98,23 @@ export const voices = {
     },
     {
       quote:
-        'After months of desk-bound tension, Kirti helped me sense the holding patterns I had normalized.',
+        'After months of desk-bound tension, Kirti helped me sense the holding patterns I had normalised.',
       name: 'David L.',
-      context: 'Somatics, 1-on-1 series',
+      context: 'Somatic Movement Therapy, one to one',
     },
   ],
 }
 
 export const invitation = {
   heading: 'Practise with Kirti',
-  body: 'Private sessions and small weekly groups, in person and online. Begin wherever your body is today.',
+  body: 'Private sessions and small groups. Begin wherever your body is today.',
   schedule: { to: '/calendar', label: 'See the weekly schedule' },
   newsletter: {
     title: 'Field Notes',
     body: 'Short reflections on sensing, moving and resting.',
     fieldLabel: 'Email address',
     submit: 'Subscribe',
-    microcopy: 'Delivered quietly twice a month. Unsubscribe anytime.',
+    microcopy: 'Occasional letters. Unsubscribe anytime.',
     success: 'Thank you. Your first note will arrive soon.',
     error: 'Please enter a valid email address.',
   },

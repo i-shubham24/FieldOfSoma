@@ -1,19 +1,19 @@
 import { images } from './images'
 import { site } from './site'
 
-// Contact page. Studio location and time zone are PLACEHOLDERS for Kirti to supply.
+// Contact page. Location and time zone are PLACEHOLDERS until Kirti confirms where she teaches.
 
 export const contact = {
   intro: {
     label: 'Contact',
     headline: [{ text: 'Begin with' }, { text: 'a few words.', italic: true }],
-    lede: 'Questions about a practice, a session or a class are all welcome. Kirti reads and answers every message herself.',
-    image: images.contactScenery,
+    lede: 'Questions about a practice, a session or a class are all welcome.',
+    image: images.kirtiFieldSoma,
   },
 
   details: [
     { term: 'Email', value: site.email, href: `mailto:${site.email}` },
-    { term: 'Studio', value: 'Dharamshala & Online Worldwide' },
+    { term: 'Sessions', value: 'Online, and in person by arrangement' },
     { term: 'Time zone', value: 'IST (UTC +5:30)' },
     { term: 'Instagram', value: 'Follow the practice', href: site.instagram, external: true },
   ],
@@ -23,7 +23,7 @@ export const contact = {
     email: { label: 'Email', error: 'Please enter a valid email address.' },
     practice: {
       label: 'Practice of interest',
-      options: ['Clinical Somatics', 'Tai Chi', 'Creative Movement', 'Not sure yet'],
+      options: ['Somatic Movement Therapy', 'Tai Chi', 'Creative Movement', 'Recorded classes', 'Not sure yet'],
     },
     message: {
       label: 'Message',

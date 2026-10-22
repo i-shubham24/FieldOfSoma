@@ -147,7 +147,7 @@ export default function AudioGuide({ practiceTitle, verbs, duration = 45, transc
           <button
             type="button"
             onClick={togglePlay}
-            aria-label={isPlaying ? `Pause sample for ${practiceTitle}` : `Listen to verbal guidance for ${practiceTitle}`}
+            aria-label={isPlaying ? `Pause sample for ${practiceTitle}` : `Play a calm tone while you read the cue for ${practiceTitle}`}
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[2px] bg-soma-moss text-soma-paper transition-colors duration-500 ease-soma hover:bg-soma-moss-light"
           >
             {isPlaying ? (
@@ -158,8 +158,8 @@ export default function AudioGuide({ practiceTitle, verbs, duration = 45, transc
           </button>
 
           <div>
-            <p className="font-sans text-[0.6875rem] font-medium tracking-[0.16em] text-soma-moss uppercase">
-              Spoken Guidance Sample
+            <p className="font-sans text-[0.75rem] font-medium tracking-[0.16em] text-soma-moss uppercase">
+              Practise with a calm tone
             </p>
             <p className="font-display text-[1.125rem] leading-[1.3] text-soma-ink">
               {practiceTitle}: {verbs}

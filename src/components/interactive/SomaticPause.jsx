@@ -4,48 +4,52 @@ import { SpeakerHighIcon } from '@phosphor-icons/react/dist/csr/SpeakerHigh'
 import { SpeakerSlashIcon } from '@phosphor-icons/react/dist/csr/SpeakerSlash'
 import { XIcon } from '@phosphor-icons/react/dist/csr/X'
 import { EASE } from '../../lib/motion'
+import useDialog from '../../lib/useDialog'
 
-// Four phases of a Hanna pandiculation cycle with physiological somatic cues.
+// Four phases of a slow pandiculation, with plain cues.
 const PHASES = [
   {
     name: 'Contract',
-    action: 'Inhale gently',
+    action: 'Breathe in gently',
     seconds: 4,
-    guidance: 'Contract the muscles with only 20% to 30% effort. Feel where the tension begins.',
+    guidance: 'Tighten the muscles a little, with only a fraction of your effort. Notice where it starts.',
     scale: 1.28,
   },
   {
     name: 'Release',
-    action: 'Exhale slower',
+    action: 'Breathe out slowly',
     seconds: 7,
-    guidance: 'Release at half speed. Feel the brain regain conscious control of the muscle fibres.',
+    guidance: 'Let go more slowly than you tightened. Take your time.',
     scale: 0.92,
   },
   {
     name: 'Rest',
     action: 'Stillness',
     seconds: 4,
-    guidance: 'Completely unclamp. Let the floor or chair carry your entire weight.',
+    guidance: 'Let go completely. Let the floor or chair hold all of your weight.',
     scale: 0.88,
   },
   {
     name: 'Sense',
-    action: 'Attention',
+    action: 'Notice',
     seconds: 3,
-    guidance: 'Notice what has changed: warmth, tingling, or a new sense of space.',
+    guidance: 'What feels different now? Warmth, tingling, a little more space?',
     scale: 1.0,
   },
 ]
 
-// Pure synthesized harmonic tone for phase transition (432Hz calming pitch).
+const PITCHES = [384, 432, 324, 480]
+
+// One shared audio context: browsers limit how many can be open at once.
+let audioContext = null
+
 function playChime(freq = 432) {
   try {
     const AudioCtx = window.AudioContext || window.webkitAudioContext
     if (!AudioCtx) return
-    const ctx = new AudioCtx()
-    if (ctx.state === 'suspended') {
-      ctx.resume()
-    }
+    audioContext ??= new AudioCtx()
+    const ctx = audioContext
+    if (ctx.state === 'suspended') ctx.resume()
     const osc = ctx.createOscillator()
     const gain = ctx.createGain()
     osc.type = 'sine'
@@ -57,111 +61,73 @@ function playChime(freq = 432) {
     osc.start()
     osc.stop(ctx.currentTime + 2.3)
   } catch {
-    // Graceful fallback if audio is not permitted by browser
+    // Sound is optional; the guide works without it
   }
 }
 
-export default function SomaticPause({ open, onClose }) {
-  const [active, setActive] = useState(false)
+// Mounted only while open, so the dialog hook can lock scroll and hold focus.
+function PauseDialog({ onClose }) {
+  const ref = useRef(null)
+  const reduce = useReducedMotion()
+  const [active, setActive] = useState(true)
   const [phaseIndex, setPhaseIndex] = useState(0)
   const [secondsLeft, setSecondsLeft] = useState(PHASES[0].seconds)
   const [cyclesCompleted, setCyclesCompleted] = useState(0)
   const [soundOn, setSoundOn] = useState(false)
-  const reduce = useReducedMotion()
-  const timerRef = useRef(null)
+  useDialog(ref, onClose)
 
   const currentPhase = PHASES[phaseIndex]
 
-  // Reset when dialog opens
+  // Count down once a second while running
   useEffect(() => {
-    if (open) {
-      window.__lenis?.stop()
-      document.body.style.overflow = 'hidden'
-      setActive(true)
-      setPhaseIndex(0)
-      setSecondsLeft(PHASES[0].seconds)
-      setCyclesCompleted(0)
-    } else {
-      window.__lenis?.start()
-      document.body.style.overflow = ''
-      setActive(false)
-      clearInterval(timerRef.current)
-    }
-    return () => {
-      window.__lenis?.start()
-      document.body.style.overflow = ''
-      clearInterval(timerRef.current)
-    }
-  }, [open])
+    if (!active) return undefined
+    const timer = setInterval(() => setSecondsLeft((prev) => prev - 1), 1000)
+    return () => clearInterval(timer)
+  }, [active])
 
-  // Handle escape key
+  // At zero, move to the next phase (side effects live here, not inside state updaters)
   useEffect(() => {
-    if (!open) return undefined
-    const onKey = (e) => {
-      if (e.key === 'Escape') onClose()
-      if (e.key === ' ') {
-        e.preventDefault()
-        setActive((prev) => !prev)
-      }
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [open, onClose])
+    if (secondsLeft > 0) return
+    const nextIndex = (phaseIndex + 1) % PHASES.length
+    if (nextIndex === 0) setCyclesCompleted((count) => count + 1)
+    if (soundOn) playChime(PITCHES[nextIndex])
+    setPhaseIndex(nextIndex)
+    setSecondsLeft(PHASES[nextIndex].seconds)
+  }, [secondsLeft, phaseIndex, soundOn])
 
-  // Timer loop
+  // Space pauses or resumes, unless a button has focus (where space already clicks)
   useEffect(() => {
-    if (!open || !active) {
-      clearInterval(timerRef.current)
-      return undefined
+    const onKey = (event) => {
+      if (event.key !== ' ' || event.target.closest?.('button')) return
+      event.preventDefault()
+      setActive((prev) => !prev)
     }
-
-    timerRef.current = setInterval(() => {
-      setSecondsLeft((prev) => {
-        if (prev <= 1) {
-          // Advance to next phase
-          setPhaseIndex((currIdx) => {
-            const nextIdx = (currIdx + 1) % PHASES.length
-            if (nextIdx === 0) {
-              setCyclesCompleted((c) => c + 1)
-            }
-            if (soundOn) {
-              const pitches = [384, 432, 324, 480]
-              playChime(pitches[nextIdx])
-            }
-            return nextIdx
-          })
-          const nextIdx = (phaseIndex + 1) % PHASES.length
-          return PHASES[nextIdx].seconds
-        }
-        return prev - 1
-      })
-    }, 1000)
-
-    return () => clearInterval(timerRef.current)
-  }, [open, active, phaseIndex, soundOn])
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [])
 
   const toggleSound = () => {
-    if (!soundOn) {
-      playChime(432)
-    }
+    if (!soundOn) playChime(432)
     setSoundOn(!soundOn)
   }
 
   return (
-    <AnimatePresence>
-      {open ? (
-        <motion.div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Somatic Pause Guided Pandiculation"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-soma-paper/95 p-6 backdrop-blur-md"
-          initial={reduce ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: EASE }}
-        >
+    <motion.div
+      ref={ref}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Somatic Pause, a guided pandiculation"
+      tabIndex={-1}
+      data-lenis-prevent
+      className="fixed inset-0 z-[55] overflow-y-auto overscroll-contain bg-soma-paper/95 outline-none backdrop-blur-md"
+      initial={reduce ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5, ease: EASE }}
+    >
+      <div className="flex min-h-full flex-col px-5 py-4 sm:px-10 sm:py-8">
           {/* Top toolbar */}
-          <div className="absolute top-6 right-6 left-6 flex items-center justify-between md:top-10 md:right-10 md:left-10">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <span className="font-sans text-label font-medium tracking-[0.16em] text-soma-clay-deep uppercase">
                 Somatic Pause
@@ -175,8 +141,9 @@ export default function SomaticPause({ open, onClose }) {
               <button
                 type="button"
                 onClick={toggleSound}
-                className="flex items-center gap-2 text-[0.8125rem] text-soma-clay-deep transition-colors hover:text-soma-ink"
-                title={soundOn ? 'Mute sound chime' : 'Enable gentle chime'}
+                aria-pressed={soundOn}
+                aria-label={soundOn ? 'Turn the chime off' : 'Turn the chime on'}
+                className="flex h-11 min-w-11 items-center justify-center gap-2 text-[0.8125rem] text-soma-clay-deep transition-colors hover:text-soma-ink"
               >
                 {soundOn ? <SpeakerHighIcon size={16} /> : <SpeakerSlashIcon size={16} />}
                 <span className="hidden sm:inline">{soundOn ? 'Tone on' : 'Tone off'}</span>
@@ -185,7 +152,7 @@ export default function SomaticPause({ open, onClose }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="group flex items-center gap-2 text-[0.8125rem] text-soma-clay-deep transition-colors hover:text-soma-ink"
+                className="group flex h-11 min-w-11 items-center justify-center gap-2 text-[0.8125rem] text-soma-clay-deep transition-colors hover:text-soma-ink"
                 aria-label="Close Somatic Pause"
               >
                 <span className="hidden sm:inline">Close</span>
@@ -195,9 +162,9 @@ export default function SomaticPause({ open, onClose }) {
           </div>
 
           {/* Central breath circle experience */}
-          <div className="relative mx-auto flex w-full max-w-xl flex-col items-center text-center">
+          <div className="relative mx-auto my-auto flex w-full max-w-xl flex-col items-center py-8 text-center">
             {/* Visual breathing geometry */}
-            <div className="relative flex h-72 w-72 items-center justify-center sm:h-84 sm:w-84">
+            <div className="relative flex size-[min(18rem,76vw)] items-center justify-center sm:size-84">
               {/* Soft background aura */}
               <motion.div
                 className="absolute inset-0 rounded-[2px] bg-soma-linen"
@@ -214,7 +181,7 @@ export default function SomaticPause({ open, onClose }) {
 
               {/* Main somatic resonant circle */}
               <motion.div
-                className="relative flex h-52 w-52 items-center justify-center rounded-none border border-soma-moss/40 bg-soma-paper sm:h-60 sm:w-60"
+                className="relative flex size-[min(13rem,56vw)] items-center justify-center rounded-none border border-soma-moss/40 bg-soma-paper sm:size-60"
                 animate={
                   reduce
                     ? undefined
@@ -234,7 +201,7 @@ export default function SomaticPause({ open, onClose }) {
                 <div className="absolute inset-4 border border-soma-sand/70" />
 
                 <div className="relative z-10 px-4">
-                  <p className="font-display text-[2.75rem] leading-none text-soma-ink italic sm:text-[3.25rem]">
+                  <p className="font-display text-[clamp(2rem,10vw,2.75rem)] leading-none text-soma-ink italic sm:text-[3.25rem]">
                     {currentPhase.name}
                   </p>
                   <p className="mt-3 font-sans text-label font-medium tracking-[0.18em] text-soma-moss uppercase">
@@ -275,18 +242,23 @@ export default function SomaticPause({ open, onClose }) {
                   setSecondsLeft(PHASES[0].seconds)
                   setActive(true)
                 }}
-                className="link-rest pb-0.5 text-[0.8125rem] text-soma-clay-deep hover:text-soma-ink"
+                className="link-rest min-h-11 pb-0.5 text-[0.8125rem] text-soma-clay-deep hover:text-soma-ink"
               >
                 Restart cycle
               </button>
             </div>
 
-            <p className="mt-6 text-[0.75rem] text-soma-clay-deep">
+            <p className="mt-6 hidden text-[0.8125rem] text-soma-clay-deep sm:block">
               Press space to pause or resume. Escape to close.
             </p>
           </div>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
+      </div>
+    </motion.div>
+  )
+}
+
+export default function SomaticPause({ open, onClose }) {
+  return (
+    <AnimatePresence>{open ? <PauseDialog onClose={onClose} /> : null}</AnimatePresence>
   )
 }

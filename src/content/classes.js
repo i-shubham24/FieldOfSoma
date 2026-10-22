@@ -1,7 +1,12 @@
 import { images } from './images'
 
-// Recorded Classes. Titles, lengths and prices are PLACEHOLDERS for Kirti to replace.
-// Phase 1: each class links to a Razorpay or Stripe checkout. Phase 2: a video library.
+// Recorded Classes: a DEMO catalogue. Titles, prices, ratings and lesson lists are samples
+// until Kirti records and prices her classes, so the page shows a draft note.
+//
+// Selling: classes go into the cart and are paid for at /checkout through Razorpay
+// (set VITE_RAZORPAY_KEY_ID in Vercel). Without a key, checkout runs in a labelled test mode.
+// Videos: paste a link into `previewUrl` (free sample) and `videoUrl` (the full class) for
+// each class. YouTube (unlisted), Vimeo or a direct .mp4 link all work.
 
 export const classes = {
   intro: {
@@ -12,18 +17,19 @@ export const classes = {
 
   filters: [
     { id: 'all', label: 'All classes' },
-    { id: 'somatics', label: 'Somatics' },
+    { id: 'somatics', label: 'Somatic Movement Therapy' },
     { id: 'tai-chi', label: 'Tai Chi' },
     { id: 'creative-movement', label: 'Creative Movement' },
   ],
 
-  placeholder: false,
+  placeholder: true,
+  note: 'Demo catalogue: class titles, prices and ratings are samples until Kirti publishes her own classes.',
 
   items: [
     {
       id: 'neck-shoulder-freedom',
       practice: 'somatics',
-      practiceName: 'Clinical Somatics',
+      practiceName: 'Somatic Movement Therapy',
       title: 'Neck and Shoulder Freedom',
       subtitle: 'Gentle pandiculation to release chronic trapezius tightness, desk posture strain, and habituated shoulder elevation.',
       focus: 'Slow releases for the muscles that lift and round the shoulders.',
@@ -35,7 +41,9 @@ export const classes = {
       ratingCount: 148,
       studentsCount: 390,
       lastUpdated: 'October 2026',
-      image: images.reach,
+      image: images.kirtiSomaticWorkshop,
+      previewUrl: '',
+      videoUrl: '',
       overview: [
         'When you sit at a desk, work under deadline pressure, or carry emotional strain, your nervous system triggers the startle reflex: tightening the trapezius, elevating the shoulders, and shortening the front of the neck. Over weeks and months, the brain forgets how to fully relax these muscles, a state Thomas Hanna identified as Sensory Motor Amnesia.',
         'Stretching tight neck muscles often triggers the protective stretch reflex, causing the tissue to grip back harder. This guided somatic class uses pandiculation: conscious contraction followed by decelerated, mindful lengthening. You learn to remind your motor cortex how to let the shoulder blades drop down into gravity without force.',
@@ -45,7 +53,7 @@ export const classes = {
         'Master the slow shoulder clock pandiculation for neck and collarbone ease',
         'Release chronic suboccipital tension at the base of the skull',
         'Restore free rotation of the cervical spine without joint pinching',
-        'Establish an effortless 5-minute daily reset you can practice at your desk',
+        'Establish an effortless 5-minute daily reset you can practise at your desk',
       ],
       requirements: [
         'A quiet space on a floor mat, rug, or firm bed',
@@ -92,7 +100,7 @@ export const classes = {
     {
       id: 'lower-back-release',
       practice: 'somatics',
-      practiceName: 'Clinical Somatics',
+      practiceName: 'Somatic Movement Therapy',
       title: 'Releasing the Lower Back',
       subtitle: 'Somatic pandiculation for the arch and flatten reflex, releasing habituated lumbar contraction and pelvic tilt.',
       focus: 'Pandiculation for the long muscles of the spine and the waist.',
@@ -104,17 +112,19 @@ export const classes = {
       ratingCount: 162,
       studentsCount: 420,
       lastUpdated: 'October 2026',
-      image: images.lowerBackRelease,
+      image: images.somaticConstructiveRest,
+      previewUrl: '',
+      videoUrl: '',
       overview: [
-        'Chronic lower back stiffness is rarely a spine problem: it is an action pattern. The Landau reflex contracts the extensor muscles along the lumbar vertebrae whenever we brace for productivity, stand for hours, or hurry through the day.',
-        'In this class, you practice the foundational somatic movements of the pelvis and lumbar spine. Through slow, pleasurable pandiculations, your brain regains voluntary motor control over the erector spinae and quadratus lumborum, restoring natural curve and pain-free movement.',
+        'A stiff lower back is often a habit of holding. The muscles along the spine tighten whenever we brace to get things done, stand for hours, or hurry through the day.',
+        'In this class you practise the basic somatic movements of the pelvis and lower back. Slow, gentle tightening and releasing helps you feel these muscles again, so they can soften and move more easily.',
       ],
       whatYouWillLearn: [
         'Release involuntary spasm in the lower back and waist muscles',
-        'Perform the classic Somatic Arch and Flatten with biological ease',
-        'Repattern pelvic tilting and eliminate SI joint strain',
+        'Practise the classic arch and flatten movement, slowly and gently',
+        'Get to know how your pelvis tilts and settles',
         'Learn the Diagonal Back Lift to rebalance asymmetrical tightness',
-        'Wake up in the morning without that familiar lumbar stiffness',
+        'Learn a short routine to ease morning stiffness',
       ],
       requirements: [
         'A comfortable floor mat or soft carpet',
@@ -173,7 +183,9 @@ export const classes = {
       ratingCount: 110,
       studentsCount: 295,
       lastUpdated: 'September 2026',
-      image: images.taiChiStanding,
+      image: images.kirtiTaiChiBlueSky,
+      previewUrl: '',
+      videoUrl: '',
       overview: [
         'Zhan Zhuang (standing meditation) is the cornerstone of internal martial arts. By standing in alignment without rigid tension, the skeletal frame carries the body weight and muscles are allowed to release into gravity.',
         'This 25-minute practice teaches you how to sink your weight into the feet, unlock the hips (the Kua), and allow the diaphragm to drop naturally. You discover stillness that does not feel stiff, but vibrantly alive.',
@@ -232,7 +244,9 @@ export const classes = {
       ratingCount: 88,
       studentsCount: 210,
       lastUpdated: 'October 2026',
-      image: images.fluidMovement,
+      image: images.kirtiDanceMotionBlur,
+      previewUrl: '',
+      videoUrl: '',
       overview: [
         'Your spine is a cascade of twenty-four vertebrae designed for waves, spirals, and expressive storytelling. Modern life often flattens this movement into rigid columns of posture.',
         'Spine Stories is an invitation to move without mirrors or choreography. Guided prompts gently invite each segment of your spine into curious, playful motion, shaking loose emotional holding patterns.',
@@ -279,7 +293,7 @@ export const classes = {
     {
       id: 'the-easy-breath',
       practice: 'somatics',
-      practiceName: 'Clinical Somatics',
+      practiceName: 'Somatic Movement Therapy',
       title: 'The Easy Breath',
       subtitle: 'Neuromuscular releases for the ribs, diaphragm, and abdominal wall to restore deep, unforced respiration.',
       focus: 'Softening the belly and ribs so the breath can deepen without effort.',
@@ -291,7 +305,9 @@ export const classes = {
       ratingCount: 135,
       studentsCount: 340,
       lastUpdated: 'September 2026',
-      image: images.sideBend,
+      image: images.kirtiForestGrounding,
+      previewUrl: '',
+      videoUrl: '',
       overview: [
         'Deep breathing cannot happen in a tight ribcage. When the intercostal muscles and diaphragm are held in chronic tension from anxiety, forcing deep breaths only causes fatigue.',
         'This somatic sequence guides you through gentle pandiculations for the chest, side body, and abdominal wall, giving the diaphragm space to expand freely on its own.',
@@ -299,7 +315,7 @@ export const classes = {
       whatYouWillLearn: [
         'Release chronic tightness in the intercostal muscles between the ribs',
         'Allow the diaphragm to descend without forceful belly pushing',
-        'Calm the sympathetic nervous system within minutes',
+        'Help yourself settle with a few slow breaths',
         'Experience breathing as a full-body three-dimensional expansion',
       ],
       requirements: [
@@ -350,7 +366,9 @@ export const classes = {
       ratingCount: 95,
       studentsCount: 260,
       lastUpdated: 'October 2026',
-      image: images.taiChiWall,
+      image: images.kirtiTaiChiSingleWhipBw,
+      previewUrl: '',
+      videoUrl: '',
       overview: [
         'Learn a continuous sequence of eight essential Tai Chi postures designed for daily morning practice. Every movement is broken down step by step with close attention to foot placement, waist turning, and breath.',
         'This class bridges the gap between mechanical exercise and moving meditation, leaving you grounded, centered, and physically coordinated.',
@@ -390,7 +408,7 @@ export const classes = {
           title: '03. Postures 5 to 8: Single Whip to Closing',
           duration: '18:30',
           previewable: false,
-          summary: 'Expanding out into the perimeter and gathering balance back to center.',
+          summary: 'Expanding out into the perimeter and gathering balance back to centre.',
         },
       ],
     },

@@ -1,19 +1,26 @@
-import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
-import { CheckIcon } from '@phosphor-icons/react/dist/csr/Check'
+import { useRef, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { XIcon } from '@phosphor-icons/react/dist/csr/X'
 import Frame from '../components/media/Frame'
 import Reveal from '../components/motion/Reveal'
 import RevealLines from '../components/motion/RevealLines'
 import Button from '../components/ui/Button'
 import DraftNote from '../components/ui/DraftNote'
+import Field from '../components/ui/Field'
+import SendFallback from '../components/ui/SendFallback'
 import TextLink from '../components/ui/TextLink'
 import ConsultationBuilder from '../components/interactive/ConsultationBuilder'
 import { calendar } from '../content/calendar'
-import { site } from '../content/site'
-import { sendMessage } from '../lib/contact'
+import { isEmail, sendForm } from '../lib/forms'
 import { PAGE_TOP } from '../lib/layout'
+import { EASE } from '../lib/motion'
+import useDialog from '../lib/useDialog'
 import useTitle from '../lib/useTitle'
+
+// Kirti's Cal.com or Calendly link, set in Vercel. See content/calendar.js.
+const BOOKING_URL = import.meta.env.VITE_BOOKING_URL
+
+const classLabel = (row) => `${row.title}, ${row.day} ${row.time} (${row.format})`
 
 function Intro() {
   const { label, headline, lede } = calendar.intro
@@ -37,323 +44,181 @@ function Intro() {
   )
 }
 
-function BookingModal({ config, onClose }) {
-  const isPrivate = typeof config === 'string' ? config === 'private' : config?.type === 'private'
-  const initialClass = typeof config === 'object' ? config?.classTitle : null
+function BookingModal({ request, onClose }) {
+  const { form, schedule } = calendar
+  const isPrivate = request.type === 'private'
+  const copy = isPrivate ? form.private : form.group
+  const ref = useRef(null)
+  const reduce = useReducedMotion()
+  useDialog(ref, onClose)
 
-  const [focus, setFocus] = useState('somatics')
-  const [selectedClass, setSelectedClass] = useState(initialClass || 'Somatic Movement')
-  const [format, setFormat] = useState('in-person')
-  const [timing, setTiming] = useState('Weekday morning')
-  const [groupType, setGroupType] = useState('drop-in')
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [notes, setNotes] = useState('')
+  const [values, setValues] = useState({
+    focus: form.private.focusOptions[0],
+    format: form.private.formatOptions[0],
+    time: form.timeOptions[0],
+    class: request.classLabel ?? classLabel(schedule.rows[0]),
+    name: '',
+    email: '',
+    notes: '',
+  })
   const [errors, setErrors] = useState({})
-  const [status, setStatus] = useState('idle')
+  const [status, setStatus] = useState('idle') // idle | sending | done | fallback
+  const [mailto, setMailto] = useState('')
 
-  useEffect(() => {
-    window.__lenis?.stop()
-    document.body.style.overflow = 'hidden'
-
-    const onKey = (e) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => {
-      window.__lenis?.start()
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [onClose])
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const errs = {}
-    if (!name.trim()) errs.name = 'Please enter your name'
-    if (!email.trim() || !email.includes('@')) errs.email = 'Please enter a valid email address'
-    setErrors(errs)
-    if (Object.keys(errs).length > 0) return
-
-    setStatus('submitting')
-    await sendMessage({
-      type: isPrivate ? 'Private Session' : 'Weekly Group Class',
-      focus: isPrivate ? focus : selectedClass,
-      format: isPrivate ? format : groupType,
-      timing,
-      name,
-      email,
-      notes,
-    })
-    setStatus('done')
+  const set = (key) => (event) => {
+    setValues((current) => ({ ...current, [key]: event.target.value }))
+    if (errors[key]) setErrors((current) => ({ ...current, [key]: undefined }))
   }
 
-  const handleJumpToBuilder = () => {
-    onClose()
-    setTimeout(() => {
-      const el = document.getElementById('consultation')
-      el?.scrollIntoView({ behavior: 'smooth' })
-    }, 150)
+  const onSubmit = async (event) => {
+    event.preventDefault()
+    const found = {}
+    if (!values.name.trim()) found.name = 'Please add your name.'
+    if (!isEmail(values.email)) found.email = 'Please enter a valid email address.'
+    setErrors(found)
+    if (Object.keys(found).length > 0) {
+      document.getElementById(`booking-${Object.keys(found)[0]}`)?.focus()
+      return
+    }
+
+    setStatus('sending')
+    const fields = isPrivate
+      ? {
+          request: 'Private session',
+          practice: values.focus,
+          format: values.format,
+          preferredTime: values.time,
+        }
+      : { request: 'Join a weekly class', class: values.class }
+    const result = await sendForm(copy.heading, {
+      ...fields,
+      name: values.name.trim(),
+      email: values.email.trim(),
+      notes: values.notes.trim(),
+    })
+    if (result.ok) {
+      setStatus('done')
+    } else {
+      setMailto(result.mailto)
+      setStatus('fallback')
+    }
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div className="fixed inset-0 z-[55] flex items-end justify-center sm:items-center sm:p-6">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="absolute inset-0 bg-soma-ink/50 backdrop-blur-xs"
+        className="absolute inset-0 bg-soma-ink/50"
+        aria-hidden="true"
       />
 
       <motion.div
-        initial={{ opacity: 0, y: 24, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 16, scale: 0.98 }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        data-lenis-prevent="true"
-        data-lenis-prevent-wheel="true"
-        data-lenis-prevent-touch="true"
-        onWheel={(e) => e.stopPropagation()}
-        onTouchMove={(e) => e.stopPropagation()}
-        className="relative z-10 max-h-[90vh] w-full max-w-xl overflow-y-auto overscroll-contain border border-soma-sand bg-soma-paper p-6 sm:p-8 shadow-2xl touch-pan-y"
+        ref={ref}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="booking-title"
+        tabIndex={-1}
+        initial={reduce ? false : { opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
+        transition={{ duration: 0.35, ease: EASE }}
+        data-lenis-prevent
+        className="relative z-10 max-h-[92dvh] w-full max-w-xl overflow-y-auto overscroll-contain border border-soma-sand bg-soma-paper px-6 pt-6 pb-8 outline-none sm:p-9"
       >
-        {/* Header */}
-        <div className="flex items-start justify-between border-b border-soma-sand/70 pb-5">
+        <div className="flex items-start justify-between gap-4 border-b border-soma-sand pb-5">
           <div>
-            <span className="text-[0.6875rem] font-medium uppercase tracking-widest text-soma-moss">
-              {isPrivate ? 'One-to-One Work' : 'Weekly Cohort'}
-            </span>
-            <h2 className="mt-1 font-display text-[1.75rem] leading-[1.2] text-soma-ink">
-              {isPrivate ? 'Request a Private Session' : 'Join a Weekly Class'}
+            <p className="text-label font-medium text-soma-moss uppercase">{copy.label}</p>
+            <h2 id="booking-title" className="mt-2 font-display text-[1.75rem] leading-[1.2]">
+              {copy.heading}
             </h2>
-            <p className="mt-1.5 text-xs text-soma-clay-deep">
-              {isPrivate
-                ? '60 to 75 minutes • In person or online • Guided by Kirti'
-                : '60 minutes • Small groups • Progressively taught'}
-            </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="cursor-pointer p-1 text-soma-clay-deep transition-colors hover:text-soma-ink"
-            aria-label="Close dialog"
+            className="-mt-2 -mr-3 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center text-soma-clay-deep transition-colors hover:text-soma-ink"
+            aria-label="Close"
           >
-            <XIcon size={20} />
+            <XIcon size={20} aria-hidden="true" />
           </button>
         </div>
 
         {status === 'done' ? (
-          <div className="py-10 text-center">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center bg-soma-moss/10 text-soma-moss mb-5">
-              <CheckIcon size={28} weight="bold" />
-            </div>
-            <h3 className="font-display text-2xl text-soma-ink">
-              Request Received
-            </h3>
-            <p className="mt-3 text-sm text-soma-clay-deep leading-relaxed max-w-[42ch] mx-auto font-light">
-              Thank you, <span className="font-medium text-soma-ink">{name}</span>. Your request has been sent to Kirti. You will receive a personal confirmation at{' '}
-              <span className="font-medium text-soma-ink">{email}</span> within 24 to 48 hours.
+          <div role="status" className="py-10">
+            <p className="font-display text-heading italic">{form.success.heading}</p>
+            <p className="mt-4 max-w-[38ch] text-lede font-light text-soma-ink/80">
+              {form.success.body}
             </p>
-            <button
-              type="button"
-              onClick={onClose}
-              className="mt-7 cursor-pointer bg-soma-moss px-7 py-3 text-xs font-medium uppercase tracking-wider text-soma-paper transition-colors hover:bg-soma-moss-light"
-            >
+            <Button variant="outline" size="sm" className="mt-8" onClick={onClose}>
               Close
-            </button>
+            </Button>
           </div>
+        ) : status === 'fallback' ? (
+          <SendFallback mailto={mailto} className="py-8" />
         ) : (
-          <form onSubmit={handleSubmit} className="mt-6 space-y-6">
+          <form noValidate onSubmit={onSubmit} className="mt-8 space-y-8">
             {isPrivate ? (
               <>
-                <div>
-                  <label className="block text-[0.6875rem] font-medium uppercase tracking-wider text-soma-clay-deep mb-2.5">
-                    Practice Focus
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {[
-                      { id: 'somatics', label: 'Clinical Somatics' },
-                      { id: 'taichi', label: 'Tai Chi Flow' },
-                      { id: 'creative', label: 'Creative Movement' },
-                      { id: 'exploratory', label: 'Not Sure Yet' },
-                    ].map((opt) => (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        onClick={() => setFocus(opt.id)}
-                        className={`cursor-pointer border p-2.5 text-left text-xs transition-colors ${
-                          focus === opt.id
-                            ? 'border-soma-moss bg-soma-linen text-soma-ink font-medium'
-                            : 'border-soma-sand bg-transparent text-soma-ink/80 hover:border-soma-ink/50'
-                        }`}
-                      >
-                        {opt.label}
-                      </button>
+                <Field id="booking-focus" as="select" label="Practice" value={values.focus} onChange={set('focus')}>
+                  {form.private.focusOptions.map((option) => (
+                    <option key={option}>{option}</option>
+                  ))}
+                </Field>
+                <div className="grid gap-8 sm:grid-cols-2">
+                  <Field id="booking-format" as="select" label="In person or online" value={values.format} onChange={set('format')}>
+                    {form.private.formatOptions.map((option) => (
+                      <option key={option}>{option}</option>
                     ))}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[0.6875rem] font-medium uppercase tracking-wider text-soma-clay-deep mb-2">
-                      Format
-                    </label>
-                    <select
-                      value={format}
-                      onChange={(e) => setFormat(e.target.value)}
-                      className="w-full border border-soma-sand bg-transparent px-3 py-2.5 text-xs text-soma-ink focus:border-soma-moss focus:outline-none"
-                    >
-                      <option value="in-person">In person (Studio)</option>
-                      <option value="online">Live Online (Zoom)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-[0.6875rem] font-medium uppercase tracking-wider text-soma-clay-deep mb-2">
-                      Preferred Time
-                    </label>
-                    <select
-                      value={timing}
-                      onChange={(e) => setTiming(e.target.value)}
-                      className="w-full border border-soma-sand bg-transparent px-3 py-2.5 text-xs text-soma-ink focus:border-soma-moss focus:outline-none"
-                    >
-                      <option value="Weekday morning">Weekday morning</option>
-                      <option value="Weekday evening">Weekday evening</option>
-                      <option value="Saturday morning">Saturday morning</option>
-                    </select>
-                  </div>
+                  </Field>
+                  <Field id="booking-time" as="select" label="Best time" value={values.time} onChange={set('time')}>
+                    {form.timeOptions.map((option) => (
+                      <option key={option}>{option}</option>
+                    ))}
+                  </Field>
                 </div>
               </>
             ) : (
-              <>
-                <div>
-                  <label className="block text-[0.6875rem] font-medium uppercase tracking-wider text-soma-clay-deep mb-2.5">
-                    Select Group Class
-                  </label>
-                  <div className="space-y-2">
-                    {[
-                      { title: 'Somatic Movement', meta: 'Monday 7:00 am • Online' },
-                      { title: 'Tai Chi', meta: 'Wednesday 6:30 pm • In person' },
-                      { title: 'Tai Chi (Online)', meta: 'Friday 7:00 am • Online' },
-                      { title: 'Creative Movement', meta: 'Saturday 10:00 am • In person, monthly' },
-                    ].map((cls) => (
-                      <button
-                        key={cls.title}
-                        type="button"
-                        onClick={() => setSelectedClass(cls.title)}
-                        className={`w-full cursor-pointer flex items-center justify-between border p-3 text-left text-xs transition-colors ${
-                          selectedClass === cls.title
-                            ? 'border-soma-moss bg-soma-linen text-soma-ink font-medium'
-                            : 'border-soma-sand bg-transparent text-soma-ink/80 hover:border-soma-ink/50'
-                        }`}
-                      >
-                        <span className="font-display text-sm">{cls.title}</span>
-                        <span className="text-[0.6875rem] text-soma-clay-deep">{cls.meta}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-[0.6875rem] font-medium uppercase tracking-wider text-soma-clay-deep mb-2">
-                    Attendance Option
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setGroupType('drop-in')}
-                      className={`cursor-pointer border p-2.5 text-center text-xs transition-colors ${
-                        groupType === 'drop-in'
-                          ? 'border-soma-moss bg-soma-linen text-soma-ink font-medium'
-                          : 'border-soma-sand bg-transparent text-soma-ink/80 hover:border-soma-ink/50'
-                      }`}
-                    >
-                      Single Drop-in
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setGroupType('term')}
-                      className={`cursor-pointer border p-2.5 text-center text-xs transition-colors ${
-                        groupType === 'term'
-                          ? 'border-soma-moss bg-soma-linen text-soma-ink font-medium'
-                          : 'border-soma-sand bg-transparent text-soma-ink/80 hover:border-soma-ink/50'
-                      }`}
-                    >
-                      Full Term Series
-                    </button>
-                  </div>
-                </div>
-              </>
+              <Field id="booking-class" as="select" label="Class" value={values.class} onChange={set('class')}>
+                {schedule.rows.map((row) => (
+                  <option key={row.id}>{classLabel(row)}</option>
+                ))}
+              </Field>
             )}
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <label className="block text-[0.6875rem] font-medium uppercase tracking-wider text-soma-clay-deep mb-1.5">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
-                  className="w-full border border-soma-sand bg-transparent px-3 py-2.5 text-xs text-soma-ink placeholder:text-soma-clay-deep/60 focus:border-soma-moss focus:outline-none"
-                />
-                {errors.name ? (
-                  <p className="mt-1 text-[0.6875rem] text-red-700">{errors.name}</p>
-                ) : null}
-              </div>
-
-              <div>
-                <label className="block text-[0.6875rem] font-medium uppercase tracking-wider text-soma-clay-deep mb-1.5">
-                  Email Address *
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your.email@example.com"
-                  className="w-full border border-soma-sand bg-transparent px-3 py-2.5 text-xs text-soma-ink placeholder:text-soma-clay-deep/60 focus:border-soma-moss focus:outline-none"
-                />
-                {errors.email ? (
-                  <p className="mt-1 text-[0.6875rem] text-red-700">{errors.email}</p>
-                ) : null}
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-[0.6875rem] font-medium uppercase tracking-wider text-soma-clay-deep mb-1.5">
-                Notes on your body (Optional)
-              </label>
-              <textarea
-                rows={2}
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder="Any areas of tension, previous injuries, or what you hope to explore..."
-                className="w-full border border-soma-sand bg-transparent px-3 py-2 text-xs text-soma-ink placeholder:text-soma-clay-deep/60 focus:border-soma-moss focus:outline-none resize-none"
+            <div className="grid gap-8 sm:grid-cols-2">
+              <Field
+                id="booking-name"
+                label="Your name"
+                autoComplete="name"
+                value={values.name}
+                onChange={set('name')}
+                error={errors.name}
+              />
+              <Field
+                id="booking-email"
+                type="email"
+                label="Email"
+                autoComplete="email"
+                value={values.email}
+                onChange={set('email')}
+                error={errors.email}
               />
             </div>
 
-            <div className="pt-2 border-t border-soma-sand/70 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <button
-                type="button"
-                onClick={handleJumpToBuilder}
-                className="cursor-pointer text-[0.6875rem] text-soma-clay-deep underline hover:text-soma-ink text-left"
-              >
-                Or customize via Consultation Builder below &darr;
-              </button>
+            <Field
+              id="booking-notes"
+              as="textarea"
+              label="Anything Kirti should know (optional)"
+              hint="Old injuries, areas of tension, or what you hope for."
+              value={values.notes}
+              onChange={set('notes')}
+            />
 
-              <button
-                type="submit"
-                disabled={status === 'submitting'}
-                className="cursor-pointer bg-soma-moss px-7 py-3 text-xs font-medium uppercase tracking-wider text-soma-paper transition-colors hover:bg-soma-moss-light disabled:opacity-50"
-              >
-                {status === 'submitting'
-                  ? 'Submitting...'
-                  : isPrivate
-                  ? 'Send Session Request'
-                  : 'Join Class Request'}
-              </button>
-            </div>
+            <Button type="submit" arrow disabled={status === 'sending'}>
+              {status === 'sending' ? 'Sending' : copy.submit}
+            </Button>
           </form>
         )}
       </motion.div>
@@ -384,10 +249,7 @@ function Paths({ onSelectPath }) {
                   <li key={line}>{line}</li>
                 ))}
               </ul>
-              <TextLink
-                onClick={() => onSelectPath(path.id)}
-                className="mt-10 cursor-pointer"
-              >
+              <TextLink onClick={() => onSelectPath(path.id)} className="mt-10 cursor-pointer">
                 {path.cta}
               </TextLink>
             </Reveal>
@@ -415,9 +277,9 @@ function Week({ onSelectClass }) {
             {rows.map((row, i) => (
               <Reveal
                 as="li"
-                key={`${row.day}-${row.title}`}
+                key={row.id}
                 delay={i * 0.05}
-                className="grid grid-cols-2 gap-x-6 gap-y-1 border-b border-soma-ink/15 py-6 sm:grid-cols-12 sm:items-baseline"
+                className="grid grid-cols-2 items-baseline gap-x-6 gap-y-1 border-b border-soma-ink/15 py-6 sm:grid-cols-12"
               >
                 <p className="font-display text-[1.5rem] leading-[1.2] font-medium sm:col-span-3">
                   {row.day}
@@ -428,14 +290,15 @@ function Week({ onSelectClass }) {
                 <p className="font-display text-[1.375rem] leading-[1.25] text-soma-moss italic sm:col-span-4">
                   {row.title}
                 </p>
-                <p className="text-left text-[0.875rem] text-soma-clay-deep sm:col-span-2">
+                <p className="text-right text-[0.875rem] text-soma-clay-deep sm:col-span-2 sm:text-left">
                   {row.format}
                 </p>
-                <div className="col-span-2 sm:col-span-1 text-right">
+                <div className="col-span-2 text-right sm:col-span-1">
                   <button
                     type="button"
-                    onClick={() => onSelectClass(row.title)}
-                    className="cursor-pointer text-[0.75rem] font-medium uppercase tracking-wider text-soma-moss underline hover:text-soma-ink transition-colors"
+                    onClick={() => onSelectClass(classLabel(row))}
+                    aria-label={`Ask to join ${row.title} on ${row.day}`}
+                    className="link-rest min-h-11 cursor-pointer text-[0.875rem] font-medium text-soma-moss transition-colors hover:text-soma-ink"
                   >
                     Join
                   </button>
@@ -450,36 +313,42 @@ function Week({ onSelectClass }) {
 }
 
 function Request() {
-  const { heading, body, image } = calendar.request
+  const { heading, body, bookingBody, image } = calendar.request
 
   return (
-    <section id="consultation" className="py-28 md:py-40">
+    <section id="consultation" className="scroll-mt-24 py-28 md:py-40">
       <div className="shell">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid items-start gap-14 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-5">
-              <Reveal as="h2" className="text-heading">
-                {heading}
-              </Reveal>
-              <Reveal
-                as="p"
-                delay={0.08}
-                className="mt-6 max-w-[42ch] text-lede font-light text-soma-ink/80"
-              >
-                {body}
-              </Reveal>
-              <Frame
-                image={image}
-                ratio="aspect-[3/2]"
-                sizes="(min-width: 1024px) 30rem, 100vw"
-                drift
-                unveil
-                className="mt-12 hidden lg:block"
+        <div className="mx-auto grid max-w-6xl items-start gap-14 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-5">
+            <Reveal as="h2" className="text-heading">
+              {heading}
+            </Reveal>
+            <Reveal
+              as="p"
+              delay={0.08}
+              className="mt-6 max-w-[42ch] text-lede font-light text-soma-ink/80"
+            >
+              {BOOKING_URL ? bookingBody : body}
+            </Reveal>
+            <Frame
+              image={image}
+              ratio="aspect-[3/2]"
+              sizes="(min-width: 1024px) 30rem, 100vw"
+              unveil
+              className="mt-12 hidden lg:block"
+            />
+          </div>
+          <div className="lg:col-span-7">
+            {BOOKING_URL ? (
+              <iframe
+                src={BOOKING_URL}
+                title="Book a time with Kirti Verma"
+                loading="lazy"
+                className="h-[44rem] w-full border border-soma-sand bg-soma-paper"
               />
-            </div>
-            <div className="lg:col-span-7">
+            ) : (
               <ConsultationBuilder />
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -488,27 +357,22 @@ function Request() {
 }
 
 export default function Calendar() {
-  useTitle('Schedule and Consultations: Group Classes and Private Sessions', {
+  useTitle('Book a Session or Class with Kirti Verma', {
     description:
-      'View the weekly schedule for Clinical Somatics, Tai Chi, and Creative Movement. Book private 1-on-1 consultations or reserve group classes with Kirti Verma.',
+      'Book a private session or join a weekly Somatic Movement Therapy or Tai Chi class with Kirti Verma.',
     path: '/calendar',
   })
-  const [activeBooking, setActiveBooking] = useState(null)
+  const [request, setRequest] = useState(null)
 
   return (
     <>
       <Intro />
-      <Paths onSelectPath={(pathId) => setActiveBooking(pathId)} />
-      <Week onSelectClass={(classTitle) => setActiveBooking({ type: 'group', classTitle })} />
+      <Paths onSelectPath={(type) => setRequest({ type })} />
+      <Week onSelectClass={(label) => setRequest({ type: 'group', classLabel: label })} />
       <Request />
 
       <AnimatePresence>
-        {activeBooking ? (
-          <BookingModal
-            config={activeBooking}
-            onClose={() => setActiveBooking(null)}
-          />
-        ) : null}
+        {request ? <BookingModal request={request} onClose={() => setRequest(null)} /> : null}
       </AnimatePresence>
     </>
   )

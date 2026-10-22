@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { ArrowLeftIcon } from '@phosphor-icons/react/dist/csr/ArrowLeft'
-import { ArrowRightIcon } from '@phosphor-icons/react/dist/csr/ArrowRight'
 import { CheckIcon } from '@phosphor-icons/react/dist/csr/Check'
 import { PlayIcon } from '@phosphor-icons/react/dist/csr/Play'
 import { VideoCameraIcon } from '@phosphor-icons/react/dist/csr/VideoCamera'
@@ -10,12 +8,14 @@ import ClosingCall from '../components/layout/ClosingCall'
 import Reveal from '../components/motion/Reveal'
 import RevealLines from '../components/motion/RevealLines'
 import DraftNote from '../components/ui/DraftNote'
+import TextLink from '../components/ui/TextLink'
 import { classes } from '../content/classes'
 import { PAGE_TOP } from '../lib/layout'
 import { EASE } from '../lib/motion'
+import { priceValue, useCart } from '../lib/cart'
 import { usePurchasedClasses } from '../lib/purchases'
 import useTitle from '../lib/useTitle'
-import { CheckoutModal, FullVideoPlayerModal, VideoPreviewModal } from './ClassDetail'
+import { FullVideoPlayerModal, VideoPreviewModal } from '../components/classes/ClassPlayers'
 
 function Intro() {
   const { label, headline, lede } = classes.intro
@@ -39,158 +39,72 @@ function Intro() {
   )
 }
 
-function ClassCard({ item, isPurchased, onEnroll, onPreview, onPlayFullVideo }) {
+// Grid view: a quiet editorial card. Photo, practice and length, title, a line about it,
+// then the price and one action.
+function ClassCard({ item, isPurchased, inCart, onAddToCart, onPlayFullVideo }) {
+  const original = priceValue(item.originalPrice)
+
   return (
-    <article className="group flex flex-col justify-between h-full border border-soma-sand/90 bg-soma-paper p-6 sm:p-7 shadow-2xs transition-all duration-500 ease-soma hover:shadow-md hover:-translate-y-1 transform-gpu">
-      <div>
-        {/* Card Thumbnail with Play Preview */}
-        <div className="relative overflow-hidden bg-soma-sand aspect-[16/10]">
-          <Link
-            to={`/classes/${item.id}`}
-            className="block h-full w-full"
-          >
-            <img
-              src={item.image.src}
-              srcSet={item.image.srcSet}
-              alt={item.image.alt || item.title}
-              className="h-full w-full object-cover transition-transform duration-700 ease-soma group-hover:scale-105"
-              loading="lazy"
-            />
-          </Link>
-
-          {isPurchased ? (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                onPlayFullVideo(item)
-              }}
-              className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-soma-moss px-3 py-1.5 text-[0.6875rem] font-medium text-soma-paper uppercase tracking-wider backdrop-blur-xs transition-colors hover:bg-soma-moss-light cursor-pointer"
-            >
-              <PlayIcon size={12} weight="fill" />
-              <span>Play Video</span>
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                onPreview(item)
-              }}
-              className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-soma-ink/85 px-3 py-1.5 text-[0.6875rem] font-medium text-white uppercase tracking-wider backdrop-blur-xs transition-colors hover:bg-soma-moss cursor-pointer"
-            >
-              <PlayIcon size={12} weight="fill" />
-              <span>Sample</span>
-            </button>
-          )}
-
-          {isPurchased ? (
-            <span className="absolute top-3 right-3 bg-soma-moss px-2 py-0.5 text-[0.625rem] font-semibold text-white uppercase tracking-wider">
-              Enrolled
-            </span>
-          ) : null}
-        </div>
-
-        {/* Practice and Meta */}
-        <div className="mt-5 flex items-baseline justify-between gap-4">
-          <span className="font-display text-[1.125rem] leading-[1.2] text-soma-moss italic">
-            {item.practiceName}
+    <article className="group flex h-full flex-col">
+      <Link
+        to={`/classes/${item.id}`}
+        className="relative block overflow-hidden bg-soma-linen"
+        aria-label={item.title}
+        tabIndex={-1}
+      >
+        <img
+          src={item.image.src}
+          srcSet={item.image.srcSet}
+          sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 100vw"
+          alt={item.image.alt}
+          loading="lazy"
+          decoding="async"
+          className="photo aspect-[4/5] w-full object-cover transition-transform duration-700 ease-soma group-hover:scale-[1.03]"
+        />
+        {isPurchased ? (
+          <span className="absolute top-3 right-3 bg-soma-moss px-2 py-0.5 text-[0.75rem] font-semibold tracking-wider text-white uppercase">
+            Owned
           </span>
-          <span className="text-[0.75rem] text-soma-clay-deep uppercase tracking-wider tabular-nums">
-            {item.duration} • {item.level}
-          </span>
-        </div>
-
-        {/* Title */}
-        <Link
-          to={`/classes/${item.id}`}
-          className="mt-2 block"
-        >
-          <h3 className="text-[clamp(1.375rem,2vw,1.75rem)] leading-[1.2] transition-colors group-hover:text-soma-moss">
-            {item.title}
-          </h3>
-        </Link>
-
-        {/* Focus description */}
-        <p className="mt-3 text-[0.875rem] leading-[1.65] text-soma-ink/80 line-clamp-3">
-          {item.focus}
-        </p>
-
-        {/* Highlights */}
-        {item.whatYouWillLearn && item.whatYouWillLearn.length > 0 ? (
-          <div className="mt-4 pt-3 border-t border-soma-sand/60">
-            <p className="text-[0.6875rem] uppercase tracking-wider text-soma-clay-deep font-medium">
-              Core Outcome
-            </p>
-            <p className="mt-1 text-xs text-soma-ink/85 line-clamp-1 italic">
-              {item.whatYouWillLearn[0]}
-            </p>
-          </div>
         ) : null}
+      </Link>
+      <div className="mt-5 flex items-baseline justify-between gap-4">
+        <span className="font-display text-[1.125rem] leading-[1.2] text-soma-moss italic">
+          {item.practiceName}
+        </span>
+        <span className="text-[0.8125rem] whitespace-nowrap text-soma-clay-deep tabular-nums">
+          {item.duration}
+        </span>
       </div>
-
-      {/* Pricing & Dual Actions */}
-      <div className="mt-6 pt-4 border-t border-soma-sand/70">
-        <div className="flex items-baseline justify-between mb-4">
-          {isPurchased ? (
-            <div className="flex items-center gap-1.5 text-xs font-medium text-soma-moss">
-              <CheckIcon size={14} weight="bold" />
-              <span>Full Access Unlocked</span>
-            </div>
-          ) : (
-            <div className="flex items-baseline gap-2">
-              <span className="text-[1.25rem] font-semibold tabular-nums text-soma-ink">
-                {item.price}
-              </span>
-              <span className="text-xs text-soma-clay-deep line-through tabular-nums">
-                {item.originalPrice}
-              </span>
-            </div>
-          )}
-
-          <span className="text-[0.6875rem] font-medium uppercase tracking-wider text-soma-moss">
-            {isPurchased ? 'In My Videos' : 'Instant Access'}
+      <h3 className="mt-2 text-[clamp(1.375rem,2vw,1.75rem)] leading-[1.2]">
+        <Link to={`/classes/${item.id}`} className="transition-colors hover:text-soma-moss">
+          {item.title}
+        </Link>
+      </h3>
+      <p className="mt-3 max-w-[40ch] text-[0.9375rem] leading-[1.65] text-soma-ink/80">{item.focus}</p>
+      <div className="mt-auto flex items-center justify-between gap-4 pt-6">
+        {isPurchased ? (
+          <span className="text-[0.875rem] text-soma-moss">In My Videos</span>
+        ) : (
+          <span className="text-[0.9375rem] tabular-nums">
+            <span className="font-semibold">{item.price}</span>
+            {original > priceValue(item.price) ? (
+              <span className="ml-2 text-[0.8125rem] text-soma-clay-deep line-through">{item.originalPrice}</span>
+            ) : null}
           </span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          {isPurchased ? (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                onPlayFullVideo(item)
-              }}
-              className="cursor-pointer bg-soma-moss py-2.5 text-center text-xs font-medium text-soma-paper transition-colors duration-300 hover:bg-soma-moss-light"
-            >
-              Play Video
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                onEnroll(item)
-              }}
-              className="cursor-pointer bg-soma-moss py-2.5 text-center text-xs font-medium text-soma-paper transition-colors duration-300 hover:bg-soma-moss-light"
-            >
-              Enroll Now
-            </button>
-          )}
-
-          <Link
-            to={`/classes/${item.id}`}
-            className="flex items-center justify-center border border-soma-sand py-2.5 text-center text-xs font-medium uppercase tracking-wider text-soma-ink transition-colors hover:border-soma-ink"
-          >
-            {isPurchased ? 'Syllabus' : 'Details'}
-          </Link>
-        </div>
+        )}
+        {isPurchased ? (
+          <TextLink onClick={() => onPlayFullVideo(item)}>Play</TextLink>
+        ) : inCart ? (
+          <TextLink to="/cart">Go to cart</TextLink>
+        ) : (
+          <TextLink onClick={() => onAddToCart(item)}>Add to cart</TextLink>
+        )}
       </div>
     </article>
   )
 }
 
-function CinemaSection({ item, isPurchased, onEnroll, onPreview, onPlayFullVideo }) {
+function CinemaSection({ item, isPurchased, inCart, onAddToCart, onPreview, onPlayFullVideo }) {
   return (
     <section className="min-h-[85vh] md:min-h-screen border-b border-soma-sand/70 flex items-center py-16 md:py-24">
       <div className="shell w-full">
@@ -219,7 +133,7 @@ function CinemaSection({ item, isPurchased, onEnroll, onPreview, onPlayFullVideo
                 </div>
               </button>
               <div className="absolute bottom-4 left-4 bg-soma-ink/85 px-3 py-1.5 text-xs text-white">
-                {isPurchased ? 'Full Course Access Available' : 'Free Lesson Preview Available'}
+                {isPurchased ? 'In your library' : 'Free preview'}
               </div>
             </div>
 
@@ -252,7 +166,7 @@ function CinemaSection({ item, isPurchased, onEnroll, onPreview, onPlayFullVideo
             {item.whatYouWillLearn && item.whatYouWillLearn.length > 0 ? (
               <div className="mt-6 border-y border-soma-sand/70 py-4 space-y-2.5">
                 <p className="text-xs uppercase font-medium tracking-wider text-soma-clay-deep">
-                  What you will practice:
+                  What you will practise
                 </p>
                 {item.whatYouWillLearn.slice(0, 3).map((pt, idx) => (
                   <div key={idx} className="flex items-start gap-2.5 text-xs text-soma-ink/90 font-light">
@@ -293,13 +207,20 @@ function CinemaSection({ item, isPurchased, onEnroll, onPreview, onPlayFullVideo
                 >
                   Play Full Video Course
                 </button>
+              ) : inCart ? (
+                <Link
+                  to="/cart"
+                  className="border border-soma-moss px-7 py-3.5 text-center text-sm font-medium text-soma-moss transition-colors duration-300 hover:bg-soma-moss hover:text-soma-paper"
+                >
+                  Go to cart
+                </Link>
               ) : (
                 <button
                   type="button"
-                  onClick={() => onEnroll(item)}
+                  onClick={() => onAddToCart(item)}
                   className="cursor-pointer bg-soma-moss px-7 py-3.5 text-center text-sm font-medium text-soma-paper transition-colors duration-300 hover:bg-soma-moss-light"
                 >
-                  Enroll & Access Now
+                  Add to cart
                 </button>
               )}
 
@@ -320,15 +241,14 @@ function CinemaSection({ item, isPurchased, onEnroll, onPreview, onPlayFullVideo
 function Library() {
   const [searchParams, setSearchParams] = useSearchParams()
   const tabParam = searchParams.get('tab')
-  const { purchases, isPurchased, clearPurchases } = usePurchasedClasses()
+  const { purchases, isPurchased } = usePurchasedClasses()
+  const cart = useCart()
 
   const [filter, setFilter] = useState(tabParam === 'my-videos' ? 'my-videos' : 'all')
-  const [viewMode, setViewMode] = useState('carousel') // 'carousel' | 'cinema' | 'grid'
-  const [selectedCheckoutCourse, setSelectedCheckoutCourse] = useState(null)
+  const [viewMode, setViewMode] = useState('grid') // 'grid' | 'cinema'
   const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null)
   const [selectedFullVideoCourse, setSelectedFullVideoCourse] = useState(null)
 
-  const carouselRef = useRef(null)
   const reduce = useReducedMotion()
 
   // Sync tab query parameter if present
@@ -357,9 +277,6 @@ function Library() {
 
   const handleFilterChange = (id) => {
     setFilter(id)
-    if (carouselRef.current) {
-      carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' })
-    }
     if (id === 'my-videos') {
       setSearchParams({ tab: 'my-videos' })
     } else {
@@ -367,20 +284,12 @@ function Library() {
     }
   }
 
-  const scrollStep = (direction) => {
-    if (!carouselRef.current) return
-    const stepSize = 460
-    carouselRef.current.scrollBy({
-      left: direction * stepSize,
-      behavior: 'smooth',
-    })
-  }
-
   return (
     <section className="py-20 md:py-28 min-h-[85vh] flex flex-col justify-center">
       {/* Top Filter and View Mode Switcher */}
       <div className="shell mb-10">
         <div className="mx-auto max-w-6xl">
+          {classes.placeholder ? <DraftNote className="mb-5">{classes.note}</DraftNote> : null}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 border-y border-soma-sand py-5">
             {/* Filter buttons */}
             <div
@@ -394,7 +303,7 @@ function Library() {
                   type="button"
                   aria-pressed={filter === option.id}
                   onClick={() => handleFilterChange(option.id)}
-                  className={`link-grow pb-1 text-[0.875rem] tracking-[0.02em] transition-colors duration-500 cursor-pointer ${
+                  className={`link-grow min-h-11 cursor-pointer pb-1 text-[0.875rem] tracking-[0.02em] transition-colors duration-500 ${
                     filter === option.id
                       ? 'font-medium text-soma-ink [background-size:100%_1px] [background-position:0_100%]'
                       : 'text-soma-ink/65 hover:text-soma-ink'
@@ -409,33 +318,9 @@ function Library() {
             <div className="flex items-center gap-2 border border-soma-sand/80 p-1 bg-soma-linen/40 shrink-0">
               <button
                 type="button"
-                onClick={() => setViewMode('carousel')}
-                aria-pressed={viewMode === 'carousel'}
-                className={`cursor-pointer px-3 py-1.5 text-xs font-medium uppercase tracking-wider transition-colors ${
-                  viewMode === 'carousel'
-                    ? 'bg-soma-paper text-soma-ink shadow-2xs font-semibold'
-                    : 'text-soma-clay-deep hover:text-soma-ink'
-                }`}
-              >
-                Carousel
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode('cinema')}
-                aria-pressed={viewMode === 'cinema'}
-                className={`cursor-pointer px-3 py-1.5 text-xs font-medium uppercase tracking-wider transition-colors ${
-                  viewMode === 'cinema'
-                    ? 'bg-soma-paper text-soma-ink shadow-2xs font-semibold'
-                    : 'text-soma-clay-deep hover:text-soma-ink'
-                }`}
-              >
-                Full Screen
-              </button>
-              <button
-                type="button"
                 onClick={() => setViewMode('grid')}
                 aria-pressed={viewMode === 'grid'}
-                className={`cursor-pointer px-3 py-1.5 text-xs font-medium uppercase tracking-wider transition-colors ${
+                className={`min-h-10 cursor-pointer px-3 text-xs font-medium uppercase tracking-wider transition-colors ${
                   viewMode === 'grid'
                     ? 'bg-soma-paper text-soma-ink shadow-2xs font-semibold'
                     : 'text-soma-clay-deep hover:text-soma-ink'
@@ -443,26 +328,28 @@ function Library() {
               >
                 Grid
               </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('cinema')}
+                aria-pressed={viewMode === 'cinema'}
+                className={`min-h-10 cursor-pointer px-3 text-xs font-medium uppercase tracking-wider transition-colors ${
+                  viewMode === 'cinema'
+                    ? 'bg-soma-paper text-soma-ink shadow-2xs font-semibold'
+                    : 'text-soma-clay-deep hover:text-soma-ink'
+                }`}
+              >
+                Full Screen
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Reset demo purchases bar for My Videos */}
       {filter === 'my-videos' && visible.length > 0 ? (
         <div className="shell mb-8">
-          <div className="mx-auto max-w-6xl flex items-center justify-between border-b border-soma-sand/70 pb-3 text-xs text-soma-clay-deep">
-            <span>
-              You have unlocked lifetime access to {visible.length} recorded {visible.length === 1 ? 'class' : 'classes'}.
-            </span>
-            <button
-              type="button"
-              onClick={() => clearPurchases()}
-              className="cursor-pointer underline hover:text-soma-ink transition-colors"
-            >
-              Reset demo purchases
-            </button>
-          </div>
+          <p className="mx-auto max-w-6xl border-b border-soma-sand/70 pb-3 text-[0.8125rem] text-soma-clay-deep">
+            You own {visible.length} recorded {visible.length === 1 ? 'class' : 'classes'}.
+          </p>
         </div>
       ) : null}
 
@@ -477,7 +364,7 @@ function Library() {
               No Purchased Videos Yet
             </h3>
             <p className="mt-3 text-sm text-soma-clay-deep font-light leading-relaxed">
-              When you enroll in any recorded class, your lifetime on-demand videos, downloadable audio tracks, and illustrated guides will be ready here.
+              Classes you buy will appear here, ready to watch.
             </p>
             <button
               type="button"
@@ -490,70 +377,7 @@ function Library() {
         </div>
       ) : null}
 
-      {/* MODE 1: Horizontal Carousel */}
-      {viewMode === 'carousel' && visible.length > 0 ? (
-        <div className="w-full">
-          {/* Header Controls with count and arrows */}
-          <div className="shell mb-6">
-            <div className="mx-auto max-w-6xl flex items-center justify-between text-xs text-soma-clay-deep">
-              <span className="tabular-nums">
-                {visible.length} {visible.length === 1 ? 'class' : 'classes'} shown
-              </span>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => scrollStep(-1)}
-                  aria-label="Previous classes"
-                  className="flex h-9 w-9 cursor-pointer items-center justify-center border border-soma-sand bg-soma-paper text-soma-ink transition-colors hover:border-soma-ink"
-                >
-                  <ArrowLeftIcon size={14} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollStep(1)}
-                  aria-label="Next classes"
-                  className="flex h-9 w-9 cursor-pointer items-center justify-center border border-soma-sand bg-soma-paper text-soma-ink transition-colors hover:border-soma-ink"
-                >
-                  <ArrowRightIcon size={14} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Clean Scrollable Motion Track */}
-          <div
-            ref={carouselRef}
-            data-lenis-prevent="true"
-            data-lenis-prevent-touch="true"
-            data-lenis-prevent-wheel="true"
-            className="w-full overflow-x-auto scrollbar-none pb-4 touch-pan-x cursor-default"
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              WebkitOverflowScrolling: 'touch',
-            }}
-          >
-            <div className="flex gap-6 sm:gap-8 px-6 sm:px-10 md:px-14 lg:px-20 py-2 w-max min-w-full">
-              {visible.map((item) => (
-                <div
-                  key={item.id}
-                  className="w-[84vw] sm:w-[380px] md:w-[420px] lg:w-[450px] shrink-0"
-                >
-                  <ClassCard
-                    item={item}
-                    isPurchased={isPurchased(item.id)}
-                    onEnroll={(course) => setSelectedCheckoutCourse(course)}
-                    onPreview={(course) => setSelectedPreviewCourse(course)}
-                    onPlayFullVideo={(course) => setSelectedFullVideoCourse(course)}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      {/* MODE 2: Full Screen Cinema Mode */}
+      {/* Full screen view */}
       {viewMode === 'cinema' && visible.length > 0 ? (
         <div className="w-full">
           {visible.map((item) => (
@@ -561,7 +385,8 @@ function Library() {
               key={item.id}
               item={item}
               isPurchased={isPurchased(item.id)}
-              onEnroll={(course) => setSelectedCheckoutCourse(course)}
+              inCart={cart.inCart(item.id)}
+              onAddToCart={(course) => cart.add(course.id)}
               onPreview={(course) => setSelectedPreviewCourse(course)}
               onPlayFullVideo={(course) => setSelectedFullVideoCourse(course)}
             />
@@ -569,7 +394,7 @@ function Library() {
         </div>
       ) : null}
 
-      {/* MODE 3: Classic 3-Column Grid */}
+      {/* Grid view */}
       {viewMode === 'grid' && visible.length > 0 ? (
         <div className="shell">
           <div className="mx-auto max-w-6xl">
@@ -587,8 +412,8 @@ function Library() {
                     <ClassCard
                       item={item}
                       isPurchased={isPurchased(item.id)}
-                      onEnroll={(course) => setSelectedCheckoutCourse(course)}
-                      onPreview={(course) => setSelectedPreviewCourse(course)}
+                      inCart={cart.inCart(item.id)}
+                      onAddToCart={(course) => cart.add(course.id)}
                       onPlayFullVideo={(course) => setSelectedFullVideoCourse(course)}
                     />
                   </motion.li>
@@ -598,25 +423,6 @@ function Library() {
           </div>
         </div>
       ) : null}
-
-      {classes.placeholder && classes.note ? (
-        <div className="shell mt-16">
-          <div className="mx-auto max-w-6xl">
-            <DraftNote>{classes.note}</DraftNote>
-          </div>
-        </div>
-      ) : null}
-
-      {/* Full Screen Checkout Modal */}
-      <AnimatePresence>
-        {selectedCheckoutCourse ? (
-          <CheckoutModal
-            course={selectedCheckoutCourse}
-            onClose={() => setSelectedCheckoutCourse(null)}
-            onOpenFullVideo={(course) => setSelectedFullVideoCourse(course)}
-          />
-        ) : null}
-      </AnimatePresence>
 
       {/* Full Screen Video Preview Modal */}
       <AnimatePresence>
@@ -645,34 +451,18 @@ export default function Classes() {
   const courseSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Recorded Somatic Movement Classes',
+    name: 'Recorded classes with Kirti Verma',
     itemListElement: classes.items.map((item, index) => ({
-      '@type': 'Course',
+      '@type': 'ListItem',
       position: index + 1,
+      url: `https://fieldofsoma.com/classes/${item.id}`,
       name: item.title,
-      description: item.subtitle || item.focus,
-      provider: {
-        '@type': 'EducationalOrganization',
-        name: 'Field of Soma',
-        sameAs: 'https://fieldofsoma.com',
-      },
-      offers: {
-        '@type': 'Offer',
-        price: item.price.replace(/[^\d]/g, ''),
-        priceCurrency: 'INR',
-        availability: 'https://schema.org/InStock',
-      },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: item.rating,
-        reviewCount: item.ratingCount,
-      },
     })),
   }
 
-  useTitle('Recorded Classes: Somatics, Tai Chi and Movement at Home', {
+  useTitle('Recorded Classes: Somatic Movement Therapy, Tai Chi and Creative Movement', {
     description:
-      'Learn somatic movement at your own pace. Video classes for neck and shoulder release, lower back tension, and spinal mobility with Kirti Verma.',
+      'Recorded classes with Kirti Verma you can practise at home, in your own time: Somatic Movement Therapy, Tai Chi and Creative Movement.',
     path: '/classes',
     keywords:
       'somatic classes online, recorded somatics, neck shoulder release video, lower back somatic exercises, pandiculation lessons',
