@@ -8,6 +8,7 @@ import { articles, readingTime } from '../content/articles'
 import { PAGE_TOP } from '../lib/layout'
 import useTitle from '../lib/useTitle'
 import NewsletterForm from '../sections/home/NewsletterForm'
+import { pages } from '../content/seo'
 
 function Intro() {
   const { label, headline, lede } = articles.intro
@@ -166,10 +167,8 @@ export default function Articles() {
     url: 'https://fieldofsoma.com/articles',
   }
 
-  useTitle('Writing on Somatics, Tai Chi and Rest', {
-    description:
-      'Short pieces by Kirti Verma about Somatics, Tai Chi and paying attention to the body. Sign up for Field Notes.',
-    path: '/articles',
+  useTitle({
+    ...pages.articles,
     schema: articlesSchema,
   })
 

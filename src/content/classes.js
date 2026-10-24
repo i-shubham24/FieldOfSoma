@@ -5,8 +5,10 @@ import { images } from './images'
 //
 // Selling: classes go into the cart and are paid for at /checkout through Razorpay
 // (set VITE_RAZORPAY_KEY_ID in Vercel). Without a key, checkout runs in a labelled test mode.
-// Videos: paste a link into `previewUrl` (free sample) and `videoUrl` (the full class) for
-// each class. YouTube (unlisted), Vimeo or a direct .mp4 link all work.
+// Videos: `previewUrl` is the free sample and may be any public link (YouTube unlisted,
+// Vimeo or .mp4). Keep `videoUrl` EMPTY here: everything in this file is public, so a paid
+// class link placed here can be copied by anyone. Paid videos are served by the backend,
+// as short-lived signed links, only to people who bought the class (BACKEND_PLAN.md).
 
 export const classes = {
   intro: {
@@ -41,7 +43,7 @@ export const classes = {
       ratingCount: 148,
       studentsCount: 390,
       lastUpdated: 'October 2026',
-      image: images.kirtiSomaticWorkshop,
+      image: images.kirtiContemplationLeaves,
       previewUrl: '',
       videoUrl: '',
       overview: [
@@ -112,7 +114,7 @@ export const classes = {
       ratingCount: 162,
       studentsCount: 420,
       lastUpdated: 'October 2026',
-      image: images.somaticConstructiveRest,
+      image: images.kirtiForestHero,
       previewUrl: '',
       videoUrl: '',
       overview: [
@@ -244,7 +246,7 @@ export const classes = {
       ratingCount: 88,
       studentsCount: 210,
       lastUpdated: 'October 2026',
-      image: images.kirtiDanceMotionBlur,
+      image: images.somaticConstructiveRest,
       previewUrl: '',
       videoUrl: '',
       overview: [

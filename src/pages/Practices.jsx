@@ -9,6 +9,7 @@ import { booking } from '../content/site'
 import AudioGuide from '../components/interactive/AudioGuide'
 import { PAGE_TOP } from '../lib/layout'
 import useTitle from '../lib/useTitle'
+import { pages } from '../content/seo'
 
 function Intro() {
   const { label, headline, lede } = practices.intro
@@ -94,34 +95,6 @@ function Heading({ item }) {
   )
 }
 
-function Session({ item }) {
-  return (
-    <Reveal>
-      <h3 className="text-[1.75rem] leading-[1.2]">Sixty minutes, in outline</h3>
-      <ol className="mt-6 border-t border-soma-ink/15">
-        {item.session.map((part) => (
-          <li
-            key={part.title}
-            className="group grid grid-cols-[5.5rem_1fr] gap-x-4 border-b border-soma-ink/15 py-5 sm:grid-cols-[7rem_1fr] px-2 -mx-2 transition-colors duration-300 hover:bg-soma-sand/20 rounded-[2px]"
-          >
-            <p className="pt-1.5 text-[0.8125rem] text-soma-clay-deep tabular-nums">
-              {part.time} min
-            </p>
-            <div>
-              <p className="font-display text-[1.375rem] leading-[1.25] font-medium transition-colors group-hover:text-soma-moss">
-                {part.title}
-              </p>
-              <p className="mt-1.5 max-w-[46ch] text-[0.9375rem] leading-[1.75] text-soma-ink/80">
-                {part.body}
-              </p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </Reveal>
-  )
-}
-
 function Serves({ item }) {
   return (
     <Reveal>
@@ -178,7 +151,6 @@ function SplitPractice({ item, flip = false }) {
               />
             ) : null}
             <div className="mt-16 space-y-16">
-              <Session item={item} />
               <Serves item={item} />
             </div>
           </div>
@@ -201,20 +173,23 @@ function WidePractice({ item }) {
             drift
             unveil
           />
-          <div className="mt-16 grid gap-16 md:mt-20 lg:grid-cols-12 lg:gap-8">
-            <div className="lg:col-span-5">
+          {/* Text on the left; the tone player and who it serves on the right, held in view
+              while the longer text scrolls, so the two columns stay balanced. */}
+          <div className="mt-16 grid items-start gap-14 md:mt-20 lg:grid-cols-12 lg:gap-8">
+            <div className="lg:col-span-6">
               <Heading item={item} />
-              {item.audioCue ? (
-                <AudioGuide
-                  practiceTitle={item.name}
-                  verbs={item.verbs}
-                  duration={item.audioCue.duration}
-                  transcript={item.audioCue.transcript}
-                />
-              ) : null}
             </div>
-            <div className="space-y-16 lg:col-span-6 lg:col-start-7">
-              <Session item={item} />
+            <div className="space-y-14 lg:sticky lg:top-28 lg:col-span-5 lg:col-start-8">
+              {item.audioCue ? (
+                <div className="[&>div]:mt-0">
+                  <AudioGuide
+                    practiceTitle={item.name}
+                    verbs={item.verbs}
+                    duration={item.audioCue.duration}
+                    transcript={item.audioCue.transcript}
+                  />
+                </div>
+              ) : null}
               <Serves item={item} />
             </div>
           </div>
@@ -255,12 +230,8 @@ export default function Practices() {
     ],
   }
 
-  useTitle('The Practices: Somatic Movement Therapy, Tai Chi and Creative Movement', {
-    description:
-      'Two distinct practices with Kirti Verma: Somatic Movement Therapy to release held tension and return to equilibrium, and Tai Chi for structure, balance and sustainable strength.',
-    path: '/practices',
-    keywords:
-      'Somatic Movement Therapy, Tai Chi, Feldenkrais, Body-Mind Centering, moving meditation, creative movement',
+  useTitle({
+    ...pages.practices,
     breadcrumbs: [{ name: 'Practices', path: '/practices' }],
     schema: serviceSchema,
   })

@@ -3,7 +3,7 @@ import { site } from '../content/site'
 
 const DEFAULT_TITLE = `${site.name}: Movement and Somatic Education with ${site.person}`
 const DEFAULT_DESC =
-  'Somatic Movement Therapy and Tai Chi with Kirti Verma. Gentle, body-based practices for releasing held tension and moving with ease.'
+  'Movement and somatic education with Kirti Verma: Somatic Movement Therapy, Tai Chi and Creative Movement. Gentle practices to release held tension.'
 const BASE_URL = 'https://fieldofsoma.com'
 
 function setMeta(attribute, name, content) {
@@ -44,6 +44,7 @@ function setJsonLd(schema) {
 }
 
 const DEFAULT_OG_IMAGE = 'https://fieldofsoma.com/photos/kirti-forest-hero.jpg'
+const DEFAULT_OG_ALT = 'Kirti Verma standing among tall pines in a white dress'
 
 // Sets page title, meta description, OpenGraph tags, canonical link, breadcrumbs and JSON-LD schema.
 export default function useTitle(titleOrOptions, maybeOptions = {}) {
@@ -57,6 +58,8 @@ export default function useTitle(titleOrOptions, maybeOptions = {}) {
   const path = options.path || (typeof window !== 'undefined' ? window.location.pathname : '')
   const keywords = options.keywords || null
   const image = options.image || null
+  const imageAlt = options.imageAlt || null
+  const type = options.type || 'website'
   const schema = options.schema || null
   const breadcrumbs = options.breadcrumbs || null
   const noindex = Boolean(options.noindex)
@@ -82,6 +85,8 @@ export default function useTitle(titleOrOptions, maybeOptions = {}) {
     setMeta('property', 'og:url', `${BASE_URL}${path}`)
     const shareImage = image ? (image.startsWith('/') ? `${BASE_URL}${image}` : image) : DEFAULT_OG_IMAGE
     setMeta('property', 'og:image', shareImage)
+    setMeta('property', 'og:image:alt', image ? imageAlt : DEFAULT_OG_ALT)
+    setMeta('property', 'og:type', type)
 
     setMeta('name', 'twitter:title', fullTitle)
     setMeta('name', 'twitter:description', description)
@@ -134,5 +139,5 @@ export default function useTitle(titleOrOptions, maybeOptions = {}) {
     }
     // schema and breadcrumbs are read through their keys above
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, description, path, keywords, image, schemaKey, crumbsKey, noindex])
+  }, [title, description, path, keywords, image, imageAlt, type, schemaKey, crumbsKey, noindex])
 }

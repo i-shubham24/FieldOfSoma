@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 
 // Orders and the classes they unlock, kept in this browser for now. When real accounts
 // arrive (Supabase or Clerk), these move to the server and follow the person's login.
+// This list only changes what the page shows. It must never be the thing that grants
+// access: anyone can edit their own browser storage. The server checks every purchase.
 const PURCHASES_KEY = 'field_of_soma_purchases'
 const ORDERS_KEY = 'field_of_soma_orders'
 const EVENT = 'soma_purchases_changed'

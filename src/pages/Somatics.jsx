@@ -7,6 +7,7 @@ import { somatics } from '../content/somatics'
 import { PAGE_TOP } from '../lib/layout'
 import useTitle from '../lib/useTitle'
 import Inquiry from '../sections/somatics/Inquiry'
+import { pages } from '../content/seo'
 
 function Intro() {
   const { label, headline, lede, image } = somatics.intro
@@ -245,12 +246,8 @@ export default function Somatics() {
     })),
   }
 
-  useTitle('Discover Clinical Somatics and Pandiculation', {
-    description:
-      'Explore Clinical Somatics: gentle neuromuscular movements and pandiculation to release sensory-motor amnesia, chronic muscular tension, and stress at the nervous system level.',
-    path: '/somatics',
-    keywords:
-      'Clinical Somatics, pandiculation, sensory motor amnesia, somatic movement, chronic tension relief, back pain somatics, Thomas Hanna somatics',
+  useTitle({
+    ...pages.somatics,
     breadcrumbs: [{ name: 'Discover Somatics', path: '/somatics' }],
     schema: faqSchema,
   })

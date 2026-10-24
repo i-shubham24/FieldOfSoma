@@ -8,7 +8,7 @@ export const somatics = {
     label: 'Discover Somatics',
     headline: [{ text: 'We live from' }, { text: 'the neck up.', italic: true }],
     lede: 'Most of us think our way through the day and notice the body only when it hurts. Somatics is the practice of noticing sooner, and of using that attention to undo tension at its source.',
-    image: images.kirtiFieldMeadowFlow,
+    image: images.kirtiForestHero,
   },
 
   problem: {
@@ -203,6 +203,5 @@ export const somatics = {
   closing: {
     heading: 'Feel it for yourself',
     body: 'Reading about Somatics only goes so far. One session will tell you more than this page can.',
-    secondary: { to: '/practices#somatics', label: 'What a session is like' },
   },
 }

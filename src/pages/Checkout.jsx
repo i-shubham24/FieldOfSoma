@@ -11,6 +11,8 @@ import { PAGE_TOP } from '../lib/layout'
 import { newOrderId, pay, paymentsLive } from '../lib/payments'
 import { recordOrder, usePurchasedClasses } from '../lib/purchases'
 import useTitle from '../lib/useTitle'
+import Honeypot from '../components/ui/Honeypot'
+import { pages } from '../content/seo'
 
 const STEPS = ['Details', 'Payment', 'Done']
 
@@ -162,7 +164,7 @@ function Success({ order }) {
 }
 
 export default function Checkout() {
-  useTitle('Checkout', { noindex: true })
+  useTitle(pages.checkout)
   const cart = useCart()
   const { isPurchased } = usePurchasedClasses()
   const [step, setStep] = useState(1)
@@ -288,6 +290,7 @@ export default function Checkout() {
                       Your receipt and class access go to this email.
                     </p>
                     <form noValidate onSubmit={onDetails} className="mt-8 space-y-8">
+                      <Honeypot />
                       <Field
                         id="checkout-name"
                         label="Full name"

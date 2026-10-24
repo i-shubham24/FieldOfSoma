@@ -17,7 +17,7 @@ export const hero = {
 
 // The first sentence is Kirti's own ("Find your way back into the body").
 export const manifesto = {
-  text: 'Find your way back into the body. It is not a problem to fix, but a living field of intelligence, capable of its own restoration, its own expression, and its own quiet wisdom.',
+  text: 'Find your way back into the body. A living field of intelligence, capable of its own restoration, its own expression, and its own quiet wisdom.',
 }
 
 export const pillars = {
@@ -32,7 +32,7 @@ export const pillars = {
       body: 'Slow, gentle movement that retrains the muscles braced from years of tightness. Nothing is forced or stretched. You learn to release the excess tension and bring the body back into a state of equilibrium.',
       audience: 'For chronic back, neck, hip or shoulder tension. For stability in body and clarity in mind.',
       link: { to: '/practices#somatics', label: 'About Somatic Movement Therapy' },
-      image: images.somaticConstructiveRest,
+      image: images.kirtiContemplationLeaves,
     },
     {
       id: 'tai-chi',

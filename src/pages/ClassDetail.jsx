@@ -17,6 +17,7 @@ import { paymentsLive } from '../lib/payments'
 import { usePurchasedClasses } from '../lib/purchases'
 import useTitle from '../lib/useTitle'
 import NotFound from './NotFound'
+import { classSeo } from '../content/seo'
 
 const solid =
   'flex min-h-12 w-full cursor-pointer items-center justify-center bg-soma-moss text-center text-sm font-medium text-soma-paper transition-colors duration-300 hover:bg-soma-moss-light'
@@ -135,10 +136,8 @@ export default function ClassDetail() {
   const [showPreview, setShowPreview] = useState(false)
   const [showFull, setShowFull] = useState(false)
 
-  useTitle(course ? `${course.title}: Recorded ${course.practiceName} Class` : 'Class not found', {
-    description: course ? `${course.subtitle} A recorded class with Kirti Verma.` : undefined,
-    path: course ? `/classes/${course.id}` : undefined,
-    image: course?.image.src,
+  useTitle({
+    ...(course ? classSeo(course) : { title: 'Class not found' }),
     breadcrumbs: course
       ? [
           { name: 'Recorded Classes', path: '/classes' },

@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/sitemap.mjs && vite build",
+    "build": "node scripts/sitemap.mjs && vite build && node scripts/prerender.mjs",
     "sitemap": "node scripts/sitemap.mjs",
     "preview": "vite preview",
-    "check:copy": "node scripts/check-copy.mjs"
+    "check:copy": "node scripts/check-copy.mjs",
+    "prerender": "node scripts/prerender.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.0",

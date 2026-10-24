@@ -16,6 +16,7 @@ import { priceValue, useCart } from '../lib/cart'
 import { usePurchasedClasses } from '../lib/purchases'
 import useTitle from '../lib/useTitle'
 import { FullVideoPlayerModal, VideoPreviewModal } from '../components/classes/ClassPlayers'
+import { pages } from '../content/seo'
 
 function Intro() {
   const { label, headline, lede } = classes.intro
@@ -460,12 +461,8 @@ export default function Classes() {
     })),
   }
 
-  useTitle('Recorded Classes: Somatic Movement Therapy, Tai Chi and Creative Movement', {
-    description:
-      'Recorded classes with Kirti Verma you can practise at home, in your own time: Somatic Movement Therapy, Tai Chi and Creative Movement.',
-    path: '/classes',
-    keywords:
-      'somatic classes online, recorded somatics, neck shoulder release video, lower back somatic exercises, pandiculation lessons',
+  useTitle({
+    ...pages.classes,
     breadcrumbs: [{ name: 'Recorded Classes', path: '/classes' }],
     schema: courseSchema,
   })

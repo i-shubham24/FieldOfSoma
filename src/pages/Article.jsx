@@ -9,6 +9,7 @@ import { allArticles, articles, readingTime } from '../content/articles'
 import { PAGE_TOP } from '../lib/layout'
 import useTitle from '../lib/useTitle'
 import NotFound from './NotFound'
+import { articleSeo } from '../content/seo'
 
 // One piece of writing at its own address, so it can be shared and found in search.
 export default function Article() {
@@ -17,10 +18,8 @@ export default function Article() {
   const article = allArticles[index]
   const next = article ? allArticles[(index + 1) % allArticles.length] : null
 
-  useTitle(article ? article.title : 'Page not found', {
-    description: article?.excerpt,
-    path: article ? `/articles/${article.id}` : undefined,
-    image: article?.image?.src,
+  useTitle({
+    ...(article ? articleSeo(article) : { title: 'Page not found' }),
     breadcrumbs: article
       ? [
           { name: 'Writing', path: '/articles' },

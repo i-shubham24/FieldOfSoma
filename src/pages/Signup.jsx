@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { images } from '../content/images'
 import useTitle from '../lib/useTitle'
+import { pages } from '../content/seo'
 
 export default function Signup() {
-  useTitle('Create Account', { noindex: true })
+  useTitle(pages.signup)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -16,8 +17,10 @@ export default function Signup() {
     setSubmitted(true)
   }
 
+  // Sized to fit one screen: the photo drops out on short screens. Only very small or
+  // zoomed windows fall back to scrolling, so nothing is ever cut off.
   return (
-    <div className="relative min-h-[100dvh] lg:h-[100dvh] lg:max-h-[100dvh] w-full overflow-y-auto lg:overflow-hidden flex items-center justify-center px-6 lg:px-12 py-10 lg:py-0 bg-[#F7F5F0] text-soma-ink select-none">
+    <div className="relative flex min-h-[100dvh] w-full items-center justify-center overflow-x-hidden bg-[#F7F5F0] px-6 pt-12 pb-6 text-soma-ink lg:px-12">
       {/* Return to website shortcut */}
       <Link
         to="/"
@@ -29,7 +32,7 @@ export default function Signup() {
         <span>Field of Soma</span>
       </Link>
 
-      <div className="max-w-5xl w-full mx-auto grid lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+      <div className="max-w-5xl w-full mx-auto grid lg:grid-cols-12 gap-7 lg:gap-14 items-center">
         {/* Left Editorial Branding Column matching Knotless Signup */}
         <div className="lg:col-span-5 flex flex-col justify-center space-y-3.5 sm:space-y-4">
           <div className="flex items-center gap-3">
@@ -173,12 +176,6 @@ export default function Signup() {
                     placeholder="Repeat password"
                     className="w-full rounded-xl border border-transparent bg-[#F2EFEB] px-3.5 py-2 sm:py-2.5 font-sans text-xs sm:text-[0.8125rem] text-soma-ink placeholder:text-soma-clay-deep/50 transition-all focus:border-soma-moss focus:bg-white focus:outline-none"
                   />
-                </div>
-
-                {/* Micro-copy information note from Knotless */}
-                <div className="flex items-center gap-2 rounded-lg border border-stone-200/70 bg-[#FAF8F5] px-3 py-1.5 text-[0.75rem] text-soma-clay-deep">
-                  <span className="shrink-0 text-soma-moss font-medium">ⓘ</span>
-                  <p>Clarify, respect silence, and contribute authentic knowledge.</p>
                 </div>
 
                 <button

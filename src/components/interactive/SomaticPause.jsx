@@ -5,6 +5,7 @@ import { SpeakerSlashIcon } from '@phosphor-icons/react/dist/csr/SpeakerSlash'
 import { XIcon } from '@phosphor-icons/react/dist/csr/X'
 import { EASE } from '../../lib/motion'
 import useDialog from '../../lib/useDialog'
+import BreathOrb from './BreathOrb'
 
 // Four phases of a slow pandiculation, with plain cues.
 const PHASES = [
@@ -13,28 +14,24 @@ const PHASES = [
     action: 'Breathe in gently',
     seconds: 4,
     guidance: 'Tighten the muscles a little, with only a fraction of your effort. Notice where it starts.',
-    scale: 1.28,
   },
   {
     name: 'Release',
     action: 'Breathe out slowly',
     seconds: 7,
     guidance: 'Let go more slowly than you tightened. Take your time.',
-    scale: 0.92,
   },
   {
     name: 'Rest',
     action: 'Stillness',
     seconds: 4,
     guidance: 'Let go completely. Let the floor or chair hold all of your weight.',
-    scale: 0.88,
   },
   {
     name: 'Sense',
     action: 'Notice',
     seconds: 3,
     guidance: 'What feels different now? Warmth, tingling, a little more space?',
-    scale: 1.0,
   },
 ]
 
@@ -161,58 +158,18 @@ function PauseDialog({ onClose }) {
             </div>
           </div>
 
-          {/* Central breath circle experience */}
+          {/* The breathing orb and its words */}
           <div className="relative mx-auto my-auto flex w-full max-w-xl flex-col items-center py-8 text-center">
-            {/* Visual breathing geometry */}
-            <div className="relative flex size-[min(18rem,76vw)] items-center justify-center sm:size-84">
-              {/* Soft background aura */}
-              <motion.div
-                className="absolute inset-0 rounded-[2px] bg-soma-linen"
-                animate={
-                  reduce
-                    ? undefined
-                    : {
-                        scale: active ? currentPhase.scale * 1.05 : 1,
-                        opacity: active ? 0.85 : 0.4,
-                      }
-                }
-                transition={{ duration: currentPhase.seconds, ease: EASE }}
-              />
-
-              {/* Main somatic resonant circle */}
-              <motion.div
-                className="relative flex size-[min(13rem,56vw)] items-center justify-center rounded-none border border-soma-moss/40 bg-soma-paper sm:size-60"
-                animate={
-                  reduce
-                    ? undefined
-                    : {
-                        scale: active ? currentPhase.scale : 1,
-                        borderColor:
-                          phaseIndex === 0
-                            ? 'rgba(70, 89, 66, 0.7)'
-                            : phaseIndex === 1
-                            ? 'rgba(96, 119, 91, 0.5)'
-                            : 'rgba(222, 214, 201, 0.8)',
-                      }
-                }
-                transition={{ duration: currentPhase.seconds, ease: EASE }}
-              >
-                {/* Secondary inner ring */}
-                <div className="absolute inset-4 border border-soma-sand/70" />
-
-                <div className="relative z-10 px-4">
-                  <p className="font-display text-[clamp(2rem,10vw,2.75rem)] leading-none text-soma-ink italic sm:text-[3.25rem]">
-                    {currentPhase.name}
-                  </p>
-                  <p className="mt-3 font-sans text-label font-medium tracking-[0.18em] text-soma-moss uppercase">
-                    {currentPhase.action}
-                  </p>
-                  <p className="mt-2 text-[0.875rem] text-soma-clay-deep tabular-nums">
-                    {secondsLeft}s
-                  </p>
-                </div>
-              </motion.div>
-            </div>
+            {/* A breathing orb that answers each phase of the guide */}
+            <BreathOrb phaseIndex={phaseIndex} seconds={currentPhase.seconds} active={active}>
+              <p className="font-display text-[clamp(2rem,10vw,2.75rem)] leading-none text-soma-ink italic sm:text-[3.25rem]">
+                {currentPhase.name}
+              </p>
+              <p className="mt-3 font-sans text-label font-medium tracking-[0.18em] text-soma-moss uppercase">
+                {currentPhase.action}
+              </p>
+              <p className="mt-2 text-[0.875rem] text-soma-clay-deep tabular-nums">{secondsLeft}s</p>
+            </BreathOrb>
 
             {/* Somatic verbal guidance cue */}
             <motion.p

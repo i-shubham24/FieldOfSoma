@@ -4,9 +4,22 @@ export const site = {
   name: 'Field of Soma',
   person: 'Kirti Verma',
   role: 'Movement and Somatic Educator',
-  email: 'hello@fieldofsoma.com', // PLACEHOLDER: confirm the real address
-  instagram: 'https://www.instagram.com/', // PLACEHOLDER: real profile link
+  email: 'info@fieldofsoma.com',
+  whatsapp: '+91 98992 90074',
+  instagram: 'https://www.instagram.com/kah_chi_chi/',
 }
+
+// The ways to reach Kirti, shown with monochrome icons in the menu, footer and contact page.
+export const contactLinks = [
+  { id: 'email', label: site.email, href: `mailto:${site.email}` },
+  {
+    id: 'whatsapp',
+    label: site.whatsapp,
+    href: `https://wa.me/${site.whatsapp.replace(/\D/g, '')}`,
+    external: true,
+  },
+  { id: 'instagram', label: 'Instagram', href: site.instagram, external: true },
+]
 
 export const nav = [
   { to: '/about', label: 'About' },

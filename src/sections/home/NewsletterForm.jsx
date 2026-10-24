@@ -3,12 +3,13 @@ import Button from '../../components/ui/Button'
 import SendFallback from '../../components/ui/SendFallback'
 import { invitation } from '../../content/home'
 import { isEmail, subscribe } from '../../lib/forms'
+import Honeypot from '../../components/ui/Honeypot'
 
 export default function NewsletterForm() {
   const { newsletter } = invitation
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle') // idle | invalid | sending | done | fallback
-  const [mailto, setMailto] = useState('')
+  const [fallback, setFallback] = useState(null)
 
   const onSubmit = async (event) => {
     event.preventDefault()
@@ -21,7 +22,7 @@ export default function NewsletterForm() {
     if (result.ok) {
       setStatus('done')
     } else {
-      setMailto(result.mailto)
+      setFallback(result)
       setStatus('fallback')
     }
   }
@@ -32,13 +33,14 @@ export default function NewsletterForm() {
       <p className="mt-3 text-[0.9375rem] text-soma-ink/80">{newsletter.body}</p>
 
       {status === 'fallback' ? (
-        <SendFallback mailto={mailto} className="mt-9 min-h-[9.5rem]" />
+        <SendFallback mailto={fallback.mailto} gmail={fallback.gmail} className="mt-9 min-h-[9.5rem]" />
       ) : status === 'done' ? (
         <p role="status" className="mt-9 min-h-[9.5rem] font-display text-[1.5rem] leading-[1.3] italic">
           {newsletter.success}
         </p>
       ) : (
         <form noValidate onSubmit={onSubmit} className="mt-9">
+          <Honeypot />
           <label
             htmlFor="newsletter-email"
             className="text-label font-medium text-soma-clay-deep uppercase"

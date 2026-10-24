@@ -160,6 +160,23 @@
 }
 
 /* The pandiculation cycle: a marker travels the circle, each word brightens as it passes. */
+/* Somatic Pause orb: blobs turn around the centre and slowly change shape */
+@keyframes soma-orb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes soma-orb-morph {
+  0%,
+  100% {
+    border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
+  }
+  50% {
+    border-radius: 58% 42% 45% 55% / 52% 58% 42% 48%;
+  }
+}
+
 @keyframes soma-orbit {
   to {
     transform: rotate(360deg);

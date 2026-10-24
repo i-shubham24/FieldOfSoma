@@ -7,6 +7,7 @@ import { site } from '../../content/site'
 import { useCart } from '../../lib/cart'
 import { lockScroll, unlockScroll } from '../../lib/useDialog'
 import SomaticPause from '../interactive/SomaticPause'
+import ContactLinks from '../ui/ContactLinks'
 import Wordmark from './Wordmark'
 
 // Bespoke editorial deceleration ease inspired by Kinfolk: slow to start, deep velvety settle
@@ -30,10 +31,6 @@ const CORE_DISCIPLINES = [
   { to: '/practices#creative-movement', label: 'Creative Movement' },
 ]
 
-const CONNECT_LINKS = [
-  { href: `mailto:${site.email}`, label: site.email },
-  { href: site.instagram, label: 'Instagram' },
-]
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -46,6 +43,8 @@ export default function Header() {
 
   const [overDark, setOverDark] = useState(false)
   const [hideLogo, setHideLogo] = useState(false)
+  // Past the top of the page the bar gets a background, so the logo never sits on text
+  const [scrolled, setScrolled] = useState(false)
 
   // Track scroll position for contrast over dark bands, and tuck the logo away near the footer
   useEffect(() => {
@@ -69,6 +68,8 @@ export default function Header() {
           }
         }
         setOverDark((prev) => (prev !== isDark ? isDark : prev))
+        const past = window.scrollY > 40
+        setScrolled((prev) => (prev !== past ? past : prev))
 
         // 2. Logo visibility: always shown on phones, elsewhere hidden just before the footer
         if (window.innerWidth < 640) {
@@ -129,19 +130,26 @@ export default function Header() {
 
   return (
     <>
-      {/* Top sticky bar: fixed across all devices; nav bg on mobile screens only, transparent on tabs and laptops */}
+      {/* Top bar: on phones it always has a background. On larger screens it is clear at the
+          very top of a page and gains a soft background once the page scrolls. */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 pointer-events-none transition-colors duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 pointer-events-none transition-[background-color,border-color,box-shadow] duration-300 ${
           open
             ? 'bg-transparent border-transparent shadow-none'
             : overDark
-              ? 'bg-soma-ink/90 border-b border-soma-sand/20 backdrop-blur-md shadow-2xs sm:bg-transparent sm:border-transparent sm:shadow-none sm:backdrop-blur-none'
-              : 'bg-soma-paper/95 border-b border-soma-sand/50 backdrop-blur-md shadow-2xs sm:bg-transparent sm:border-transparent sm:shadow-none sm:backdrop-blur-none'
+              ? `bg-soma-ink/90 border-b border-soma-sand/20 backdrop-blur-md shadow-2xs ${
+                  scrolled ? '' : 'sm:bg-transparent sm:border-transparent sm:shadow-none sm:backdrop-blur-none'
+                }`
+              : `bg-soma-paper/95 border-b border-soma-sand/50 backdrop-blur-md shadow-2xs ${
+                  scrolled ? '' : 'sm:bg-transparent sm:border-transparent sm:shadow-none sm:backdrop-blur-none'
+                }`
         }`}
       >
         {/* Masthead posture: compact on mobile, generous editorial on tabs and laptops */}
         <div
-          className={`shell flex items-center justify-between pt-3.5 pb-3.5 sm:pt-7 sm:pb-5 pointer-events-auto transition-colors duration-500 ${
+          className={`shell flex items-center justify-between pt-3.5 pb-3.5 pointer-events-auto transition-[padding,color] duration-500 ${
+            scrolled && !open ? 'sm:pt-4 sm:pb-4' : 'sm:pt-7 sm:pb-5'
+          } ${
             open
               ? 'text-soma-ink'
               : overDark
@@ -280,8 +288,10 @@ export default function Header() {
                   </div>
                 </motion.div>
 
-                {/* Middle column: Curated Disciplines and Experiential Access */}
-                <div className="order-2 flex flex-col justify-center space-y-5 sm:space-y-6 lg:order-2 lg:col-span-3 lg:pl-6 my-auto">
+                {/* Middle column: disciplines, the Somatic Pause and login at the top; the
+                    contact icons in one row at the bottom, level with the card and the inquiry line */}
+                <div className="order-2 flex flex-col justify-between gap-8 lg:order-2 lg:col-span-3 lg:pl-6">
+                  <div className="space-y-5 sm:space-y-6 lg:pt-6">
                   {/* The Disciplines */}
                   <motion.div
                     initial={reduce ? false : { opacity: 0, y: -20, filter: 'blur(5px)' }}
@@ -302,32 +312,6 @@ export default function Header() {
                           >
                             {link.label}
                           </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
-
-                  {/* Connect */}
-                  <motion.div
-                    initial={reduce ? false : { opacity: 0, y: -20, filter: 'blur(5px)' }}
-                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                    exit={{ opacity: 0, y: -10, filter: 'blur(3px)' }}
-                    transition={{ duration: 0.85, delay: 0.28, ease: KINFOLK_EASE }}
-                  >
-                    <p className="font-sans text-label font-medium tracking-[0.16em] text-soma-clay-deep uppercase">
-                      Connect
-                    </p>
-                    <ul className="mt-2 space-y-1">
-                      {CONNECT_LINKS.map((link) => (
-                        <li key={link.label}>
-                          <a
-                            href={link.href}
-                            target={link.href.startsWith('mailto:') ? undefined : '_blank'}
-                            rel={link.href.startsWith('mailto:') ? undefined : 'noreferrer'}
-                            className="link-grow text-[0.875rem] text-soma-ink/80 transition-colors hover:text-soma-ink"
-                          >
-                            {link.label}
-                          </a>
                         </li>
                       ))}
                     </ul>
@@ -375,7 +359,18 @@ export default function Header() {
                       </Link>
                     </div>
                   </motion.div>
+                  </div>
 
+                  {/* Contact icons, one row, at the bottom of the column */}
+                  <motion.div
+                    initial={reduce ? false : { opacity: 0, y: -14, filter: 'blur(4px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    exit={{ opacity: 0, y: -8, filter: 'blur(2px)' }}
+                    transition={{ duration: 0.85, delay: 0.44, ease: KINFOLK_EASE }}
+                    className="lg:pb-1"
+                  >
+                    <ContactLinks row className="-ml-3" size={24} onNavigate={close} />
+                  </motion.div>
                 </div>
 
                 {/* Right column: Large Serif Editorial Navigation & Inquire form anchored bottom-right */}

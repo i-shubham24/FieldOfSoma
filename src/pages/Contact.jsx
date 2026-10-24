@@ -4,12 +4,15 @@ import Frame from '../components/media/Frame'
 import Reveal from '../components/motion/Reveal'
 import RevealLines from '../components/motion/RevealLines'
 import Button from '../components/ui/Button'
+import EmailActions from '../components/ui/EmailActions'
 import Field from '../components/ui/Field'
 import SendFallback from '../components/ui/SendFallback'
 import { contact } from '../content/contact'
 import { isEmail, sendForm } from '../lib/forms'
 import { PAGE_TOP } from '../lib/layout'
 import useTitle from '../lib/useTitle'
+import Honeypot from '../components/ui/Honeypot'
+import { pages } from '../content/seo'
 
 const EMPTY = { name: '', email: '', practice: contact.form.practice.options[0], message: '' }
 
@@ -39,7 +42,7 @@ function MessageForm() {
   }))
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | sending | done | fallback
-  const [mailto, setMailto] = useState('')
+  const [fallback, setFallback] = useState(null)
   const thanks = useRef(null)
 
   // Once sent, bring the confirmation into view and tell assistive technology.
@@ -73,12 +76,12 @@ function MessageForm() {
     if (result.ok) {
       setStatus('done')
     } else {
-      setMailto(result.mailto)
+      setFallback(result)
       setStatus('fallback')
     }
   }
 
-  if (status === 'fallback') return <SendFallback mailto={mailto} className="min-h-[20rem]" />
+  if (status === 'fallback') return <SendFallback mailto={fallback.mailto} gmail={fallback.gmail} className="min-h-[20rem]" />
 
   if (status === 'done') {
     return (
@@ -93,6 +96,7 @@ function MessageForm() {
 
   return (
     <form noValidate onSubmit={onSubmit} className="space-y-9">
+      <Honeypot />
       <div className="grid gap-9 sm:grid-cols-2 sm:gap-8">
         <Field
           id="name"
@@ -147,12 +151,17 @@ export default function Contact() {
     description:
       'Get in touch with Kirti Verma for questions about private sessions, workshops, or somatic education.',
     url: 'https://fieldofsoma.com/contact',
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Kirti Verma',
+      email: 'info@fieldofsoma.com',
+      telephone: '+91 98992 90074',
+      sameAs: ['https://www.instagram.com/kah_chi_chi/'],
+    },
   }
 
-  useTitle('Contact: Ask a Question or Enquire About Sessions', {
-    description:
-      'Have questions about somatic movement, weekly classes, or booking a consultation? Reach out directly to Kirti Verma at Field of Soma.',
-    path: '/contact',
+  useTitle({
+    ...pages.contact,
     schema: contactSchema,
   })
   const { label, headline, lede, image } = contact.intro
@@ -184,7 +193,9 @@ export default function Contact() {
                     {detail.term}
                   </dt>
                   <dd className="text-[0.9375rem] text-soma-ink/85">
-                    {detail.href ? (
+                    {detail.email ? (
+                      <EmailActions email={detail.value} />
+                    ) : detail.href ? (
                       <a
                         href={detail.href}
                         className="link-rest pb-0.5"

@@ -17,6 +17,7 @@ const Contact = lazy(() => import('./pages/Contact'))
 const Login = lazy(() => import('./pages/Login'))
 const Signup = lazy(() => import('./pages/Signup'))
 const NotFound = lazy(() => import('./pages/NotFound'))
+const AdminApp = lazy(() => import('./admin/AdminApp'))
 
 function PageFallback() {
   return <div className="min-h-screen bg-soma-paper" aria-hidden="true" />
@@ -29,6 +30,7 @@ export default function App() {
         <Routes>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="admin/*" element={<AdminApp />} />
           <Route element={<PageShell />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />

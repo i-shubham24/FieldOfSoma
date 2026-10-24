@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Wordmark from '../components/layout/Wordmark'
 import useTitle from '../lib/useTitle'
+import { pages } from '../content/seo'
 
 export default function Login() {
-  useTitle('Member Login', { noindex: true })
+  useTitle(pages.login)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [submitted, setSubmitted] = useState(false)
@@ -14,8 +16,9 @@ export default function Login() {
     setSubmitted(true)
   }
 
+  // Centred when it fits; on short or zoomed screens the page simply scrolls
   return (
-    <div className="relative min-h-[100dvh] lg:h-[100dvh] lg:max-h-[100dvh] w-full overflow-x-hidden overflow-y-auto lg:overflow-hidden flex flex-col justify-center items-center px-4 py-8 lg:py-0 bg-[#F7F5F0] text-soma-ink select-none">
+    <div className="relative flex min-h-[100dvh] w-full flex-col items-center justify-center overflow-x-hidden bg-[#F7F5F0] px-4 pt-16 pb-10 text-soma-ink">
       {/* Return to website shortcut - pinned to top-left so it never affects vertical height */}
       <Link
         to="/"
@@ -38,37 +41,16 @@ export default function Login() {
       </div>
 
       <div className="relative z-10 w-full max-w-[420px] flex flex-col items-center">
-        {/* Top Branding Header matching Knotless reference */}
-        <div className="flex flex-col items-center text-center">
-          {/* Somatic Knot Emblem */}
-          <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-2xl border border-stone-200/80 bg-white shadow-xs">
-            <svg
-              className="h-5 w-5 text-soma-moss"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 4a4 4 0 0 1 4 4c0 3-4 6-4 6s-4-3-4-6a4 4 0 0 1 4-4Z" />
-              <path d="M12 20a4 4 0 0 1-4-4c0-3 4-6 4-6s4 3 4 6a4 4 0 0 1-4 4Z" />
-            </svg>
-          </div>
-
-          <h1 className="mt-3 font-serif text-[1.625rem] sm:text-[1.75rem] font-normal tracking-tight text-soma-ink leading-tight">
-            Field of Soma
-          </h1>
-          <p className="mt-1 font-sans text-[0.75rem] font-medium tracking-[0.22em] text-soma-clay-deep uppercase">
-            The Somatic Archive
-          </p>
-        </div>
+        {/* The same wordmark as the site's top bar */}
+        <Link to="/" aria-label="Field of Soma, home" className="flex min-h-11 items-center">
+          <Wordmark className="text-[1.375rem] sm:text-[1.5rem]" />
+        </Link>
 
         {/* Center Card */}
         <div className="mt-5 w-full rounded-[24px] border border-stone-200/70 bg-white p-6 sm:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.035)]">
-          <h2 className="text-center font-serif text-[1.65rem] sm:text-[1.75rem] font-normal text-soma-ink leading-tight">
+          <h1 className="text-center font-serif text-[1.65rem] sm:text-[1.75rem] font-normal text-soma-ink leading-tight">
             Welcome Back
-          </h2>
+          </h1>
           <p className="mt-1 text-center font-sans text-[0.8125rem] leading-normal text-soma-clay-deep">
             Please enter your credentials to access your archive.
           </p>

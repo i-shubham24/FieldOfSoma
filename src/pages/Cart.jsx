@@ -7,9 +7,10 @@ import { formatPrice, priceValue, useCart } from '../lib/cart'
 import { PAGE_TOP } from '../lib/layout'
 import { usePurchasedClasses } from '../lib/purchases'
 import useTitle from '../lib/useTitle'
+import { pages } from '../content/seo'
 
 export default function Cart() {
-  useTitle('Your Cart', { noindex: true })
+  useTitle(pages.cart)
   const cart = useCart()
   const { isPurchased } = usePurchasedClasses()
 

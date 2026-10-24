@@ -6,6 +6,7 @@ import DraftNote from '../components/ui/DraftNote'
 import { about } from '../content/about'
 import { PAGE_TOP } from '../lib/layout'
 import useTitle from '../lib/useTitle'
+import { pages } from '../content/seo'
 
 function Intro() {
   const { label, headline, lede, image, caption } = about.intro
@@ -207,25 +208,22 @@ export default function About() {
         url: 'https://fieldofsoma.com',
       },
       description:
-        'Movement educator and somatic practitioner working at the intersection of Clinical Somatics, Tai Chi, and creative dance inquiry to help students release held tension.',
+        'Movement and somatic educator teaching Somatic Movement Therapy and Tai Chi, with creative movement drawn from dance.',
+      email: 'info@fieldofsoma.com',
+      sameAs: ['https://www.instagram.com/kah_chi_chi/'],
       knowsAbout: [
-        'Clinical Somatics',
-        'Pandiculation',
-        'Sensory-Motor Amnesia',
-        'Tai Chi Chuan',
-        'Zhan Zhuang',
+        'Somatic Movement Therapy',
+        'Somatic education',
+        'Feldenkrais Method',
+        'Body-Mind Centering',
+        'Tai Chi',
         'Creative Movement',
-        'Neuromuscular Education',
       ],
     },
   }
 
-  useTitle('About Kirti Verma: Movement and Somatic Educator', {
-    description:
-      'Learn about Kirti Verma, movement and somatic educator at Field of Soma. Background in Clinical Somatics, Tai Chi, and creative movement inquiry.',
-    path: '/about',
-    keywords:
-      'Kirti Verma, somatic educator, Clinical Somatics teacher, Tai Chi instructor, creative movement educator, somatic movement India',
+  useTitle({
+    ...pages.about,
     breadcrumbs: [{ name: 'About Kirti Verma', path: '/about' }],
     schema: personSchema,
   })

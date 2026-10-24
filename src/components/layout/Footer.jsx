@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import { site } from '../../content/site'
 import { EASE } from '../../lib/motion'
+import ContactLinks from '../ui/ContactLinks'
+import Wordmark from './Wordmark'
 
 const DISCIPLINES = [
-  { to: '/practices#somatics', label: 'Somatic Movement Therapy' },
   { to: '/practices#tai-chi', label: 'Tai Chi' },
   { to: '/practices#creative-movement', label: 'Creative Movement' },
   { to: '/calendar', label: 'Private Sessions' },
@@ -44,7 +45,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Right Columns (Disciplines, Explore, Connect) */}
+          {/* Right columns: Disciplines, Explore, and contact */}
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7 lg:gap-10">
             {/* Column 1: Disciplines */}
             <div>
@@ -84,63 +85,25 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Column 3: Connect */}
-            <div className="col-span-2 sm:col-span-1">
-              <p className="font-sans text-[0.8125rem] font-medium tracking-[0.02em] text-soma-ink/75">
-                Connect
-              </p>
-              <ul className="mt-5 space-y-2.5 font-sans text-[0.9375rem]">
-                <li>
-                  <Link
-                    to="/contact"
-                    className="text-soma-ink transition-colors duration-300 hover:text-soma-moss"
-                  >
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/login"
-                    className="text-soma-ink transition-colors duration-300 hover:text-soma-moss"
-                  >
-                    Member Login
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    href={`mailto:${site.email}`}
-                    className="text-soma-ink transition-colors duration-300 hover:text-soma-moss"
-                  >
-                    {site.email}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={site.instagram}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-soma-ink transition-colors duration-300 hover:text-soma-moss"
-                  >
-                    Instagram
-                  </a>
-                </li>
-              </ul>
+            {/* Column 3: contact icons only, in squares set flush with the right edge.
+                The top padding lines the first square up with the first link in the other columns. */}
+            <div className="col-span-2 sm:col-span-1 sm:flex sm:justify-end sm:pt-[2.6rem] sm:pr-6 lg:pr-10">
+              <ContactLinks boxed size={24} />
             </div>
           </div>
         </div>
 
-        {/* Bottom: a large italic "Soma" that settles down from above as the footer comes into view */}
+        {/* Bottom: the same wordmark as the top bar, settling gently into place */}
         <div className="mt-14 flex flex-col justify-between gap-6 overflow-hidden border-t border-soma-ink/15 pt-8 sm:mt-18 lg:mt-20 lg:flex-row lg:items-end">
           <Link to="/" aria-label={`${site.name}, home`} className="self-start">
             <motion.span
-              aria-hidden="true"
-              initial={reduce ? false : { opacity: 0, y: '-45%' }}
+              initial={reduce ? false : { opacity: 0, y: -12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.6 }}
-              transition={{ duration: 1.2, ease: EASE }}
-              className="block font-display text-[clamp(4.5rem,15vw,11rem)] leading-[0.9] tracking-[-0.02em] text-soma-ink italic select-none"
+              transition={{ duration: 1, ease: EASE }}
+              className="block"
             >
-              Soma
+              <Wordmark className="text-[1.375rem] sm:text-[1.625rem]" />
             </motion.span>
           </Link>
 

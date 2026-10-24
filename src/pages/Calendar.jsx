@@ -16,6 +16,8 @@ import { PAGE_TOP } from '../lib/layout'
 import { EASE } from '../lib/motion'
 import useDialog from '../lib/useDialog'
 import useTitle from '../lib/useTitle'
+import Honeypot from '../components/ui/Honeypot'
+import { pages } from '../content/seo'
 
 // Kirti's Cal.com or Calendly link, set in Vercel. See content/calendar.js.
 const BOOKING_URL = import.meta.env.VITE_BOOKING_URL
@@ -63,7 +65,7 @@ function BookingModal({ request, onClose }) {
   })
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | sending | done | fallback
-  const [mailto, setMailto] = useState('')
+  const [fallback, setFallback] = useState(null)
 
   const set = (key) => (event) => {
     setValues((current) => ({ ...current, [key]: event.target.value }))
@@ -99,7 +101,7 @@ function BookingModal({ request, onClose }) {
     if (result.ok) {
       setStatus('done')
     } else {
-      setMailto(result.mailto)
+      setFallback(result)
       setStatus('fallback')
     }
   }
@@ -156,9 +158,10 @@ function BookingModal({ request, onClose }) {
             </Button>
           </div>
         ) : status === 'fallback' ? (
-          <SendFallback mailto={mailto} className="py-8" />
+          <SendFallback mailto={fallback.mailto} gmail={fallback.gmail} className="py-8" />
         ) : (
           <form noValidate onSubmit={onSubmit} className="mt-8 space-y-8">
+            <Honeypot />
             {isPrivate ? (
               <>
                 <Field id="booking-focus" as="select" label="Practice" value={values.focus} onChange={set('focus')}>
@@ -357,10 +360,8 @@ function Request() {
 }
 
 export default function Calendar() {
-  useTitle('Book a Session or Class with Kirti Verma', {
-    description:
-      'Book a private session or join a weekly Somatic Movement Therapy or Tai Chi class with Kirti Verma.',
-    path: '/calendar',
+  useTitle({
+    ...pages.calendar,
   })
   const [request, setRequest] = useState(null)
 

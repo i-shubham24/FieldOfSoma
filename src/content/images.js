@@ -31,12 +31,12 @@ export const images = {
   kirtiSomaticTeaching: photo(
     'kirti-somatic-teaching',
     1200,
-    'Students lying on a studio floor during a somatic class while Kirti guides them',
+    'Students lying on a wooden studio floor while Kirti guides them',
   ),
   somaticConstructiveRest: photo(
     'somatic-constructive-rest',
     1200,
-    'A student resting on the studio floor with her hands on her belly',
+    'A student resting on a wooden studio floor with her hands on her belly',
   ),
   kirtiSomaticWorkshop: photo('kirti-somatic-workshop', 1200, 'Kirti Verma in a studio, arms crossed gently over her body'),
 

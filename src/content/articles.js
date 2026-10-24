@@ -34,7 +34,7 @@ export const articles = {
       topic: 'Somatics',
       title: 'The yawn you do on purpose',
       excerpt: 'Watch a cat wake up. It does not stretch. It tightens, then slowly lets go.',
-      image: images.kirtiSomaticTeaching,
+      image: images.kirtiPortrait,
       paragraphs: [
         'Watch a cat wake up. It arches its back, spreads its paws, holds for a moment, and then slowly softens back down. This is called pandiculation, and we do it too when we yawn.',
         'You can try a small version now. Gently draw your shoulder blades together. Notice the effort. Then let them go as slowly as you can, over a count of ten. Notice how your shoulders feel afterwards.',

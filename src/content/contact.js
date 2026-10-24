@@ -12,10 +12,16 @@ export const contact = {
   },
 
   details: [
-    { term: 'Email', value: site.email, href: `mailto:${site.email}` },
+    { term: 'Email', value: site.email, email: true },
+    {
+      term: 'WhatsApp',
+      value: site.whatsapp,
+      href: `https://wa.me/${site.whatsapp.replace(/\D/g, '')}`,
+      external: true,
+    },
     { term: 'Sessions', value: 'Online, and in person by arrangement' },
     { term: 'Time zone', value: 'IST (UTC +5:30)' },
-    { term: 'Instagram', value: 'Follow the practice', href: site.instagram, external: true },
+    { term: 'Instagram', value: '@kah_chi_chi', href: site.instagram, external: true },
   ],
 
   form: {

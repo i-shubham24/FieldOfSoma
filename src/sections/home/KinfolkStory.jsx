@@ -56,7 +56,7 @@ export default function KinfolkStory() {
           {/* Top fixed line matching Kinfolk */}
           <div>
             <p className="font-sans text-[0.8125rem] font-normal tracking-[0.04em] text-soma-paper/90 sm:text-[0.9375rem]">
-              An inquiry into somatic education and embodied presence.
+              An inquiry into somatic education and embodied presence
             </p>
           </div>
 
@@ -64,7 +64,7 @@ export default function KinfolkStory() {
           <div className="space-y-5 sm:space-y-6">
             {/* Monumental display serif title across the bottom, identical to TAKING PLAY SERIOUSLY */}
             <h2 className="font-display text-[clamp(2.5rem,7.5vw,7.25rem)] font-normal tracking-[-0.01em] leading-[0.96] text-soma-paper drop-shadow-sm uppercase">
-              Listening to the Sensing Body
+              Sensitising into the Body
             </h2>
 
             {/* Bottom bar sitting flush at the bottom edge */}
