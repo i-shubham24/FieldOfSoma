@@ -50,6 +50,8 @@ export default function Header() {
 
   const [overDark, setOverDark] = useState(false)
   const [hideLogo, setHideLogo] = useState(false)
+  // Past the top of the page the bar gets a background, so the logo never sits on text
+  const [scrolled, setScrolled] = useState(false)
 
 // Track scroll position for contrast over dark bands, and tuck the logo away near the footer
   useEffect(() => {
@@ -73,6 +75,8 @@ export default function Header() {
           }
         }
         setOverDark((prev) => (prev !== isDark ? isDark : prev))
+        const past = window.scrollY > 40
+        setScrolled((prev) => (prev !== past ? past : prev))
         
         // 2. Logo visibility: always shown on phones, elsewhere hidden just before the footer
         if (window.innerWidth < 640) {
@@ -144,19 +148,26 @@ export default function Header() {
 
   return (
     <>
-      {/* Top sticky bar: fixed across all devices with paper background and border */}
+      {/* Top bar: on phones it always has a background. On larger screens it is clear at the
+          very top of a page and gains a soft background once the page scrolls. */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 pointer-events-none transition-colors duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 pointer-events-none transition-[background-color,border-color,box-shadow] duration-300 ${
           open
             ? 'bg-transparent border-transparent shadow-none'
             : overDark
-              ? 'bg-soma-ink/90 border-b border-soma-sand/20 backdrop-blur-md shadow-2xs'
-              : 'bg-soma-paper/95 border-b border-soma-sand/50 backdrop-blur-md shadow-2xs'
+              ? `bg-soma-ink/90 border-b border-soma-sand/20 backdrop-blur-md shadow-2xs ${
+                  scrolled ? '' : 'sm:bg-transparent sm:border-transparent sm:shadow-none sm:backdrop-blur-none'
+                }`
+              : `bg-soma-paper/95 border-b border-soma-sand/50 backdrop-blur-md shadow-2xs ${
+                  scrolled ? '' : 'sm:bg-transparent sm:border-transparent sm:shadow-none sm:backdrop-blur-none'
+                }`
         }`}
       >
         {/* Masthead posture: compact on mobile, generous editorial on tabs and laptops */}
         <div
-          className={`shell flex items-center justify-between pt-3.5 pb-3.5 sm:pt-5 sm:pb-5 pointer-events-auto transition-colors duration-500 ${
+          className={`shell flex items-center justify-between pt-3.5 pb-3.5 pointer-events-auto transition-[padding,color] duration-500 ${
+            scrolled && !open ? 'sm:pt-4 sm:pb-4' : 'sm:pt-7 sm:pb-5'
+          } ${
             open
               ? 'text-soma-ink'
               : overDark
