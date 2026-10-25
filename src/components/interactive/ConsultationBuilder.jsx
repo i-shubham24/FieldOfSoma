@@ -14,7 +14,7 @@ const FOCUSES = [
 ]
 
 const FORMATS = [
-  { id: 'private', label: 'Private session', setting: 'One to one, online or in person' },
+  { id: 'private', label: 'Private session', setting: 'One-to-one, online or in person' },
   { id: 'group', label: 'Small group class', setting: 'From the weekly schedule' },
 ]
 
@@ -42,7 +42,7 @@ export default function ConsultationBuilder() {
           Consultation Builder
         </p>
         <h3 className="mt-2 font-display text-[1.75rem] leading-[1.2] text-soma-ink">
-          Tailor your inquiry
+          Shape your enquiry
         </h3>
         <p className="mt-2 text-[0.875rem] text-soma-clay-deep">
           Choose what your body needs today. Your selections will be placed in a prepared message to Kirti.

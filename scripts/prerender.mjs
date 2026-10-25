@@ -13,8 +13,8 @@ const dist = join(root, 'dist')
 const BASE = 'https://fieldofsoma.com'
 const SITE = 'Field of Soma'
 const DEFAULT_TITLE = 'Field of Soma: Movement and Somatic Education with Kirti Verma'
-const DEFAULT_IMAGE = `${BASE}/photos/kirti-forest-hero.jpg`
-const DEFAULT_IMAGE_ALT = 'Kirti Verma standing among tall pines in a white dress'
+const DEFAULT_IMAGE = `${BASE}/photos/kirti-author-preview.jpg`
+const DEFAULT_IMAGE_ALT = 'Kirti Verma: Movement and Somatic Educator'
 
 // The content files use Vite-style imports, so let Vite load them.
 const vite = await createServer({
@@ -47,8 +47,11 @@ function setMeta(html, attribute, key, value) {
 function headFor(page) {
   const title = !page.title ? DEFAULT_TITLE : page.title.includes(SITE) ? page.title : `${page.title} | ${SITE}`
   const url = `${BASE}${page.path}`
-  const image = page.image ? (page.image.startsWith('/') ? `${BASE}${page.image}` : page.image) : DEFAULT_IMAGE
-  const imageAlt = page.image ? page.imageAlt || title : DEFAULT_IMAGE_ALT
+  let image = page.image ? (page.image.startsWith('/') ? `${BASE}${page.image}` : page.image) : DEFAULT_IMAGE
+  if (image.endsWith('.webp')) {
+    image = DEFAULT_IMAGE
+  }
+  const imageAlt = page.image && !page.image.endsWith('.webp') ? page.imageAlt || title : DEFAULT_IMAGE_ALT
 
   let html = template.replace(/<title>[^<]*<\/title>/, `<title>${escape(title)}</title>`)
   html = html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/, `$1${escape(url)}$2`)
@@ -63,9 +66,14 @@ function headFor(page) {
   html = setMeta(html, 'property', 'og:title', title)
   html = setMeta(html, 'property', 'og:url', url)
   html = setMeta(html, 'property', 'og:image', image)
+  html = setMeta(html, 'property', 'og:image:secure_url', image)
+  html = setMeta(html, 'property', 'og:image:type', 'image/jpeg')
+  html = setMeta(html, 'property', 'og:image:width', '1200')
+  html = setMeta(html, 'property', 'og:image:height', '630')
   html = setMeta(html, 'property', 'og:image:alt', imageAlt)
   html = setMeta(html, 'name', 'twitter:title', title)
   html = setMeta(html, 'name', 'twitter:image', image)
+  html = setMeta(html, 'name', 'twitter:image:alt', imageAlt)
   return html
 }
 

@@ -326,6 +326,7 @@ const settings = {
 export function seedData() {
   return {
     version: DATA_VERSION,
+    seededAt: Date.now(),
     messages,
     orders,
     members,

@@ -44,20 +44,30 @@ export const deleteFile = (id) => run('readwrite', (store) => store.delete(id))
 export const listFileIds = () => run('readonly', (store) => store.getAllKeys())
 export const clearFiles = () => run('readwrite', (store) => store.clear())
 
-// Deletes saved files that nothing points to any more (a replaced video, an unsaved upload).
+// When a file was saved, read from its id (newId puts the time first, after the prefix)
+const savedAt = (id) => parseInt(String(id).split(':')[0].split('_')[1]?.slice(0, 8) ?? '', 36)
+
+// Deletes saved files that nothing points to any more (a replaced video, an upload that was
+// never saved). Only files older than a day go, so an upload still open in another tab is safe.
 export async function removeUnusedFiles(usedIds) {
   try {
     const keep = new Set(usedIds)
+    const dayAgo = Date.now() - 24 * 60 * 60 * 1000
     const ids = await listFileIds()
-    await Promise.all(ids.filter((id) => !keep.has(String(id).split(':')[0])).map((id) => deleteFile(id)))
+    const unused = ids.filter((id) => {
+      const time = savedAt(id)
+      return !keep.has(String(id).split(':')[0]) && Number.isFinite(time) && time < dayAgo
+    })
+    await Promise.all(unused.map((id) => deleteFile(id)))
   } catch {
     // Storage blocked or unavailable: nothing to tidy
   }
 }
 
 // A temporary address for a saved file, so an <img> or <video> can show it.
-export function useMediaUrl(id) {
-  const [entry, setEntry] = useState({ id: null, url: null })
+// `missing` turns true when the file is no longer in this browser.
+export function useMediaFile(id) {
+  const [entry, setEntry] = useState({ id: null, url: null, missing: false })
 
   useEffect(() => {
     if (!id) return undefined
@@ -65,19 +75,25 @@ export function useMediaUrl(id) {
     let alive = true
     getFile(id)
       .then((blob) => {
-        if (!alive || !blob) return
+        if (!alive) return
+        if (!blob) {
+          setEntry({ id, url: null, missing: true })
+          return
+        }
         objectUrl = URL.createObjectURL(blob)
-        setEntry({ id, url: objectUrl })
+        setEntry({ id, url: objectUrl, missing: false })
       })
-      .catch(() => {})
+      .catch(() => alive && setEntry({ id, url: null, missing: true }))
     return () => {
       alive = false
       if (objectUrl) URL.revokeObjectURL(objectUrl)
     }
   }, [id])
 
-  return entry.id === id ? entry.url : null
+  return entry.id === id ? entry : { url: null, missing: false }
 }
+
+export const useMediaUrl = (id) => useMediaFile(id).url
 
 /* Checking what a file really is */
 
@@ -127,7 +143,7 @@ const wait = (ms, signal) =>
   })
 
 // Reads the length and size of a video, and grabs a still frame to use as its thumbnail.
-function readVideo(file) {
+function readVideo(file, signal) {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file)
     const video = document.createElement('video')
@@ -150,6 +166,7 @@ function readVideo(file) {
       20000,
     )
     video.onerror = () => done(null, new Error('This video could not be opened. Try exporting it again as MP4 (H.264).'))
+    signal?.addEventListener('abort', () => done(null, new DOMException('Upload stopped', 'AbortError')), { once: true })
     video.onloadedmetadata = () => {
       const length = Number.isFinite(video.duration) ? video.duration : null
       const info = { duration: length, width: video.videoWidth, height: video.videoHeight, poster: null }
@@ -186,7 +203,8 @@ export async function uploadVideo(file, { onProgress = () => {}, signal } = {}) 
     throw new Error('This file does not look like a video, even though its name says so. Export it again as MP4.')
   }
 
-  const info = await readVideo(file)
+  if (signal?.aborted) throw new DOMException('Upload stopped', 'AbortError')
+  const info = await readVideo(file, signal)
   if (signal?.aborted) throw new DOMException('Upload stopped', 'AbortError')
 
   // Preview: show the transfer at a steady speed, then keep the file in this browser.
@@ -200,6 +218,11 @@ export async function uploadVideo(file, { onProgress = () => {}, signal } = {}) 
   const id = newId('vid_')
   await putFile(id, file)
   if (info.poster) await putFile(`${id}:poster`, info.poster)
+  // Cancelled while the file was being saved: take it back out
+  if (signal?.aborted) {
+    await Promise.all([deleteFile(id), deleteFile(`${id}:poster`)]).catch(() => {})
+    throw new DOMException('Upload stopped', 'AbortError')
+  }
   onProgress(1)
 
   return {

@@ -152,6 +152,17 @@
 }
 
 /* Underline that is always present. Used for editorial text links. */
+/* A bigger, invisible tap area around a small text link or button (44px tall on phones),
+   without changing how it looks or where it sits. */
+@utility tap-area {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -12px -4px;
+  }
+}
+
 @utility link-rest {
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;

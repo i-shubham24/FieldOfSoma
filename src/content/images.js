@@ -10,6 +10,10 @@ const photo = (name, width, alt) => ({
 })
 
 export const images = {
+  kirtiAuthorPreview: {
+    src: '/photos/kirti-author-preview.jpg',
+    alt: 'Kirti Verma: Movement and Somatic Educator',
+  },
   kirtiForestHero: photo('kirti-forest-hero', 1200, 'Kirti Verma standing among tall pines in a white dress'),
   kirtiPortrait: photo('kirti-portrait', 1200, 'Kirti Verma with her eyes closed, holding a sprig of leaves'),
   kirtiContemplationLeaves: photo(

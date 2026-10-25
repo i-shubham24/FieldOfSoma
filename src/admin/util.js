@@ -111,3 +111,33 @@ export function gmailCompose({ from, to, subject = '', body = '' }) {
 
 export const mailtoCompose = ({ to, subject = '', body = '' }) =>
   `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+// "5 Nov 2026" becomes "2026-11-05". Anything else ("Today", "No end date") gives ''.
+export function parseShownDate(text) {
+  const match = String(text ?? '').match(/^(\d{1,2}) ([A-Z][a-z]{2}) (\d{4})$/)
+  if (!match) return ''
+  const month = MONTHS.indexOf(match[2])
+  return month < 0 ? '' : `${match[3]}-${String(month + 1).padStart(2, '0')}-${match[1].padStart(2, '0')}`
+}
+
+// "Oct 2026" for the current month, to match dates like "2 Oct 2026"
+export const thisMonthLabel = () => {
+  const now = new Date()
+  return `${MONTHS[now.getMonth()]} ${now.getFullYear()}`
+}
+
+// A promo code's status comes from its dates on the day it is looked at, so a scheduled code
+// turns active on its start date and ends by itself after its end date or its last use.
+export function promoStatus(promo, today = todayIso()) {
+  const paused = promo.paused ?? promo.status === 'Paused'
+  const starts = promo.startsOn || parseShownDate(promo.starts)
+  const ends = promo.endsOn || parseShownDate(promo.ends)
+  if ((ends && ends < today) || (promo.limit && promo.used >= promo.limit)) return 'Ended'
+  if (paused) return 'Paused'
+  if (starts && starts > today) return 'Scheduled'
+  return 'Active'
+}
+
+export const plural = (count, one, many = `${one}s`) => `${count} ${count === 1 ? one : many}`

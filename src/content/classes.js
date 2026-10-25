@@ -13,7 +13,7 @@ import { images } from './images'
 export const classes = {
   intro: {
     label: 'Recorded Classes',
-    headline: [{ text: 'Practise at home,' }, { text: 'in your own time.', italic: true }],
+    headline: [{ text: 'Practise at home,' }, { text: 'in your own time', italic: true }],
     lede: 'Guided classes you can return to as often as you like. Each one is complete in itself: a mat, a quiet floor and the length of the recording are all you need.',
   },
 
@@ -33,7 +33,7 @@ export const classes = {
       practice: 'somatics',
       practiceName: 'Somatic Movement Therapy',
       title: 'Neck and Shoulder Freedom',
-      subtitle: 'Gentle pandiculation to release chronic trapezius tightness, desk posture strain, and habituated shoulder elevation.',
+      subtitle: 'Gentle pandiculation to release chronic trapezius tightness, desk posture strain and habituated shoulder elevation.',
       focus: 'Slow releases for the muscles that lift and round the shoulders.',
       duration: '45 min',
       level: 'All levels',
@@ -47,31 +47,31 @@ export const classes = {
       previewUrl: '',
       videoUrl: '',
       overview: [
-        'When you sit at a desk, work under deadline pressure, or carry emotional strain, your nervous system triggers the startle reflex: tightening the trapezius, elevating the shoulders, and shortening the front of the neck. Over weeks and months, the brain forgets how to fully relax these muscles, a state Thomas Hanna identified as Sensory Motor Amnesia.',
+        'When you sit at a desk, work under deadline pressure or carry emotional strain, your nervous system triggers the startle reflex: tightening the trapezius, elevating the shoulders and shortening the front of the neck. Over weeks and months, the brain forgets how to fully relax these muscles, a state Thomas Hanna identified as sensory-motor amnesia.',
         'Stretching tight neck muscles often triggers the protective stretch reflex, causing the tissue to grip back harder. This guided somatic class uses pandiculation: conscious contraction followed by decelerated, mindful lengthening. You learn to remind your motor cortex how to let the shoulder blades drop down into gravity without force.',
       ],
       whatYouWillLearn: [
-        'Identify involuntary tension held in the trapezius, levator scapulae, and pectorals',
+        'Identify involuntary tension held in the trapezius, levator scapulae and pectorals',
         'Master the slow shoulder clock pandiculation for neck and collarbone ease',
         'Release chronic suboccipital tension at the base of the skull',
         'Restore free rotation of the cervical spine without joint pinching',
         'Establish an effortless 5-minute daily reset you can practise at your desk',
       ],
       requirements: [
-        'A quiet space on a floor mat, rug, or firm bed',
+        'A quiet space on a floor mat, rug or firm bed',
         'Comfortable clothing that allows your ribs and shoulders to move freely',
         'No prior somatic movement experience needed',
       ],
       includes: [
-        '45 minutes on-demand high-definition video lesson',
+        '45-minute high-definition video lesson to watch any time',
         'Downloadable audio-only pandiculation companion (MP3)',
         'Printable illustrated movement sequence guide (PDF)',
-        'Lifetime streaming access on laptop, tablet, and mobile',
+        'Lifetime streaming access on laptop, tablet and mobile',
       ],
       curriculum: [
         {
           id: 'lesson-1',
-          title: '01. Arriving & Neuromuscular Assessment',
+          title: '01. Arriving and Neuromuscular Assessment',
           duration: '6:30',
           previewable: true,
           summary: 'Sensing where the shoulder blades rest against gravity before initiating movement.',
@@ -85,17 +85,17 @@ export const classes = {
         },
         {
           id: 'lesson-3',
-          title: '03. Freeing the Cervical Spine & Suboccipitals',
+          title: '03. Freeing the Cervical Spine and Suboccipitals',
           duration: '12:15',
           previewable: false,
           summary: 'Coordinating head rolling with shoulder release to unlock neck mobility.',
         },
         {
           id: 'lesson-4',
-          title: '04. Standing Integration & Postural Ease',
+          title: '04. Standing Integration and Postural Ease',
           duration: '7:30',
           previewable: false,
-          summary: 'Standing up, sensing weight transfer, and checking the new baseline of lightness.',
+          summary: 'Standing up, sensing weight transfer and checking the new baseline of lightness.',
         },
       ],
     },
@@ -118,7 +118,7 @@ export const classes = {
       previewUrl: '',
       videoUrl: '',
       overview: [
-        'A stiff lower back is often a habit of holding. The muscles along the spine tighten whenever we brace to get things done, stand for hours, or hurry through the day.',
+        'A stiff lower back is often a habit of holding. The muscles along the spine tighten whenever we brace to get things done, stand for hours or hurry through the day.',
         'In this class you practise the basic somatic movements of the pelvis and lower back. Slow, gentle tightening and releasing helps you feel these muscles again, so they can soften and move more easily.',
       ],
       whatYouWillLearn: [
@@ -131,7 +131,7 @@ export const classes = {
       requirements: [
         'A comfortable floor mat or soft carpet',
         'A small towel or thin pillow for under the head if needed',
-        'Willingness to move at twenty percent effort for maximum neural feedback',
+        'Willingness to move at twenty per cent effort for maximum neural feedback',
       ],
       includes: [
         '40 minutes guided video sequence with clear spoken guidance',
@@ -163,7 +163,7 @@ export const classes = {
         },
         {
           id: 'lesson-4',
-          title: '04. Integration & Gentle Standing Walk',
+          title: '04. Integration and Gentle Standing Walk',
           duration: '6:40',
           previewable: false,
           summary: 'Bringing the restored mobility of the lumbar curve into your everyday stride.',
@@ -175,7 +175,7 @@ export const classes = {
       practice: 'tai-chi',
       practiceName: 'Tai Chi',
       title: 'Standing Like a Tree',
-      subtitle: 'A foundational Zhan Zhuang moving meditation for rooted leg strength, settled breath, and effortless equilibrium.',
+      subtitle: 'A foundational Zhan Zhuang moving meditation for rooted leg strength, settled breath and effortless equilibrium.',
       focus: 'A standing practice for rooting, balance and a settled breath.',
       duration: '25 min',
       level: 'Beginners',
@@ -190,7 +190,7 @@ export const classes = {
       videoUrl: '',
       overview: [
         'Zhan Zhuang (standing meditation) is the cornerstone of internal martial arts. By standing in alignment without rigid tension, the skeletal frame carries the body weight and muscles are allowed to release into gravity.',
-        'This 25-minute practice teaches you how to sink your weight into the feet, unlock the hips (the Kua), and allow the diaphragm to drop naturally. You discover stillness that does not feel stiff, but vibrantly alive.',
+        'This 25-minute practice teaches you how to sink your weight into the feet, unlock the hips (the Kua) and allow the diaphragm to drop naturally. You discover a stillness that feels alive, not stiff.',
       ],
       whatYouWillLearn: [
         'Root your body weight into the three points of the feet',
@@ -220,11 +220,11 @@ export const classes = {
           title: '02. Embracing the Tree (Wuji to Zhan Zhuang)',
           duration: '14:20',
           previewable: false,
-          summary: 'Holding the round circle posture while releasing tension layer by layer.',
+          summary: 'Holding the circle posture while releasing tension layer by layer.',
         },
         {
           id: 'lesson-3',
-          title: '03. Gathering Chi and Quiet Closing',
+          title: '03. Gathering Qi and Quiet Closing',
           duration: '4:30',
           previewable: false,
           summary: 'Storing energy in the lower dantian and settling back into daily life.',
@@ -236,7 +236,7 @@ export const classes = {
       practice: 'creative-movement',
       practiceName: 'Creative Movement',
       title: 'Spine Stories',
-      subtitle: 'Guided somatic dance inquiry that unlocks expressive articulation, spinal rhythm, and emotional lightness.',
+      subtitle: 'Guided somatic dance inquiry that unlocks expressive articulation, spinal rhythm and emotional lightness.',
       focus: 'Guided improvisation that begins and ends with the spine.',
       duration: '35 min',
       level: 'All levels',
@@ -250,14 +250,14 @@ export const classes = {
       previewUrl: '',
       videoUrl: '',
       overview: [
-        'Your spine is a cascade of twenty-four vertebrae designed for waves, spirals, and expressive storytelling. Modern life often flattens this movement into rigid columns of posture.',
+        'Your spine is a cascade of twenty-four vertebrae designed for waves, spirals and expressive storytelling. Modern life often flattens this movement into rigid columns of posture.',
         'Spine Stories is an invitation to move without mirrors or choreography. Guided prompts gently invite each segment of your spine into curious, playful motion, shaking loose emotional holding patterns.',
       ],
       whatYouWillLearn: [
-        'Explore spinal articulation through wave, spiral, and ripple dynamics',
+        'Explore spinal articulation through wave, spiral and ripple dynamics',
         'Move from inner sensation rather than external aesthetics',
         'Release inhibitions and performance anxiety around dance',
-        'Restore spontaneous fluidity to your ribs, neck, and pelvis',
+        'Restore spontaneous fluidity to your ribs, neck and pelvis',
       ],
       requirements: [
         'Space to take a few steps in all directions',
@@ -278,14 +278,14 @@ export const classes = {
         },
         {
           id: 'lesson-2',
-          title: '02. Spiral Dynamics & The Living Column',
+          title: '02. Spiral Dynamics and the Living Column',
           duration: '18:10',
           previewable: false,
           summary: 'Guiding the spine from floor to standing through continuous fluid spirals.',
         },
         {
           id: 'lesson-3',
-          title: '03. Free Expression & Still Landing',
+          title: '03. Free Expression and Still Landing',
           duration: '9:10',
           previewable: false,
           summary: 'Unstructured movement integration followed by quiet resting contemplation.',
@@ -297,7 +297,7 @@ export const classes = {
       practice: 'somatics',
       practiceName: 'Somatic Movement Therapy',
       title: 'The Easy Breath',
-      subtitle: 'Neuromuscular releases for the ribs, diaphragm, and abdominal wall to restore deep, unforced respiration.',
+      subtitle: 'Neuromuscular releases for the ribs, diaphragm and abdominal wall to restore deep, unforced respiration.',
       focus: 'Softening the belly and ribs so the breath can deepen without effort.',
       duration: '30 min',
       level: 'All levels',
@@ -312,7 +312,7 @@ export const classes = {
       videoUrl: '',
       overview: [
         'Deep breathing cannot happen in a tight ribcage. When the intercostal muscles and diaphragm are held in chronic tension from anxiety, forcing deep breaths only causes fatigue.',
-        'This somatic sequence guides you through gentle pandiculations for the chest, side body, and abdominal wall, giving the diaphragm space to expand freely on its own.',
+        'This somatic sequence guides you through gentle pandiculations for the chest, side body and abdominal wall, giving the diaphragm space to expand freely on its own.',
       ],
       whatYouWillLearn: [
         'Release chronic tightness in the intercostal muscles between the ribs',
@@ -358,7 +358,7 @@ export const classes = {
       practice: 'tai-chi',
       practiceName: 'Tai Chi',
       title: 'Grounding Flow: A First Form',
-      subtitle: 'Eight linked traditional postures taught with precise footwork, circular transitions, and internal relaxation.',
+      subtitle: 'Eight linked traditional postures taught with precise footwork, circular transitions and internal relaxation.',
       focus: 'Eight linked postures, taught slowly, to carry into daily practice.',
       duration: '50 min',
       level: 'Beginners',
@@ -372,8 +372,8 @@ export const classes = {
       previewUrl: '',
       videoUrl: '',
       overview: [
-        'Learn a continuous sequence of eight essential Tai Chi postures designed for daily morning practice. Every movement is broken down step by step with close attention to foot placement, waist turning, and breath.',
-        'This class bridges the gap between mechanical exercise and moving meditation, leaving you grounded, centered, and physically coordinated.',
+        'Learn a continuous sequence of eight essential Tai Chi postures designed for daily morning practice. Every movement is broken down step by step with close attention to foot placement, waist turning and breath.',
+        'This class bridges the gap between mechanical exercise and moving meditation, leaving you grounded, centred and physically coordinated.',
       ],
       whatYouWillLearn: [
         'Learn the choreography and internal intention of eight classic movements',
@@ -393,7 +393,7 @@ export const classes = {
       curriculum: [
         {
           id: 'lesson-1',
-          title: '01. Opening the Form & Stepping Dynamics',
+          title: '01. Opening the Form and Stepping Dynamics',
           duration: '10:20',
           previewable: true,
           summary: 'Sinking weight and stepping without committing until rooted.',
@@ -403,7 +403,7 @@ export const classes = {
           title: '02. Postures 1 to 4: Ward Off, Roll Back, Press, Push',
           duration: '21:10',
           previewable: false,
-          summary: 'The fundamental grasping sparrow’s tail sequence explained in detail.',
+          summary: 'The fundamental Grasp the Sparrow’s Tail sequence, explained in detail.',
         },
         {
           id: 'lesson-3',

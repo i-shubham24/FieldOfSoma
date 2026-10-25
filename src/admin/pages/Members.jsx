@@ -7,7 +7,7 @@ import { ADMIN_EMAIL } from '../sampleData'
 import { classTitle, useAdminData } from '../store'
 import useAdminTitle from '../useAdminTitle'
 import { AutoTextarea, button, field, Notice, PageHeader, panel, SampleNote, Segmented, StatCard, Tag, Toggle } from '../ui'
-import { downloadCsv, gmailCompose, initials, rupees } from '../util'
+import { downloadCsv, gmailCompose, initials, rupees, thisMonthLabel } from '../util'
 
 const FILTERS = [
   ['all', 'All'],
@@ -246,7 +246,7 @@ export default function Members() {
         <StatCard label="Members" value={String(list.length)} />
         <StatCard label="Bought a class" value={String(list.filter((m) => m.owns.length).length)} />
         <StatCard label="Get Field Notes" value={String(list.filter((m) => m.fieldNotes).length)} />
-        <StatCard label="Joined this month" value={String(list.filter((m) => m.joined.includes('Oct')).length)} />
+        <StatCard label="Joined this month" value={String(list.filter((m) => m.joined.endsWith(thisMonthLabel())).length)} />
       </section>
 
       <div className="flex flex-wrap items-center gap-3">

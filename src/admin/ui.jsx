@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { XIcon } from '@phosphor-icons/react/dist/csr/X'
 import { useMediaUrl } from './media'
 
@@ -192,7 +193,11 @@ export function ProgressBar({ value, label: text }) {
   )
 }
 
-// A dialog over the page. Escape or the close button shuts it, and focus returns to where it was.
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, video[controls], [tabindex]:not([tabindex="-1"])'
+
+// A dialog over the page. Escape or the close button shuts it, Tab stays inside, and focus
+// returns to where it was. It is drawn at the end of <body>, outside any form on the page,
+// so pressing Enter in a field inside it never submits the editor behind it.
 export function Modal({ title, onClose, children, wide = false }) {
   const box = useRef(null)
   const close = useRef(onClose)
@@ -201,7 +206,23 @@ export function Modal({ title, onClose, children, wide = false }) {
     const before = document.activeElement
     box.current?.focus()
     const onKey = (event) => {
-      if (event.key === 'Escape') close.current()
+      if (event.key === 'Escape') {
+        close.current()
+        return
+      }
+      if (event.key !== 'Tab' || !box.current) return
+      const items = [...box.current.querySelectorAll(FOCUSABLE)].filter((el) => el.offsetParent !== null)
+      if (!items.length) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      const inside = items.includes(document.activeElement)
+      if (event.shiftKey && (document.activeElement === first || !inside)) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && (document.activeElement === last || !inside)) {
+        event.preventDefault()
+        first.focus()
+      }
     }
     window.addEventListener('keydown', onKey)
     const overflow = document.body.style.overflow
@@ -213,7 +234,7 @@ export function Modal({ title, onClose, children, wide = false }) {
     }
   }, [])
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto p-4 sm:items-center sm:p-8">
       <button type="button" aria-label="Close" onClick={onClose} className="fixed inset-0 cursor-default bg-soma-ink/45" />
       <div
@@ -232,7 +253,8 @@ export function Modal({ title, onClose, children, wide = false }) {
         </div>
         <div className="p-5">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 

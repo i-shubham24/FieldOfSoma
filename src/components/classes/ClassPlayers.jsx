@@ -6,12 +6,34 @@ import { PlayIcon } from '@phosphor-icons/react/dist/csr/Play'
 import useDialog from '../../lib/useDialog'
 
 // Turns a YouTube, Vimeo or direct video link into something the page can play.
+// Handles the shapes people copy from the address bar or a share button: youtu.be/ID?si=…,
+// watch?si=…&v=ID, /shorts/, /live/, and private Vimeo links that carry a hash.
 function embedFor(url) {
   if (!url) return null
-  const youtube = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/)
-  if (youtube) return { type: 'iframe', src: `https://www.youtube-nocookie.com/embed/${youtube[1]}?rel=0` }
-  const vimeo = url.match(/vimeo\.com\/(?:video\/)?(\d+)/)
-  if (vimeo) return { type: 'iframe', src: `https://player.vimeo.com/video/${vimeo[1]}` }
+  let link
+  try {
+    link = new URL(url)
+  } catch {
+    return { type: 'video', src: url }
+  }
+  const host = link.hostname.replace(/^(www|m)\./, '')
+
+  if (host === 'youtu.be' || host.endsWith('youtube.com') || host.endsWith('youtube-nocookie.com')) {
+    const id =
+      host === 'youtu.be'
+        ? link.pathname.slice(1, 12)
+        : link.searchParams.get('v') || link.pathname.match(/\/(?:embed|shorts|live|v)\/([\w-]{11})/)?.[1]
+    if (id && /^[\w-]{11}$/.test(id)) return { type: 'iframe', src: `https://www.youtube-nocookie.com/embed/${id}?rel=0` }
+  }
+
+  if (host.endsWith('vimeo.com')) {
+    const match = link.pathname.match(/^\/(?:video\/)?(\d+)(?:\/([\da-f]+))?/)
+    if (match) {
+      const hash = match[2] || link.searchParams.get('h')
+      return { type: 'iframe', src: `https://player.vimeo.com/video/${match[1]}${hash ? `?h=${hash}` : ''}` }
+    }
+  }
+
   return { type: 'video', src: url }
 }
 

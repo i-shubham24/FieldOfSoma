@@ -36,7 +36,7 @@ const METHODS = [
   },
   {
     id: 'wallet',
-    label: 'Wallets (Paytm, Amazon Pay, Mobikwik)',
+    label: 'Wallets (Paytm, Amazon Pay, MobiKwik)',
     hint: 'Pay from a wallet balance',
   },
 ]
@@ -175,6 +175,8 @@ export default function Checkout() {
   const [payError, setPayError] = useState('')
   const [order, setOrder] = useState(null)
   const topRef = useRef(null)
+  // Set straight away, before React re-renders, so a double click cannot pay twice
+  const payingRef = useRef(false)
 
   // Never charge twice for a class someone already owns
   const items = cart.items.filter((item) => !isPurchased(item.id))
@@ -203,16 +205,25 @@ export default function Checkout() {
   }
 
   const onPay = async () => {
+    if (payingRef.current) return
+    payingRef.current = true
     setPaying(true)
     setPayError('')
-    const result = await pay({
-      amount: total,
-      name: details.name.trim(),
-      email: details.email.trim(),
-      method,
-      description: items.map((item) => item.title).join(', '),
-    })
-    setPaying(false)
+    let result
+    try {
+      result = await pay({
+        amount: total,
+        name: details.name.trim(),
+        email: details.email.trim(),
+        method,
+        description: items.map((item) => item.title).join(', '),
+      })
+    } catch {
+      result = { ok: false, reason: 'Something went wrong. Please try again.' }
+    } finally {
+      payingRef.current = false
+      setPaying(false)
+    }
     if (!result.ok) {
       setPayError(result.reason)
       return
@@ -284,7 +295,7 @@ export default function Checkout() {
               <div className="min-w-0 lg:col-span-7">
                 {step === 1 ? (
                   <>
-                    <p className="font-display text-[1.125rem] text-soma-moss italic">Step 1 of 2</p>
+                    <p className="font-display text-[1.125rem] text-soma-moss italic">Step 1 of 3</p>
                     <h1 className="mt-1 font-display text-2xl sm:text-3xl">Enter your details</h1>
                     <p className="mt-2 text-sm leading-relaxed font-light text-soma-clay-deep">
                       Your receipt and class access go to this email.
@@ -315,7 +326,7 @@ export default function Checkout() {
                   </>
                 ) : (
                   <>
-                    <p className="font-display text-[1.125rem] text-soma-moss italic">Step 2 of 2</p>
+                    <p className="font-display text-[1.125rem] text-soma-moss italic">Step 2 of 3</p>
                     <h1 className="mt-1 font-display text-2xl sm:text-3xl">Select payment method</h1>
                     <p className="mt-2 text-sm leading-relaxed font-light text-soma-clay-deep">
                       Payments are handled securely by Razorpay. Choose how you would like to pay.

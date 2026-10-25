@@ -198,7 +198,7 @@ export default function Contact() {
                     ) : detail.href ? (
                       <a
                         href={detail.href}
-                        className="link-rest pb-0.5"
+                        className="tap-area link-rest pb-0.5"
                         {...(detail.external ? { target: '_blank', rel: 'noreferrer' } : {})}
                       >
                         {detail.value}

@@ -12,7 +12,7 @@ export default function NotFound() {
       <div className="shell">
         <RevealLines
           as="h1"
-          lines={[{ text: 'Nothing lives' }, { text: 'at this address.', italic: true }]}
+          lines={[{ text: 'Nothing lives' }, { text: 'at this address', italic: true }]}
           className="text-display"
         />
         <Reveal

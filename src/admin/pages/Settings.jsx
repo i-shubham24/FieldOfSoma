@@ -85,6 +85,14 @@ export default function Settings() {
   const { data, setValue, log } = useAdminData()
   const location = useLocation()
   const [form, setForm] = useState(data.settings)
+
+  // After "Reset sample data" the form starts again from the fresh values
+  useEffect(() => {
+    setForm(data.settings)
+    setErrors({})
+    // Only a reset should replace what is being typed
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.seededAt])
   const [errors, setErrors] = useState({})
   const [notice, setNotice] = useState('')
 

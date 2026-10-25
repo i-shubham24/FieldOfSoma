@@ -59,8 +59,8 @@ export function UploadPhotosButton({ onUploaded, multiple = true, children = 'Up
         <UploadSimpleIcon size={16} aria-hidden="true" />
         {busy.length ? `Uploading ${busy.length}…` : children}
       </button>
-      {errors.map((text) => (
-        <Notice key={text} tone="warn">
+      {errors.map((text, index) => (
+        <Notice key={`${index}-${text}`} tone="warn">
           {text}
         </Notice>
       ))}
@@ -134,7 +134,13 @@ export default function PhotoPicker({ value, onChange, round = false, allowRemov
     <div className="flex flex-col gap-3">
       <AdminPhoto
         photo={photo}
-        className={round ? 'h-28 w-28 rounded-[50%]' : 'aspect-[16/10] w-full rounded-[2px]'}
+        className={
+          round
+            ? 'h-28 w-28 rounded-[50%]'
+            : photo
+              ? 'aspect-[16/10] w-full rounded-[2px]'
+              : 'h-28 w-full rounded-[2px] border border-dashed border-[#D8CFC1]'
+        }
       />
       {photo && !photo.alt ? (
         <p className="text-[0.8125rem] text-[#8E3519]">This photo has no description yet. Add one in Photos, for people using screen readers.</p>

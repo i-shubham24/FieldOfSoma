@@ -377,7 +377,7 @@ export default function Inquiry() {
                       <button
                         type="button"
                         onClick={() => handleSetAll(areas.map((a) => a.id))}
-                        className="link-rest pb-0.5 text-[0.75rem] text-soma-clay-deep hover:text-soma-ink cursor-pointer"
+                        className="tap-area link-rest pb-0.5 text-[0.75rem] text-soma-clay-deep hover:text-soma-ink cursor-pointer"
                       >
                         Select all
                       </button>
@@ -385,7 +385,7 @@ export default function Inquiry() {
                       <button
                         type="button"
                         onClick={() => handleSetAll([])}
-                        className="link-rest pb-0.5 text-[0.75rem] text-soma-clay-deep hover:text-soma-ink cursor-pointer"
+                        className="tap-area link-rest pb-0.5 text-[0.75rem] text-soma-clay-deep hover:text-soma-ink cursor-pointer"
                       >
                         Clear all
                       </button>
@@ -402,7 +402,7 @@ export default function Inquiry() {
                         <BodySilhouette areas={areas} chosen={chosen} onToggle={handleToggle} />
                       </div>
                       <p className="mt-1 text-[0.75rem] text-soma-clay-deep">
-                        Click points on meridian axis to inspect.
+                        Tap a point to read about it.
                       </p>
                     </div>
                   </div>

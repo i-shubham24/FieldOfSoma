@@ -61,7 +61,7 @@ function BuyBox({ course, owned, onPreview, onPlay }) {
         {owned ? (
           <p className="flex items-center gap-2 border border-soma-moss/30 bg-soma-linen/60 px-3.5 py-2 text-xs font-medium text-soma-moss">
             <CheckIcon size={14} weight="bold" aria-hidden="true" />
-            <span>In your library</span>
+            <span>In My Videos</span>
           </p>
         ) : (
           <p className="flex flex-wrap items-baseline gap-3">

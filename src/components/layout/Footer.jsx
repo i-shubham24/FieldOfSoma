@@ -17,7 +17,7 @@ const EXPLORE = [
   { to: '/classes', label: 'Recorded Classes' },
   { to: '/calendar', label: 'Calendar and Booking' },
   { to: '/about', label: 'About Kirti' },
-  { to: '/articles', label: 'Writing and Essays' },
+  { to: '/articles', label: 'Writing' },
 ]
 
 export default function Footer() {
@@ -33,14 +33,14 @@ export default function Footer() {
             <div className="space-y-5">
               <p className="font-display text-xl sm:text-2xl lg:text-[1.75rem] font-normal leading-[1.3] text-soma-ink">
                 <span className="italic">Field of Soma</span> is movement education.<br />
-                Body-based practices for living healing.
+                Body-based practices for healing and living well.
               </p>
               <p className="font-display text-xl sm:text-2xl lg:text-[1.75rem] font-normal leading-[1.3] text-soma-ink">
                 Informed by Somatics and Tai Chi,<br />
-                with creative movement from dance.
+                with Creative Movement from dance.
               </p>
               <p className="font-sans text-[0.875rem] font-normal leading-[1.6] text-soma-clay-deep max-w-[38ch]">
-                Cultivating felt presence and coming back to the body&apos;s innate capacity to heal, steady, and express.
+                Cultivating felt presence and coming back to the body&apos;s innate capacity to heal, steady and express.
               </p>
             </div>
           </div>

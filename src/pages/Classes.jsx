@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { CheckIcon } from '@phosphor-icons/react/dist/csr/Check'
@@ -134,12 +134,12 @@ function CinemaSection({ item, isPurchased, inCart, onAddToCart, onPreview, onPl
                 </div>
               </button>
               <div className="absolute bottom-4 left-4 bg-soma-ink/85 px-3 py-1.5 text-xs text-white">
-                {isPurchased ? 'In your library' : 'Free preview'}
+                {isPurchased ? 'In My Videos' : 'Free preview'}
               </div>
             </div>
 
             <div className="mt-4 flex items-center justify-between text-xs text-soma-clay-deep px-1">
-              <span>{item.duration} length • {item.level}</span>
+              <span>{item.duration} • {item.level}</span>
               <span>{item.rating} ★ ({item.ratingCount} reviews)</span>
             </div>
           </div>
@@ -206,7 +206,7 @@ function CinemaSection({ item, isPurchased, inCart, onAddToCart, onPreview, onPl
                   onClick={() => onPlayFullVideo(item)}
                   className="cursor-pointer bg-soma-moss px-7 py-3.5 text-center text-sm font-medium text-soma-paper transition-colors duration-300 hover:bg-soma-moss-light"
                 >
-                  Play Full Video Course
+                  Play the class
                 </button>
               ) : inCart ? (
                 <Link
@@ -245,23 +245,19 @@ function Library() {
   const { purchases, isPurchased } = usePurchasedClasses()
   const cart = useCart()
 
-  const [filter, setFilter] = useState(tabParam === 'my-videos' ? 'my-videos' : 'all')
   const [viewMode, setViewMode] = useState('grid') // 'grid' | 'cinema'
   const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null)
   const [selectedFullVideoCourse, setSelectedFullVideoCourse] = useState(null)
 
   const reduce = useReducedMotion()
 
-  // Sync tab query parameter if present
-  useEffect(() => {
-    if (tabParam === 'my-videos') {
-      setFilter('my-videos')
-    }
-  }, [tabParam])
+  // The filter lives in the address (?tab=tai-chi), so Back, links and reloads all agree with it
+  const filterIds = ['all', 'my-videos', ...classes.filters.map((f) => f.id)]
+  const filter = filterIds.includes(tabParam) ? tabParam : 'all'
 
   // Compute filter tabs dynamically
   const filterTabs = [
-    { id: 'all', label: 'All Classes' },
+    { id: 'all', label: 'All classes' },
     {
       id: 'my-videos',
       label: purchases.length > 0 ? `My Videos (${purchases.length})` : 'My Videos',
@@ -276,17 +272,14 @@ function Library() {
     ? classes.items
     : classes.items.filter((item) => item.practice === filter)
 
-  const handleFilterChange = (id) => {
-    setFilter(id)
-    if (id === 'my-videos') {
-      setSearchParams({ tab: 'my-videos' })
-    } else {
-      setSearchParams({})
-    }
-  }
+  const handleFilterChange = (id) => setSearchParams(id === 'all' ? {} : { tab: id }, { replace: true })
 
   return (
-    <section className="py-20 md:py-28 min-h-[85vh] flex flex-col justify-center">
+    <section aria-labelledby="library-title" className="py-20 md:py-28 min-h-[85vh] flex flex-col justify-center">
+      {/* Gives the class titles (h3) a parent heading, for screen readers and search engines */}
+      <h2 id="library-title" className="sr-only">
+        Recorded classes
+      </h2>
       {/* Top Filter and View Mode Switcher */}
       <div className="shell mb-10">
         <div className="mx-auto max-w-6xl">
@@ -362,7 +355,7 @@ function Library() {
               <VideoCameraIcon size={28} />
             </div>
             <h3 className="mt-5 font-display text-2xl text-soma-ink">
-              No Purchased Videos Yet
+              No videos yet
             </h3>
             <p className="mt-3 text-sm text-soma-clay-deep font-light leading-relaxed">
               Classes you buy will appear here, ready to watch.

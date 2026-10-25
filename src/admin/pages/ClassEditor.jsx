@@ -191,7 +191,7 @@ function Editor({ id }) {
   const checks = readiness(form)
   const ready = checks.every(([, ok]) => ok)
   const videoSeconds = form.lessons.reduce((total, lesson) => total + (lesson.video?.duration || 0), 0)
-  const slug = isNew ? slugify(form.title || 'new-class', data.classes.map((c) => c.id)) : id
+  const slug = isNew ? slugify(form.title || 'new-class', ['new', ...data.classes.map((c) => c.id)]) : id
 
   const save = (event) => {
     event.preventDefault()
@@ -323,36 +323,6 @@ function Editor({ id }) {
             <AutoTextarea id="class-about" minRows={5} value={form.about} onChange={set('about')} />
           </Section>
 
-          <Section title="What you will practise" hint="Short lines. They show as a ticked list on the class page.">
-            <ul className="flex flex-col gap-2">
-              {form.learn.map((line, index) => (
-                <li key={index} className="flex gap-2">
-                  <label htmlFor={`learn-${index}`} className="sr-only">
-                    Line {index + 1}
-                  </label>
-                  <input
-                    id={`learn-${index}`}
-                    value={line}
-                    onChange={(event) => update('learn', (all) => all.map((l, i) => (i === index ? event.target.value : l)))}
-                    className={`${field} h-11`}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => update('learn', (all) => all.filter((_, i) => i !== index))}
-                    aria-label={`Remove line ${index + 1}`}
-                    className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center text-soma-clay-deep hover:text-[#8E3519]"
-                  >
-                    <TrashIcon size={17} aria-hidden="true" />
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <button type="button" onClick={() => update('learn', (all) => [...all, ''])} className={`${button.outline} self-start`}>
-              <PlusIcon size={15} aria-hidden="true" />
-              Add a line
-            </button>
-          </Section>
-
           <Section
             title="Lessons"
             hint={`Each lesson needs a video before the class can be published. Free previews can be watched by anyone.${
@@ -467,12 +437,6 @@ function Editor({ id }) {
             </p>
           </Section>
 
-          <Section title="You will need" hint="One item per line.">
-            <label htmlFor="class-needs" className="sr-only">
-              You will need
-            </label>
-            <AutoTextarea id="class-needs" minRows={3} value={form.needs} onChange={set('needs')} />
-          </Section>
         </div>
 
         <div className="flex min-w-0 flex-[1_1_300px] flex-col gap-5">
@@ -544,6 +508,43 @@ function Editor({ id }) {
               </dl>
             </Section>
           ) : null}
+
+          <Section title="What you will practise" hint="Short lines. They show as a ticked list on the class page.">
+            <ul className="flex flex-col gap-2">
+              {form.learn.map((line, index) => (
+                <li key={index} className="flex gap-2">
+                  <label htmlFor={`learn-${index}`} className="sr-only">
+                    Line {index + 1}
+                  </label>
+                  <input
+                    id={`learn-${index}`}
+                    value={line}
+                    onChange={(event) => update('learn', (all) => all.map((l, i) => (i === index ? event.target.value : l)))}
+                    className={`${field} h-11`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => update('learn', (all) => all.filter((_, i) => i !== index))}
+                    aria-label={`Remove line ${index + 1}`}
+                    className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center text-soma-clay-deep hover:text-[#8E3519]"
+                  >
+                    <TrashIcon size={17} aria-hidden="true" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <button type="button" onClick={() => update('learn', (all) => [...all, ''])} className={`${button.outline} self-start`}>
+              <PlusIcon size={15} aria-hidden="true" />
+              Add a line
+            </button>
+          </Section>
+
+          <Section title="You will need" hint="One item per line.">
+            <label htmlFor="class-needs" className="sr-only">
+              You will need
+            </label>
+            <AutoTextarea id="class-needs" minRows={3} value={form.needs} onChange={set('needs')} />
+          </Section>
         </div>
       </div>
 

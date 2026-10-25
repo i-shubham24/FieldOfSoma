@@ -77,7 +77,7 @@ export default function KinfolkStory() {
                   to="/login"
                   className="inline-flex min-h-11 items-center font-sans text-[0.8125rem] font-medium tracking-[0.06em] text-soma-paper/90 transition-colors hover:text-white"
                 >
-                  Login
+                  Log in
                 </Link>
                 <Link
                   to={booking.to}

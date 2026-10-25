@@ -25,6 +25,8 @@ const writePref = (value) => {
 export default function AmbientSound() {
   const audioRef = useRef(null)
   const fadeRef = useRef(null)
+  // Stops listening for the first click; the button calls it too, so a choice made there sticks
+  const stopListening = useRef(() => {})
   const [isPlaying, setIsPlaying] = useState(false)
 
   const fadeTo = (target, done) => {
@@ -61,12 +63,15 @@ export default function AmbientSound() {
       // A click on the sound button itself is handled by the button.
       if (event.target.closest?.('[data-ambient-toggle]')) return
       remove()
+      // Muted, or already playing from the button: leave it as it is
+      if (readPref() === 'off' || !audioRef.current?.paused) return
       start()
     }
     const remove = () => {
       window.removeEventListener('click', onFirstGesture)
       window.removeEventListener('keydown', onFirstGesture)
     }
+    stopListening.current = remove
     window.addEventListener('click', onFirstGesture)
     window.addEventListener('keydown', onFirstGesture)
 
@@ -81,6 +86,7 @@ export default function AmbientSound() {
   const toggleSound = () => {
     const audio = audioRef.current
     if (!audio) return
+    stopListening.current()
 
     if (isPlaying) {
       writePref('off')

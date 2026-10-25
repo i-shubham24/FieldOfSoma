@@ -16,11 +16,11 @@ export default function EmailActions({ email, className = '' }) {
     }
   }
 
-  const action = 'link-rest min-h-8 cursor-pointer text-[0.8125rem] text-soma-clay-deep hover:text-soma-ink'
+  const action = 'tap-area link-rest min-h-8 cursor-pointer text-[0.8125rem] text-soma-clay-deep hover:text-soma-ink'
 
   return (
     <span className={`flex flex-wrap items-baseline gap-x-4 gap-y-1 ${className}`}>
-      <a href={`mailto:${email}`} className="link-rest pb-0.5">
+      <a href={`mailto:${email}`} className="tap-area link-rest pb-0.5">
         {email}
       </a>
       <span className="flex items-baseline gap-3">

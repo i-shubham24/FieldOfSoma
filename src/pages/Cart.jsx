@@ -30,7 +30,7 @@ export default function Cart() {
           </Reveal>
           <p className="mt-4 text-[0.9375rem] text-soma-clay-deep">
             {cart.count === 0
-              ? 'Nothing here yet.'
+              ? 'Nothing here yet'
               : `${cart.count} ${cart.count === 1 ? 'class' : 'classes'} in your cart`}
           </p>
 

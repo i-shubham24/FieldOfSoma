@@ -7,7 +7,7 @@ import { ADMIN_EMAIL } from '../sampleData'
 import { useAdminData } from '../store'
 import useAdminTitle from '../useAdminTitle'
 import { button, PageHeader, panel, SampleNote, Segmented, StatCard, Tag } from '../ui'
-import { downloadCsv, gmailCompose, rupees } from '../util'
+import { downloadCsv, gmailCompose, plural, rupees, thisMonthLabel } from '../util'
 
 const STATUSES = ['All', 'Paid', 'Refunded', 'Failed']
 
@@ -39,6 +39,12 @@ export default function Orders() {
   const [notice, setNotice] = useState('')
   const [confirmRefund, setConfirmRefund] = useState(false)
 
+  // Moving to another order, by clicking or through search, disarms a half-clicked refund
+  useEffect(() => {
+    setConfirmRefund(false)
+    setNotice('')
+  }, [selectedId])
+
   // Opened from search: show that order
   const wanted = params.get('id')
   useEffect(() => {
@@ -61,6 +67,9 @@ export default function Orders() {
   const selected = visible.find((o) => o.id === selectedId) ?? null
   const paid = list.filter((o) => o.status === 'Paid')
   const paidTotal = paid.reduce((total, o) => total + o.amount, 0)
+  // Order dates look like "24 Oct, 9:58 am"
+  const month = thisMonthLabel().split(' ')[0]
+  const paidThisMonth = paid.filter((o) => o.date.split(',')[0].endsWith(month))
   const refunded = list.filter((o) => o.status === 'Refunded')
 
   const select = (id) => {
@@ -116,7 +125,7 @@ export default function Orders() {
       </PageHeader>
 
       <section aria-label="This month" className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(190px,1fr))]">
-        <StatCard label="Paid this month" value={rupees(paidTotal)} note={`${paid.length} orders`} />
+        <StatCard label="Paid this month" value={rupees(paidThisMonth.reduce((total, o) => total + o.amount, 0))} note={plural(paidThisMonth.length, 'order')} />
         <StatCard label="Refunded" value={rupees(refunded.reduce((t, o) => t + o.amount, 0))} note={`${refunded.length} ${refunded.length === 1 ? 'order' : 'orders'}`} />
         <StatCard label="Payments that failed" value={String(list.filter((o) => o.status === 'Failed').length)} note="Buyers can try again from their email" />
         <StatCard label="Average order" value={rupees(paidTotal / Math.max(1, paid.length))} note="Paid orders only" />

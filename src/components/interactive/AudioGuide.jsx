@@ -89,7 +89,7 @@ export default function AudioGuide({ practiceTitle, verbs, duration = 45, transc
   const intervalRef = useRef(null)
 
   // Frequencies for each practice mood: Somatics (deep 192Hz), Tai Chi (grounded 162Hz), Creative (light 240Hz)
-  const pitch = practiceTitle.includes('Somatics')
+  const pitch = /Somatic/.test(practiceTitle)
     ? 192
     : practiceTitle.includes('Tai Chi')
     ? 162
@@ -147,7 +147,7 @@ export default function AudioGuide({ practiceTitle, verbs, duration = 45, transc
           <button
             type="button"
             onClick={togglePlay}
-            aria-label={isPlaying ? `Pause sample for ${practiceTitle}` : `Play a calm tone while you read the cue for ${practiceTitle}`}
+            aria-label={isPlaying ? `Pause the tone for ${practiceTitle}` : `Play a calm tone while you read the cue for ${practiceTitle}`}
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[2px] bg-soma-moss text-soma-paper transition-colors duration-500 ease-soma hover:bg-soma-moss-light"
           >
             {isPlaying ? (
@@ -219,7 +219,7 @@ export default function AudioGuide({ practiceTitle, verbs, duration = 45, transc
 
         <span className="flex items-center gap-1.5 text-[0.75rem] text-soma-clay-deep">
           <SpeakerHighIcon size={13} />
-          <span>Harmonic ambient resonance</span>
+          <span>A calm tone to read by</span>
         </span>
       </div>
 

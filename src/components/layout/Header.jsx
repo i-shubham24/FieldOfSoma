@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { HandbagSimpleIcon } from '@phosphor-icons/react/dist/csr/HandbagSimple'
@@ -20,7 +20,7 @@ const EDITORIAL_CATEGORIES = [
   { to: '/classes', label: 'Recorded Classes' },
   { to: '/calendar', label: 'Calendar and Booking' },
   { to: '/about', label: 'About Kirti' },
-  { to: '/articles', label: 'Writing and Essays' },
+  { to: '/articles', label: 'Writing' },
   { to: '/contact', label: 'Contact' },
 ]
 
@@ -40,6 +40,13 @@ export default function Header() {
   const navigate = useNavigate()
   const { count: cartCount } = useCart()
   const location = useLocation()
+  const menuRef = useRef(null)
+  const buttonRef = useRef(null)
+
+  // Any change of page closes the menu, including the browser's Back button
+  useEffect(() => {
+    setOpen(false)
+  }, [location.key, location.pathname])
 
   const [overDark, setOverDark] = useState(false)
   const [hideLogo, setHideLogo] = useState(false)
@@ -108,11 +115,22 @@ export default function Header() {
 
     page?.setAttribute('inert', '')
     window.addEventListener('keydown', onKeyDown)
+    // Keyboard and screen reader users land on the first link of the menu
+    // (the first one that is shown: some columns are hidden on phones)
+    const focusTimer = setTimeout(() => {
+      const items = [...(menuRef.current?.querySelectorAll('a[href], button, input') ?? [])]
+      items.find((item) => item.offsetParent !== null)?.focus({ preventScroll: true })
+    }, 60)
 
     return () => {
+      clearTimeout(focusTimer)
       unlockScroll()
       page?.removeAttribute('inert')
       window.removeEventListener('keydown', onKeyDown)
+      // Closing from inside the menu hands focus back to the menu button
+      if (menuRef.current?.contains(document.activeElement) || document.activeElement === document.body) {
+        buttonRef.current?.focus({ preventScroll: true })
+      }
     }
   }, [open])
 
@@ -186,6 +204,7 @@ export default function Header() {
             </Link>
           ) : null}
           <button
+            ref={buttonRef}
             type="button"
             className="group relative flex h-11 w-11 cursor-pointer items-center justify-center text-inherit focus:outline-none focus-visible:ring-1 focus-visible:ring-current"
             aria-expanded={open}
@@ -220,6 +239,7 @@ export default function Header() {
       <AnimatePresence>
         {open ? (
           <motion.div
+            ref={menuRef}
             id="kinfolk-menu"
             role="dialog"
             aria-modal="true"
@@ -259,10 +279,10 @@ export default function Header() {
                       </div>
                       <div>
                         <p className="font-sans text-[0.75rem] font-medium tracking-[0.16em] text-soma-moss uppercase">
-                          Practice with Kirti
+                          Practise with Kirti
                         </p>
                         <p className="mt-1 font-display text-[1.125rem] leading-[1.2] font-medium text-soma-ink">
-                          Private Consultations
+                          Private consultations
                         </p>
                         <p className="mt-1.5 text-[0.8125rem] leading-[1.45] text-soma-clay-deep">
                           Begin wherever your body is today. In person or live online.
@@ -347,15 +367,15 @@ export default function Header() {
                     transition={{ duration: 0.85, delay: 0.38, ease: KINFOLK_EASE }}
                   >
                     <p className="font-sans text-label font-medium tracking-[0.16em] text-soma-clay-deep uppercase">
-                      Archive Access
+                      Members
                     </p>
                     <div className="mt-1.5">
                       <Link
                         to="/login"
                         onClick={close}
-                        className="link-rest pb-0.5 text-[0.875rem] text-soma-ink/80 hover:text-soma-ink"
+                        className="tap-area link-rest pb-0.5 text-[0.875rem] text-soma-ink/80 hover:text-soma-ink"
                       >
-                        Login / Member Archive
+                        Log in
                       </Link>
                     </div>
                   </motion.div>
@@ -414,17 +434,17 @@ export default function Header() {
                       <input
                         type="text"
                         name="inquiry"
-                        aria-label="Type here to inquire"
+                        aria-label="Type here to enquire"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Type here to inquire"
+                        placeholder="Type here to enquire"
                         className="w-full bg-transparent font-sans text-base text-soma-ink placeholder:text-soma-clay-deep focus:outline-none"
                       />
                       <button
                         type="submit"
                         className="link-rest shrink-0 cursor-pointer pb-0.5 text-[0.75rem] font-medium text-soma-ink uppercase tracking-wider"
                       >
-                        Inquire
+                        Enquire
                       </button>
                     </div>
                   </motion.form>

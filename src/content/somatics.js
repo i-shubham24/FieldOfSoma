@@ -6,7 +6,7 @@ import { images } from './images'
 export const somatics = {
   intro: {
     label: 'Discover Somatics',
-    headline: [{ text: 'We live from' }, { text: 'the neck up.', italic: true }],
+    headline: [{ text: 'We live from' }, { text: 'the neck up', italic: true }],
     lede: 'Most of us think our way through the day and notice the body only when it hurts. Somatics is the practice of noticing sooner, and of using that attention to undo tension at its source.',
     image: images.kirtiForestHero,
   },
@@ -113,7 +113,7 @@ export const somatics = {
         reflex: 'Holding pattern',
         coords: { x: 100, y: 88 },
         body: 'Shoulders that sit high or roll forward are being held there by muscles that never switch off. Somatic work begins by feeling them lift on purpose.',
-        microPractice: 'Lift both shoulders up toward the ears by 10%. Feel the effort. Now take eight slow seconds to let them sink all the way down.',
+        microPractice: 'Lift both shoulders up towards the ears by 10%. Feel the effort. Now take eight slow seconds to let them sink all the way down.',
       },
       {
         id: 'breath',
@@ -140,7 +140,7 @@ export const somatics = {
         reflex: 'Guarding pattern',
         coords: { x: 100, y: 216 },
         body: 'Hips that feel stuck are often gripped by the waist and deep hip muscles on one side. Guarding after an old injury is a common cause.',
-        microPractice: 'Notice which hip is carrying more of your weight right now. Shift a little toward the lighter side, and notice what your spine does.',
+        microPractice: 'Notice which hip is carrying more of your weight right now. Shift a little towards the lighter side, and notice what your spine does.',
       },
       {
         id: 'tiredness',

@@ -7,7 +7,7 @@ import { images } from './images'
 export const articles = {
   intro: {
     label: 'Writing',
-    headline: [{ text: 'Notes on sensing,' }, { text: 'moving and resting.', italic: true }],
+    headline: [{ text: 'Notes on sensing,' }, { text: 'moving and resting', italic: true }],
     lede: 'Short pieces about the practices, and about paying attention to the body.',
   },
 
@@ -24,7 +24,7 @@ export const articles = {
     paragraphs: [
       'When a muscle feels tight, most of us want to stretch it. We lean, pull and hold. Sometimes it helps for an hour, and then the tightness comes back.',
       'That is because the tightness is often a habit, not a length. Over months and years, the brain learns to keep certain muscles a little bit on. We stop feeling it, so we cannot simply decide to relax.',
-      'In Somatics we work with the habit itself. You gently tighten the muscle a little more, notice what that feels like, and then let it go very slowly. Done with attention, this helps the brain feel the muscle again, and it can begin to rest.',
+      'In Somatics we work with the habit itself. You gently tighten the muscle a little more, notice what that feels like and then let it go very slowly. Done with attention, this helps the brain feel the muscle again, and it can begin to rest.',
     ],
   },
 
@@ -36,7 +36,7 @@ export const articles = {
       excerpt: 'Watch a cat wake up. It does not stretch. It tightens, then slowly lets go.',
       image: images.kirtiPortrait,
       paragraphs: [
-        'Watch a cat wake up. It arches its back, spreads its paws, holds for a moment, and then slowly softens back down. This is called pandiculation, and we do it too when we yawn.',
+        'Watch a cat wake up. It arches its back, spreads its paws, holds for a moment and then slowly softens back down. This is called pandiculation, and we do it too when we yawn.',
         'You can try a small version now. Gently draw your shoulder blades together. Notice the effort. Then let them go as slowly as you can, over a count of ten. Notice how your shoulders feel afterwards.',
       ],
     },
@@ -48,7 +48,7 @@ export const articles = {
       image: images.kirtiTaiChiHorseStance,
       paragraphs: [
         'In Tai Chi, standing practice looks completely still. But inside, the body is always making small adjustments to stay balanced.',
-        'Standing like a tree does not mean going stiff. The feet settle into the ground, the knees stay soft, and the upper body can relax because the legs are doing the carrying. Many people find their shoulders drop on their own.',
+        'Standing like a tree does not mean going stiff. The feet settle into the ground, the knees stay soft and the upper body can relax because the legs are doing the carrying. Many people find their shoulders drop on their own.',
       ],
     },
     {
@@ -59,7 +59,7 @@ export const articles = {
       image: images.kirtiStageLunge,
       paragraphs: [
         'Many of us stop moving freely once we start to worry about how we look. We learn to sit still and stand straight, and we forget what it was like to move for fun.',
-        'Creative movement is a chance to forget the mirror for a few minutes. There are no steps to learn and nobody to impress. You follow what feels good, and see where it goes.',
+        'Creative Movement is a chance to forget the mirror for a few minutes. There are no steps to learn and nobody to impress. You follow what feels good, and see where it goes.',
       ],
     },
     {

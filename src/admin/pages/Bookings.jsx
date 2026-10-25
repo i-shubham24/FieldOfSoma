@@ -295,6 +295,7 @@ export default function Bookings() {
   const { data, patch, remove, log } = useAdminData()
   const [params, setParams] = useSearchParams()
   const [highlight, setHighlight] = useState(null)
+  const [historyOpen, setHistoryOpen] = useState(false)
   const [notice, setNotice] = useState(null)
   const today = todayIso()
 
@@ -303,9 +304,10 @@ export default function Bookings() {
   useEffect(() => {
     if (!wanted) return
     setHighlight(wanted)
+    if (['Done', 'Cancelled'].includes(data.sessions.find((s) => s.id === wanted)?.status)) setHistoryOpen(true)
     setParams({}, { replace: true })
     setTimeout(() => document.getElementById(`session-${wanted}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 60)
-  }, [wanted, setParams])
+  }, [wanted, setParams, data.sessions])
 
   const byTime = (a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`)
   const requests = data.sessions.filter((s) => s.status === 'Requested')
@@ -409,7 +411,7 @@ export default function Bookings() {
       </section>
 
       {history.length ? (
-        <details className="group">
+        <details className="group" open={historyOpen} onToggle={(event) => setHistoryOpen(event.currentTarget.open)}>
           <summary className="flex min-h-11 cursor-pointer items-center gap-2 text-[0.9375rem] font-semibold">
             Past and cancelled sessions <span className="font-normal text-soma-clay-deep">{history.length}</span>
           </summary>

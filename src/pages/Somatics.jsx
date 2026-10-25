@@ -216,7 +216,7 @@ function Doubts() {
               as="h2"
               className="font-serif text-[clamp(2.25rem,4.5vw,3.5rem)] font-normal text-soma-ink leading-tight"
             >
-              Frequently Asked Questions
+              Frequently asked questions
             </Reveal>
             <Reveal as="p" delay={0.08} className="mt-3 text-sm sm:text-base text-soma-clay-deep">
               {heading}

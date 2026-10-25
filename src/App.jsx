@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PageShell from './components/layout/PageShell'
+import AppErrorBoundary from './components/shared/AppErrorBoundary'
 
 const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
@@ -26,28 +27,30 @@ function PageFallback() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<PageFallback />}>
-        <Routes>
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="admin/*" element={<AdminApp />} />
-          <Route element={<PageShell />}>
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="somatics" element={<Somatics />} />
-            <Route path="practices" element={<Practices />} />
-            <Route path="classes" element={<Classes />} />
-            <Route path="classes/:id" element={<ClassDetail />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="calendar" element={<Calendar />} />
-            <Route path="articles" element={<Articles />} />
-            <Route path="articles/:id" element={<Article />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </Suspense>
+      <AppErrorBoundary>
+        <Suspense fallback={<PageFallback />}>
+          <Routes>
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="admin/*" element={<AdminApp />} />
+            <Route element={<PageShell />}>
+              <Route index element={<Home />} />
+              <Route path="about" element={<About />} />
+              <Route path="somatics" element={<Somatics />} />
+              <Route path="practices" element={<Practices />} />
+              <Route path="classes" element={<Classes />} />
+              <Route path="classes/:id" element={<ClassDetail />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="calendar" element={<Calendar />} />
+              <Route path="articles" element={<Articles />} />
+              <Route path="articles/:id" element={<Article />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </AppErrorBoundary>
     </BrowserRouter>
   )
 }

@@ -6,7 +6,7 @@ import { site } from './site'
 export const contact = {
   intro: {
     label: 'Contact',
-    headline: [{ text: 'Begin with' }, { text: 'a few words.', italic: true }],
+    headline: [{ text: 'Begin with' }, { text: 'a few words', italic: true }],
     lede: 'Questions about a practice, a session or a class are all welcome.',
     image: images.kirtiFieldSoma,
   },
@@ -20,12 +20,12 @@ export const contact = {
       external: true,
     },
     { term: 'Sessions', value: 'Online, and in person by arrangement' },
-    { term: 'Time zone', value: 'IST (UTC +5:30)' },
+    { term: 'Time zone', value: 'IST (UTC+5:30)' },
     { term: 'Instagram', value: '@kah_chi_chi', href: site.instagram, external: true },
   ],
 
   form: {
-    name: { label: 'Full name', error: 'Please tell Kirti your name.' },
+    name: { label: 'Full name', error: 'Please add your name.' },
     email: { label: 'Email', error: 'Please enter a valid email address.' },
     practice: {
       label: 'Practice of interest',
@@ -39,7 +39,7 @@ export const contact = {
     submit: 'Send message',
     sending: 'Sending',
     success: {
-      heading: 'Thank you.',
+      heading: 'Thank you',
       body: 'Your message is on its way. Kirti will write back soon.',
     },
   },

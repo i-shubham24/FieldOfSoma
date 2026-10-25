@@ -13,12 +13,14 @@ export const pages = {
     title: '',
     description:
       'Movement and somatic education with Kirti Verma: Somatic Movement Therapy, Tai Chi and Creative Movement. Gentle practices to release held tension.',
+    image: '/photos/kirti-author-preview.jpg',
+    imageAlt: 'Kirti Verma: Movement and Somatic Educator',
   },
   somatics: {
     path: '/somatics',
     title: 'What Is Somatics? Gentle Movement and Somatic Education',
     description:
-      'What somatics is and how it helps: slow, gentle movement that lets long-held tension go. Movement and somatic education with Kirti Verma.',
+      'What Somatics is and how it helps: slow, gentle movement that lets long-held tension go. Movement and somatic education with Kirti Verma.',
     keywords:
       'what is somatics, somatic movement, movement and somatic education, pandiculation, sensory motor amnesia, somatic exercises, Kirti Verma',
   },
@@ -47,9 +49,11 @@ export const pages = {
     path: '/about',
     title: 'About Kirti Verma: Movement and Somatic Educator',
     description:
-      'Kirti Verma is a movement and somatic educator. She teaches Somatic Movement Therapy and Tai Chi, with creative movement drawn from dance.',
+      'Kirti Verma is a movement and somatic educator. She teaches Somatic Movement Therapy and Tai Chi, with Creative Movement drawn from dance.',
     keywords:
       'Kirti Verma, movement and somatic educator, somatic movement therapy teacher, Tai Chi teacher, creative movement, somatics India',
+    image: '/photos/kirti-author-preview.jpg',
+    imageAlt: 'Kirti Verma: Movement and Somatic Educator',
   },
   articles: {
     path: '/articles',

@@ -4,14 +4,14 @@ import { FilmSlateIcon } from '@phosphor-icons/react/dist/csr/FilmSlate'
 import { PlayIcon } from '@phosphor-icons/react/dist/csr/Play'
 import { TrashIcon } from '@phosphor-icons/react/dist/csr/Trash'
 import { UploadSimpleIcon } from '@phosphor-icons/react/dist/csr/UploadSimple'
-import { checkVideo, uploadVideo, useMediaUrl } from './media'
+import { checkVideo, uploadVideo, useMediaFile, useMediaUrl } from './media'
 import { button, Modal, ProgressBar } from './ui'
 import { formatBytes, formatDuration } from './util'
 
 const small = `${button.outline} min-h-9 px-3 text-[0.8125rem]`
 
 function Player({ video, onClose }) {
-  const url = useMediaUrl(video.sample ? null : video.id)
+  const { url, missing } = useMediaFile(video.sample ? null : video.id)
   const poster = useMediaUrl(video.hasPoster ? `${video.id}:poster` : null)
   return (
     <Modal title={video.name} onClose={onClose} wide>
@@ -19,6 +19,10 @@ function Player({ video, onClose }) {
         <p className="text-[0.9375rem] leading-relaxed text-[#3D362F]">
           This lesson uses a sample video, so there is no file to play in this preview. Upload the real recording with
           Replace, and it will play here.
+        </p>
+      ) : missing ? (
+        <p className="text-[0.9375rem] leading-relaxed text-[#8E3519]">
+          This video file is no longer in this browser. Upload it again with Replace.
         </p>
       ) : url ? (
         <video src={url} poster={poster ?? undefined} controls autoPlay playsInline className="aspect-video w-full bg-soma-ink" />
@@ -69,7 +73,7 @@ export default function LessonVideo({ video, lessonName, onChange, onBusy, start
           if (controller.current === mine) setUpload((current) => (current ? { ...current, progress } : current))
         },
       })
-      onChange(record)
+      if (!mine.signal.aborted) onChange(record)
     } catch (err) {
       if (err.name !== 'AbortError') setError(err.message || 'The upload did not finish. Please try again.')
     } finally {

@@ -139,7 +139,7 @@ function PauseDialog({ onClose }) {
                 type="button"
                 onClick={toggleSound}
                 aria-pressed={soundOn}
-                aria-label={soundOn ? 'Turn the chime off' : 'Turn the chime on'}
+                aria-label={soundOn ? 'Turn the tone off' : 'Turn the tone on'}
                 className="flex h-11 min-w-11 items-center justify-center gap-2 text-[0.8125rem] text-soma-clay-deep transition-colors hover:text-soma-ink"
               >
                 {soundOn ? <SpeakerHighIcon size={16} /> : <SpeakerSlashIcon size={16} />}
@@ -206,7 +206,7 @@ function PauseDialog({ onClose }) {
             </div>
 
             <p className="mt-6 hidden text-[0.8125rem] text-soma-clay-deep sm:block">
-              Press space to pause or resume. Escape to close.
+              Press Space to pause or resume, and Esc to close.
             </p>
           </div>
       </div>

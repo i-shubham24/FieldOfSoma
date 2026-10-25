@@ -7,9 +7,9 @@ export const about = {
   intro: {
     label: 'About',
     headline: [{ text: 'Kirti Verma' }],
-    lede: 'Movement and Somatic Educator. Her teaching brings together Somatic Movement Therapy and Tai Chi, with elements of creative movement drawn from dance.',
+    lede: 'A movement and somatic educator. Her teaching brings together Somatic Movement Therapy and Tai Chi, with elements of Creative Movement drawn from dance.',
     image: images.kirtiPortrait,
-    caption: 'Kirti Verma, movement and somatic educator.',
+    caption: 'Kirti Verma, movement and somatic educator',
   },
 
   story: {
@@ -17,7 +17,7 @@ export const about = {
     heading: 'A practice that began with listening',
     paragraphs: [
       'Kirti came to body-based practice the way many of her students do: through a body that was asking to be heard. What began as a personal search for relief became a long study of how people sense, hold and move.',
-      'Her work is informed by Somatic Movement Therapy: drawing from approaches like the Feldenkrais method, Body-Mind Centering, Abhyas Somatics, and Somatic Intelligence to create safety, presence, and grounding in the bones. Tai Chi brings an internal martial art discipline rooted in Taoism and Traditional Chinese Medicine, training structure, balance, and sensitivity to vital energy. Creative movement invites spontaneous expression and playful exploration.',
+      'Her work is informed by Somatic Movement Therapy: drawing from approaches like the Feldenkrais Method, Body-Mind Centering, Abhyas Somatics and Somatic Intelligence to create safety, presence and grounding in the bones. Tai Chi brings an internal martial art discipline rooted in Taoism and Traditional Chinese Medicine, training structure, balance and sensitivity to vital energy. Creative Movement invites spontaneous expression and playful exploration.',
       'Today she teaches these distinct practices side by side. Some students arrive with chronic pain, and some arrive seeking stillness. Most discover that the same patient quality of attention serves both.',
     ],
     image: images.kirtiContemplationLeaves,
@@ -30,27 +30,27 @@ export const about = {
       {
         field: 'Somatic Movement Therapy',
         title: 'Sensory-motor retraining and somatic inquiry',
-        detail: 'Informed by Feldenkrais method, Body-Mind Centering, Abhyas Somatics, and Somatic Intelligence',
+        detail: 'Informed by the Feldenkrais Method, Body-Mind Centering, Abhyas Somatics and Somatic Intelligence',
       },
       {
-        field: 'Bone Grounding & Alignment',
+        field: 'Bone Grounding and Alignment',
         title: 'Neuromuscular presence and structural balance',
-        detail: 'Gentle spinal decompression, safety in the bones, and somatic guided prompts',
+        detail: 'Gentle spinal decompression, safety in the bones and somatic guided prompts',
       },
       {
         field: 'Tai Chi',
         title: 'Traditional internal form and moving meditation',
-        detail: 'Rooted in Taoism and Traditional Chinese Medicine, weight transitions, and qi cultivation',
+        detail: 'Rooted in Taoism and Traditional Chinese Medicine; weight transitions and qi cultivation',
       },
       {
         field: 'Creative Movement',
         title: 'Creative movement derived from dance',
-        detail: 'Unchoreographed somatic exploration, rhythm, and expressive release',
+        detail: 'Unchoreographed somatic exploration, rhythm and expressive release',
       },
       {
         field: 'Integrative Practice',
         title: 'Nervous system regulation and movement education',
-        detail: 'Somatic education for chronic tension, posture realignment, and embodied ease',
+        detail: 'Somatic education for chronic tension, posture realignment and embodied ease',
       },
     ],
   },
@@ -89,7 +89,7 @@ export const about = {
         quote:
           'My shoulders came down from my ears in the second class, and they have mostly stayed there.',
         name: 'Marcus T.',
-        context: 'Weekly Tai Chi and Movement group',
+        context: 'Weekly Tai Chi and Creative Movement group',
       },
     ],
   },

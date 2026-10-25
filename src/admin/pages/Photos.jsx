@@ -147,8 +147,8 @@ export default function Photos() {
       </label>
 
       {added ? <Notice>{added === 1 ? 'Photo added.' : `${added} photos added.`} Give each a short description below.</Notice> : null}
-      {errors.map((text) => (
-        <Notice key={text} tone="warn">
+      {errors.map((text, index) => (
+        <Notice key={`${index}-${text}`} tone="warn">
           {text}
         </Notice>
       ))}

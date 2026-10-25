@@ -51,10 +51,12 @@ export default function useDialog(ref, onClose) {
       }
       const firstItem = items[0]
       const lastItem = items[items.length - 1]
-      if (event.shiftKey && document.activeElement === firstItem) {
+      // Focus can also sit on the dialog box itself (after a click on empty space): wrap from there too
+      const inside = items.includes(document.activeElement)
+      if (event.shiftKey && (document.activeElement === firstItem || !inside)) {
         event.preventDefault()
         lastItem.focus()
-      } else if (!event.shiftKey && document.activeElement === lastItem) {
+      } else if (!event.shiftKey && (document.activeElement === lastItem || !inside)) {
         event.preventDefault()
         firstItem.focus()
       }

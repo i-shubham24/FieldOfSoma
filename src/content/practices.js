@@ -8,8 +8,8 @@ import { images } from './images'
 export const practices = {
   intro: {
     label: 'The Practices',
-    headline: [{ text: 'Find your way back' }, { text: 'into the body.', italic: true }],
-    lede: 'Somatic Movement Therapy and Tai Chi are two distinct practices. Creative movement, drawn from dance, adds a third, freer way in.',
+    headline: [{ text: 'Find your way back' }, { text: 'into the body', italic: true }],
+    lede: 'Somatic Movement Therapy and Tai Chi are two distinct practices. Creative Movement, drawn from dance, adds a third, freer way in.',
   },
 
   items: [
@@ -37,7 +37,7 @@ export const practices = {
       audioCue: {
         duration: 45,
         transcript:
-          'Lie on your back, knees bent, feet flat on the floor. Inhale gently and press your lower back down into the floor just twenty percent. Feel the abdominal muscles engage. Now take eight long seconds to slowly release the press. Notice the exact moment when the muscles stop working and rest begins.',
+          'Lie on your back, knees bent, feet flat on the floor. Inhale gently and press your lower back down into the floor just twenty per cent. Feel the abdominal muscles engage. Now take eight long seconds to slowly release the press. Notice the exact moment when the muscles stop working and rest begins.',
       },
     },
     {
@@ -84,7 +84,7 @@ export const practices = {
       audioCue: {
         duration: 45,
         transcript:
-          'Close your eyes. Find your breath. Notice the first tiny movement that wants to happen without planning: a finger curling, the ribs shifting, or the neck turning. Do not judge how it looks. Simply follow the sensation of the movement as it travels into the next shape.',
+          'Close your eyes. Find your breath. Notice the first tiny movement that wants to happen without planning: a finger curling, the ribs shifting or the neck turning. Do not judge how it looks. Simply follow the sensation of the movement as it travels into the next shape.',
       },
     },
   ],

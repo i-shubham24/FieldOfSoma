@@ -193,7 +193,7 @@ function BookingModal({ request, onClose }) {
             <div className="grid gap-8 sm:grid-cols-2">
               <Field
                 id="booking-name"
-                label="Your name"
+                label="Full name"
                 autoComplete="name"
                 value={values.name}
                 onChange={set('name')}
@@ -301,7 +301,7 @@ function Week({ onSelectClass }) {
                     type="button"
                     onClick={() => onSelectClass(classLabel(row))}
                     aria-label={`Ask to join ${row.title} on ${row.day}`}
-                    className="link-rest min-h-11 cursor-pointer text-[0.875rem] font-medium text-soma-moss transition-colors hover:text-soma-ink"
+                    className="tap-area link-rest -mr-2 min-h-11 cursor-pointer px-2 text-[0.875rem] font-medium text-soma-moss transition-colors hover:text-soma-ink"
                   >
                     Join
                   </button>
@@ -322,7 +322,7 @@ function Request() {
     <section id="consultation" className="scroll-mt-24 py-28 md:py-40">
       <div className="shell">
         <div className="mx-auto grid max-w-6xl items-start gap-14 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-28 lg:col-span-5">
             <Reveal as="h2" className="text-heading">
               {heading}
             </Reveal>

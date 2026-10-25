@@ -76,7 +76,7 @@ export default function Cycle({ centre, phases, caption, onOpenPause }) {
             type="button"
             onClick={onOpenPause}
             className="group absolute inset-0 flex flex-col items-center justify-center p-8 text-center transition-opacity"
-            title="Click to begin interactive pandiculation guide"
+            title="Tap to begin the guided pandiculation"
           >
             <span className="font-display text-[1.75rem] italic transition-transform duration-500 ease-soma group-hover:scale-105">
               {centre}

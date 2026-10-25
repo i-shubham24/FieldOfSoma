@@ -23,7 +23,7 @@ import { KIND_LABEL } from './sampleData'
 import { isSignedIn, signOut } from './session'
 import { findPhoto, useAdminData } from './store'
 import { AdminPhoto, SampleNote, Tag } from './ui'
-import { rupees } from './util'
+import { promoStatus, rupees } from './util'
 
 function navFor(data) {
   const count = (list, test) => list.filter(test).length
@@ -139,7 +139,7 @@ function searchAll(data, q) {
     ['Bookings', data.sessions.filter((s) => has(s.name, s.email)).map((s) => ({ title: s.name, detail: `${s.practice}, ${s.status}`, to: `/admin/bookings?id=${s.id}` }))],
     ['Classes', data.classes.filter((c) => has(c.title, c.practiceName)).map((c) => ({ title: c.title, detail: `${c.practiceName}, ${c.status}`, to: `/admin/classes/${c.id}` }))],
     ['Writing', data.writing.filter((w) => has(w.title, w.topic)).map((w) => ({ title: w.title, detail: `${w.topic}, ${w.status}`, to: `/admin/writing/${w.id}` }))],
-    ['Promo codes', data.promos.filter((p) => has(p.code)).map((p) => ({ title: p.code, detail: p.status, to: `/admin/promos?code=${p.code}` }))],
+    ['Promo codes', data.promos.filter((p) => has(p.code)).map((p) => ({ title: p.code, detail: promoStatus(p), to: `/admin/promos?code=${p.code}` }))],
   ]
   return groups.map(([title, items]) => [title, items.slice(0, 4)]).filter(([, items]) => items.length)
 }

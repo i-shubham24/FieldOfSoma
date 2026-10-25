@@ -5,7 +5,7 @@ import { TrashIcon } from '@phosphor-icons/react/dist/csr/Trash'
 import { useAdminData } from '../store'
 import useAdminTitle from '../useAdminTitle'
 import { button, field, FieldError, label, Notice, PageHeader, panel, SampleNote, Segmented, StatCard, Tag, Toggle } from '../ui'
-import { formatDate, rupees } from '../util'
+import { formatDate, promoStatus, rupees, todayIso } from '../util'
 
 const EMPTY = { code: '', kind: 'percent', value: '', starts: '', ends: '', limit: '' }
 
@@ -35,7 +35,6 @@ function NewCodeForm({ existing, onSave, onCancel }) {
     setErrors(found)
     if (Object.keys(found).length) return
 
-    const today = new Date().toISOString().slice(0, 10)
     const show = (iso) => formatDate(iso, { day: 'numeric', month: 'short', year: 'numeric' })
     onSave({
       id: code,
@@ -44,9 +43,11 @@ function NewCodeForm({ existing, onSave, onCancel }) {
       value,
       used: 0,
       limit: Number(values.limit) || 0,
+      startsOn: values.starts || todayIso(),
+      endsOn: values.ends,
       starts: values.starts ? show(values.starts) : 'Today',
       ends: values.ends ? show(values.ends) : 'No end date',
-      status: values.starts && values.starts > today ? 'Scheduled' : 'Active',
+      paused: false,
       revenue: 0,
     })
   }
@@ -148,12 +149,13 @@ export default function Promos() {
   const [creating, setCreating] = useState(false)
   const [saved, setSaved] = useState('')
 
-  const active = list.filter((p) => p.status === 'Active')
+  const statusOf = (p) => promoStatus(p)
+  const active = list.filter((p) => statusOf(p) === 'Active')
   const usedThisMonth = active.reduce((total, p) => total + p.used, 0)
-  const revenue = list.filter((p) => p.status !== 'Ended').reduce((total, p) => total + p.revenue, 0)
+  const revenue = list.filter((p) => statusOf(p) !== 'Ended').reduce((total, p) => total + p.revenue, 0)
 
   const setActive = (code, on) => {
-    patch('promos', code, { status: on ? 'Active' : 'Paused' })
+    patch('promos', code, { paused: !on })
     log(`${on ? 'Switched on' : 'Paused'} the promo code ${code}`)
   }
 
@@ -189,7 +191,7 @@ export default function Promos() {
             add('promos', promo)
             log(`Created the promo code ${promo.code}`)
             setCreating(false)
-            setSaved(promo.status === 'Scheduled' ? `${promo.code} is saved and starts on ${promo.starts}.` : `${promo.code} is live. Share it however you like.`)
+            setSaved(statusOf(promo) === 'Scheduled' ? `${promo.code} is saved and starts on ${promo.starts}.` : `${promo.code} is live. Share it however you like.`)
           }}
         />
       ) : null}
@@ -213,7 +215,8 @@ export default function Promos() {
           <tbody>
             {list.map((p) => {
               const pct = p.limit ? Math.min(100, Math.round((p.used / p.limit) * 100)) : 0
-              const canToggle = p.status === 'Active' || p.status === 'Paused'
+              const status = statusOf(p)
+              const canToggle = status !== 'Ended'
               return (
                 <tr key={p.code} className={highlight === p.code ? 'bg-soma-linen' : ''}>
                   <td className="border-b border-[#EDE6DA] px-4 py-3 font-mono text-[0.875rem] font-semibold">{p.code}</td>
@@ -234,13 +237,13 @@ export default function Promos() {
                     <span className="block text-soma-clay-deep">to {p.ends}</span>
                   </td>
                   <td className="border-b border-[#EDE6DA] px-3 py-3">
-                    <Tag>{p.status}</Tag>
+                    <Tag>{status}</Tag>
                   </td>
                   <td className="border-b border-[#EDE6DA] px-3 py-1">
                     {canToggle ? (
-                      <Toggle checked={p.status === 'Active'} onChange={(on) => setActive(p.code, on)} label={`${p.code} switched on`} />
+                      <Toggle checked={status !== 'Paused'} onChange={(on) => setActive(p.code, on)} label={`${p.code} switched on`} />
                     ) : (
-                      <span className="text-[0.8125rem] text-soma-clay-deep">{p.status === 'Ended' ? 'Ended' : 'Starts later'}</span>
+                      <span className="text-[0.8125rem] text-soma-clay-deep">Ended</span>
                     )}
                   </td>
                   <td className="border-b border-[#EDE6DA] px-4 py-1">

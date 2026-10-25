@@ -9,15 +9,15 @@ import { images } from './images'
 export const calendar = {
   intro: {
     label: 'Calendar and Booking',
-    headline: [{ text: 'Find a time' }, { text: 'to practise.', italic: true }],
-    lede: 'You can work with Kirti one to one, or join a small weekly group.',
+    headline: [{ text: 'Find a time' }, { text: 'to practise', italic: true }],
+    lede: 'You can work with Kirti one-to-one, or join a small weekly group.',
   },
 
   paths: [
     {
       id: 'private',
       title: 'Private sessions',
-      meta: ['One to one', 'In person or online'],
+      meta: ['One-to-one', 'In person or online'],
       body: 'A session shaped around you. Kirti looks at how you stand and move, guides you through gentle work for what she sees, and gives you a little practice to take home.',
       includes: [
         'A look at how you stand and move',
@@ -60,7 +60,7 @@ export const calendar = {
 
   form: {
     private: {
-      label: 'One to one',
+      label: 'One-to-one',
       heading: 'Request a private session',
       focusOptions: ['Somatic Movement Therapy', 'Tai Chi', 'Creative Movement', 'Not sure yet'],
       formatOptions: ['In person', 'Online'],
@@ -73,7 +73,7 @@ export const calendar = {
     },
     timeOptions: ['Weekday morning', 'Weekday evening', 'Saturday morning'],
     success: {
-      heading: 'Thank you.',
+      heading: 'Thank you',
       body: 'Your request is with Kirti. She will email you to confirm a time.',
     },
   },

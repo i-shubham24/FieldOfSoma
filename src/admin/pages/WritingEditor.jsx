@@ -99,7 +99,7 @@ function Editor({ id }) {
     ['The piece itself', wordCount(form.body) >= 30],
   ]
   const ready = checks.every(([, ok]) => ok)
-  const slug = isNew ? slugify(form.title || 'new-piece', data.writing.map((w) => w.id)) : id
+  const slug = isNew ? slugify(form.title || 'new-piece', ['new', ...data.writing.map((w) => w.id)]) : id
 
   const save = (event) => {
     event.preventDefault()
