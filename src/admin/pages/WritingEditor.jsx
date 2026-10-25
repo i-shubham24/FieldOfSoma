@@ -90,7 +90,7 @@ function Editor({ id }) {
   const set = (key) => (event) => update(key, event.target.value)
 
   const topics = [...new Set([...BASE_TOPICS, ...data.writing.map((w) => w.topic)])]
-  const subscribers = data.members.filter((m) => m.fieldNotes).length + data.messages.filter((m) => m.kind === 'notes').length
+  const subscribers = (data.members?.filter((m) => m.fieldNotes).length ?? 0) + data.messages.filter((m) => m.kind === 'notes').length
   const paragraphs = form.body.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
   const checks = [
     ['A title', Boolean(form.title.trim())],

@@ -104,8 +104,8 @@ export default function Dashboard() {
             <PlusIcon size={16} weight="bold" aria-hidden="true" />
             Add a class
           </Link>
-          <Link to="/admin/promos" className={button.outline}>
-            New promo code
+          <Link to="/admin/writing/new" className={button.outline}>
+            New essay
           </Link>
           <Link to="/admin/inbox" className={button.outline}>
             Open inbox
@@ -116,7 +116,7 @@ export default function Dashboard() {
       <section aria-label="This month at a glance" className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(210px,1fr))]">
         <StatCard label="Money this month" value={rupees(18400)} note="18% more than September" />
         <StatCard label="Classes sold" value="31" note="6 more than September" />
-        <StatCard label="New members" value="12" note="9 also joined Field Notes" />
+        <StatCard label="Field Notes" value="28" note="Email subscribers" />
         <StatCard label="Unread messages" value={String(newMessages.length)} note={`${sessionRequests} ${sessionRequests === 1 ? 'is a session request' : 'are session requests'}`} />
       </section>
 

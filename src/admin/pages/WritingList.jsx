@@ -15,7 +15,7 @@ export default function WritingList() {
   const [status, setStatus] = useState('All')
   const pieces = [...data.writing].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
   const visible = pieces.filter((w) => status === 'All' || w.status === status)
-  const subscribers = data.members.filter((m) => m.fieldNotes).length + data.messages.filter((m) => m.kind === 'notes').length
+  const subscribers = (data.members?.filter((m) => m.fieldNotes).length ?? 0) + data.messages.filter((m) => m.kind === 'notes').length
 
   return (
     <div className="flex flex-col gap-6">

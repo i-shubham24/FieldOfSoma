@@ -90,7 +90,7 @@ export default function Orders() {
     const classIds = selected.items.map((item) => item.id)
     patch('orders', selected.id, { status: 'Refunded', refunded: stamp() })
     setValue('members', (members) =>
-      members.map((m) =>
+      members?.map((m) =>
         m.email === selected.email ? { ...m, owns: m.owns.filter((id) => !classIds.includes(id)), spent: Math.max(0, m.spent - selected.amount) } : m,
       ),
     )

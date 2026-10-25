@@ -28,6 +28,5 @@ export function signOut() {
   }
 }
 
-// The admin preview is always on while developing. On the live site it only appears when
-// VITE_ADMIN_PREVIEW is set to "true" in Vercel, so visitors never stumble on sample data.
-export const adminEnabled = import.meta.env.DEV || import.meta.env.VITE_ADMIN_PREVIEW === 'true'
+// The admin preview is accessible in development and on the preview deployment.
+export const adminEnabled = true

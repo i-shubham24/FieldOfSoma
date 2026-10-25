@@ -3,7 +3,6 @@ import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from 'react
 import { ArrowSquareOutIcon } from '@phosphor-icons/react/dist/csr/ArrowSquareOut'
 import { BellIcon } from '@phosphor-icons/react/dist/csr/Bell'
 import { CalendarBlankIcon } from '@phosphor-icons/react/dist/csr/CalendarBlank'
-import { ImageIcon } from '@phosphor-icons/react/dist/csr/Image'
 import { ListIcon } from '@phosphor-icons/react/dist/csr/List'
 import { MagnifyingGlassIcon } from '@phosphor-icons/react/dist/csr/MagnifyingGlass'
 import { MonitorPlayIcon } from '@phosphor-icons/react/dist/csr/MonitorPlay'
@@ -13,17 +12,14 @@ import { SignOutIcon } from '@phosphor-icons/react/dist/csr/SignOut'
 import { SlidersHorizontalIcon } from '@phosphor-icons/react/dist/csr/SlidersHorizontal'
 import { SquaresFourIcon } from '@phosphor-icons/react/dist/csr/SquaresFour'
 import { StarIcon } from '@phosphor-icons/react/dist/csr/Star'
-import { TagIcon } from '@phosphor-icons/react/dist/csr/Tag'
 import { TrayIcon } from '@phosphor-icons/react/dist/csr/Tray'
-import { UserCircleIcon } from '@phosphor-icons/react/dist/csr/UserCircle'
-import { UsersIcon } from '@phosphor-icons/react/dist/csr/Users'
 import { XIcon } from '@phosphor-icons/react/dist/csr/X'
 import Wordmark from '../components/layout/Wordmark'
 import { KIND_LABEL } from './sampleData'
 import { isSignedIn, signOut } from './session'
 import { findPhoto, useAdminData } from './store'
 import { AdminPhoto, SampleNote, Tag } from './ui'
-import { promoStatus, rupees } from './util'
+import { rupees } from './util'
 
 function navFor(data) {
   const count = (list, test) => list.filter(test).length
@@ -47,16 +43,12 @@ function navFor(data) {
       title: 'Business',
       items: [
         { to: '/admin/orders', label: 'Orders', icon: ReceiptIcon },
-        { to: '/admin/promos', label: 'Promo codes', icon: TagIcon },
-        { to: '/admin/members', label: 'Members', icon: UsersIcon },
+        { to: '/admin/writing', label: 'Writing', icon: PencilSimpleIcon },
       ],
     },
     {
       title: 'Website',
       items: [
-        { to: '/admin/writing', label: 'Writing', icon: PencilSimpleIcon },
-        { to: '/admin/photos', label: 'Photos', icon: ImageIcon },
-        { to: '/admin/profile', label: 'Profile', icon: UserCircleIcon },
         { to: '/admin/settings', label: 'Settings', icon: SlidersHorizontalIcon },
       ],
     },
@@ -109,7 +101,7 @@ function SideNav({ onSignOut }) {
       </div>
 
       <div className="mt-auto flex items-center gap-2.5 border-t border-[#E4DCCF] pt-4 pl-2.5">
-        <Link to="/admin/profile" className="flex min-w-0 items-center gap-2.5 hover:text-soma-moss">
+        <Link to="/admin/settings" className="flex min-w-0 items-center gap-2.5 hover:text-soma-moss">
           <AdminPhoto photo={findPhoto(data, data.profile.photoId)} alt="" sizes="36px" className="h-9 w-9 shrink-0 rounded-[50%]" />
           <span className="min-w-0">
             <span className="block truncate text-[0.875rem] font-semibold">{data.profile.name}</span>
@@ -133,13 +125,11 @@ function SideNav({ onSignOut }) {
 function searchAll(data, q) {
   const has = (...values) => values.some((value) => String(value ?? '').toLowerCase().includes(q))
   const groups = [
-    ['Members', data.members.filter((m) => has(m.name, m.email)).map((m) => ({ title: m.name, detail: m.email, to: `/admin/members?id=${m.id}` }))],
     ['Orders', data.orders.filter((o) => has(o.id, o.name, o.email)).map((o) => ({ title: o.id, detail: `${o.name}, ${rupees(o.amount)}, ${o.status}`, to: `/admin/orders?id=${o.id}` }))],
     ['Inbox', data.messages.filter((m) => has(m.name, m.email, m.message)).map((m) => ({ title: m.name, detail: `${KIND_LABEL[m.kind]}, ${m.when}`, to: `/admin/inbox?id=${m.id}` }))],
     ['Bookings', data.sessions.filter((s) => has(s.name, s.email)).map((s) => ({ title: s.name, detail: `${s.practice}, ${s.status}`, to: `/admin/bookings?id=${s.id}` }))],
     ['Classes', data.classes.filter((c) => has(c.title, c.practiceName)).map((c) => ({ title: c.title, detail: `${c.practiceName}, ${c.status}`, to: `/admin/classes/${c.id}` }))],
     ['Writing', data.writing.filter((w) => has(w.title, w.topic)).map((w) => ({ title: w.title, detail: `${w.topic}, ${w.status}`, to: `/admin/writing/${w.id}` }))],
-    ['Promo codes', data.promos.filter((p) => has(p.code)).map((p) => ({ title: p.code, detail: promoStatus(p), to: `/admin/promos?code=${p.code}` }))],
   ]
   return groups.map(([title, items]) => [title, items.slice(0, 4)]).filter(([, items]) => items.length)
 }
