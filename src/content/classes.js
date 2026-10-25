@@ -1,4 +1,4 @@
-import { images } from './images'
+import { images } from './images.js'
 
 // Recorded Classes: a DEMO catalogue. Titles, prices, ratings and lesson lists are samples
 // until Kirti records and prices her classes, so the page shows a draft note.

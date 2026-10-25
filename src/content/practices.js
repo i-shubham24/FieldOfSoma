@@ -1,4 +1,4 @@
-import { images } from './images'
+import { images } from './images.js'
 
 // The Practices page: two distinct practices, each with Kirti's own summary, about text,
 // who it serves and (for Somatics) possible results, from her "Website notes" doc.

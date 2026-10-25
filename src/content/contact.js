@@ -1,5 +1,5 @@
-import { images } from './images'
-import { site } from './site'
+import { images } from './images.js'
+import { site } from './site.js'
 
 // Contact page. Location and time zone are PLACEHOLDERS until Kirti confirms where she teaches.
 

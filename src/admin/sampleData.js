@@ -1,11 +1,11 @@
-import { about } from '../content/about'
-import { articles as siteArticles } from '../content/articles'
-import { calendar } from '../content/calendar'
-import { classes } from '../content/classes'
-import { voices } from '../content/home'
-import { images } from '../content/images'
-import { site } from '../content/site'
-import { rupees } from './util'
+import { about } from '../content/about.js'
+import { articles as siteArticles } from '../content/articles.js'
+import { calendar } from '../content/calendar.js'
+import { classes } from '../content/classes.js'
+import { voices } from '../content/home.js'
+import { images } from '../content/images.js'
+import { site } from '../content/site.js'
+import { rupees } from './util.js'
 
 // SAMPLE DATA for the admin preview. Nothing here is real: names, orders, messages and
 // numbers only show how each screen works. seedData() is the starting point the admin's
@@ -15,7 +15,7 @@ import { rupees } from './util'
 export const ADMIN_EMAIL = 'kirtiverma.kv@gmail.com'
 
 // Raise this when the shape of the data changes, so old saved copies are replaced.
-export const DATA_VERSION = 3
+export const DATA_VERSION = 4
 
 export { rupees }
 
@@ -315,12 +315,21 @@ const profile = {
   photoId: 'kirtiPortrait',
 }
 
+export const DEFAULT_POLICIES = {
+  refund:
+    'We want these practices to serve you well. If a recorded class is not the right fit for your body or learning path, write to info@fieldofsoma.com within 7 days of purchase for a full refund through Razorpay. For private one-to-one somatic consultations, sessions can be rescheduled or cancelled with at least 24 hours notice. Late cancellations within 24 hours are non-refundable.',
+  privacy:
+    'Field of Soma respects your personal privacy. We only collect information necessary to deliver your classes and sessions: your name, email address, phone number for booking, and practice notes you share with us. Payments are handled securely via Razorpay; we never store or see your card or banking credentials. We never sell, rent, or share your data with third parties. You can request deletion of your information anytime by emailing info@fieldofsoma.com.',
+  terms:
+    'All recorded video classes, audio lessons, and written materials are the intellectual property of Kirti Verma and are licensed solely for your personal practice. Access is personal to you and may not be shared, reproduced, or broadcast. Somatic education and movement therapies are educational practices designed to foster body awareness and ease tension; they do not replace medical diagnosis, physical therapy, or mental healthcare. Always honour your physical comfort and move within your pain-free range.',
+}
+
 const settings = {
   bookingUrl: '',
   notifyEmail: ADMIN_EMAIL,
   notify: { messages: true, orders: true, reviews: true },
-  policies: { refund: '', privacy: '', terms: '' },
-  policiesUpdated: '',
+  policies: DEFAULT_POLICIES,
+  policiesUpdated: '2026-10-25',
 }
 
 export function seedData() {

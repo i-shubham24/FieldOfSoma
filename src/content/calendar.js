@@ -1,4 +1,4 @@
-import { images } from './images'
+import { images } from './images.js'
 
 // Calendar and Booking. The weekly schedule is a PLACEHOLDER for Kirti to replace.
 //

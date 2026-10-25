@@ -68,25 +68,48 @@ export async function sendForm(subject, rawFields) {
   const gmail = gmailFor(site.email, subject, fields)
   // Pretend all went well, so a bot learns nothing
   if (caughtBot()) return { ok: true }
-  if (!KEY) return { ok: false, reason: 'not-connected', mailto, gmail }
   if (!allowedToSend()) return { ok: false, reason: 'too-many', mailto, gmail }
 
+  // 1. Try Nodemailer backend endpoint first
   try {
-    const response = await fetch(ENDPOINT, {
+    const apiResponse = await fetch('/api/send-email', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        access_key: KEY,
         subject: `${tidy(subject).slice(0, 150)} | ${site.name}`,
-        from_name: `${site.name} website`,
         ...fields,
       }),
     })
-    const data = await response.json()
-    return data.success ? { ok: true } : { ok: false, reason: 'failed', mailto, gmail }
+    if (apiResponse.ok) {
+      const data = await apiResponse.json()
+      if (data.ok) return { ok: true }
+    }
   } catch {
-    return { ok: false, reason: 'failed', mailto, gmail }
+    // If local/serverless Nodemailer is not reached, fall back
   }
+
+  // 2. Fallback to Web3Forms if configured
+  if (KEY) {
+    try {
+      const response = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: KEY,
+          subject: `${tidy(subject).slice(0, 150)} | ${site.name}`,
+          from_name: `${site.name} website`,
+          ...fields,
+        }),
+      })
+      const data = await response.json()
+      if (data.success) return { ok: true }
+    } catch {
+      // ignore
+    }
+  }
+
+  // 3. Fallback to email client
+  return { ok: false, reason: KEY ? 'failed' : 'not-connected', mailto, gmail }
 }
 
 // Field Notes sign-ups arrive as emails for now. When Kirti picks a newsletter provider

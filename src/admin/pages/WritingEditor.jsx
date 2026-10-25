@@ -65,7 +65,7 @@ function Editor({ id }) {
   const location = useLocation()
   const isNew = id === 'new'
   const saved = isNew ? null : data.writing.find((w) => w.id === id)
-  useAdminTitle(isNew ? 'New piece' : saved.title)
+  useAdminTitle(isNew ? 'New note' : saved.title)
 
   const [form, setForm] = useState(() => ({ ...BLANK, ...(saved ?? {}) }))
   const [mode, setMode] = useState('write')
@@ -99,7 +99,7 @@ function Editor({ id }) {
     ['The piece itself', wordCount(form.body) >= 30],
   ]
   const ready = checks.every(([, ok]) => ok)
-  const slug = isNew ? slugify(form.title || 'new-piece', ['new', ...data.writing.map((w) => w.id)]) : id
+  const slug = isNew ? slugify(form.title || 'new-note', ['new', ...data.writing.map((w) => w.id)]) : id
 
   const save = (event) => {
     event.preventDefault()
@@ -156,7 +156,7 @@ function Editor({ id }) {
             Writing
           </Link>
           <h1 className="mt-1 flex flex-wrap items-center gap-3 font-display text-[clamp(1.75rem,3vw,2.125rem)] leading-tight font-normal">
-            {form.title || 'New piece'}
+            {form.title || 'New note'}
             <Tag>{form.status}</Tag>
             {dirty ? <Tag tone="sand">Unsaved changes</Tag> : null}
           </h1>
@@ -310,11 +310,11 @@ function Editor({ id }) {
       {!isNew ? (
         <section className={`${panel} flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6`}>
           <div>
-            <h2 className="text-[1rem] font-semibold">Delete this piece</h2>
+            <h2 className="text-[1rem] font-semibold">Delete this note</h2>
             <p className="mt-1 text-[0.8125rem] text-soma-clay-deep">It comes off the Writing page straight away.</p>
           </div>
           <button type="button" onClick={deletePiece} className={button.danger}>
-            {confirmDelete ? 'Click again to delete for good' : 'Delete piece'}
+            {confirmDelete ? 'Click again to delete for good' : 'Delete note'}
           </button>
         </section>
       ) : null}

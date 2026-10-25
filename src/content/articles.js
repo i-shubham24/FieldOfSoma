@@ -1,4 +1,4 @@
-import { images } from './images'
+import { images } from './images.js'
 
 // Writing and newsletter. These short pieces are PLACEHOLDERS written for the site so the
 // page has a shape. They are marked as drafts until Kirti replaces them with her own

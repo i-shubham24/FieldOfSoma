@@ -105,7 +105,7 @@ export default function Dashboard() {
             Add a class
           </Link>
           <Link to="/admin/writing/new" className={button.outline}>
-            New essay
+            New note
           </Link>
           <Link to="/admin/inbox" className={button.outline}>
             Open inbox

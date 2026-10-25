@@ -1,4 +1,4 @@
-import { images } from './images'
+import { images } from './images.js'
 
 // Home page copy. The headline, subtext and practice summaries are Kirti's own words
 // (her "Website notes" doc). She asked for a minimal first page, so keep descriptions short.

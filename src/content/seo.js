@@ -1,5 +1,5 @@
-import { articles } from './articles'
-import { classes } from './classes'
+import { articles } from './articles.js'
+import { classes } from './classes.js'
 
 // Titles and descriptions for every page, in one place. The pages use them while the site
 // runs, and the build writes them into each page's own HTML file (scripts/prerender.mjs),

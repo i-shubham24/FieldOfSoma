@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "backend": "node backend/server.js",
+    "test:email": "node backend/test-email.js",
     "build": "node scripts/sitemap.mjs && vite build && node scripts/prerender.mjs",
     "sitemap": "node scripts/sitemap.mjs",
     "preview": "vite preview",
@@ -12,9 +14,14 @@
     "prerender": "node scripts/prerender.mjs"
   },
   "dependencies": {
+    "@fastify/cors": "^11.3.1",
     "@phosphor-icons/react": "^2.1.0",
+    "dotenv": "^18.0.9",
+    "fastify": "^5.12.7",
     "lenis": "^1.3.26",
+    "mongodb": "^7.7.0",
     "motion": "^12.0.0",
+    "nodemailer": "^10.2.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.0"

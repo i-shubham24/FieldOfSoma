@@ -23,7 +23,7 @@ export default function WritingList() {
         <SampleNote />
         <Link to="/admin/writing/new" className={button.primary}>
           <PlusIcon size={16} weight="bold" aria-hidden="true" />
-          New piece
+          New note
         </Link>
       </PageHeader>
 

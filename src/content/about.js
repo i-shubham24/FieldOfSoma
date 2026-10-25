@@ -1,4 +1,4 @@
-import { images } from './images'
+import { images } from './images.js'
 
 // About page. Sections with a `note` are draft wording until Kirti supplies her own;
 // the note shows on the page so nobody mistakes it for her words.

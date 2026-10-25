@@ -1,4 +1,4 @@
-import { images } from './images'
+import { images } from './images.js'
 
 // Discover Somatics: the page that explains and persuades.
 // The physiology here follows Thomas Hanna's Clinical Somatics. Kirti should review every claim.

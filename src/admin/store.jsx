@@ -16,14 +16,37 @@ const AdminData = createContext(null)
 // Version 3 dropped test orders, the team list and the test payment switch
 function upgradeFrom2(saved) {
   const { team: _team, paymentMode: _mode, ...settings } = saved.settings
-  return { ...saved, version: DATA_VERSION, orders: saved.orders.filter((o) => o.status !== 'Test'), settings }
+  return { ...saved, version: 3, orders: saved.orders.filter((o) => o.status !== 'Test'), settings }
+}
+
+// Version 4 adds real policy text for refund, privacy and terms of use
+function upgradeTo4(saved) {
+  const seed = seedData()
+  const policies = {
+    refund: saved.settings?.policies?.refund || seed.settings.policies.refund,
+    privacy: saved.settings?.policies?.privacy || seed.settings.policies.privacy,
+    terms: saved.settings?.policies?.terms || seed.settings.policies.terms,
+  }
+  return {
+    ...saved,
+    version: DATA_VERSION,
+    settings: {
+      ...saved.settings,
+      policies,
+      policiesUpdated: saved.settings?.policiesUpdated || seed.settings.policiesUpdated,
+    },
+  }
 }
 
 function loadData() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY))
-    if (saved?.version === DATA_VERSION) return saved
-    if (saved?.version === 2) return upgradeFrom2(saved)
+    if (saved?.version === DATA_VERSION) {
+      if (!saved.settings?.policies?.refund) return upgradeTo4(saved)
+      return saved
+    }
+    if (saved?.version === 3) return upgradeTo4(saved)
+    if (saved?.version === 2) return upgradeTo4(upgradeFrom2(saved))
   } catch {
     // Nothing saved yet, or storage blocked: start from the sample data
   }
@@ -51,7 +74,38 @@ export function AdminDataProvider({ children }) {
     } catch {
       setSaveFailed(true)
     }
+
+    // Debounced sync to MongoDB backend
+    const timer = setTimeout(() => {
+      fetch('/api/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      }).catch(() => {})
+    }, 1200)
+
+    return () => clearTimeout(timer)
   }, [data])
+
+  // Synchronize with MongoDB on mount
+  useEffect(() => {
+    let active = true
+    fetch('/api/sync')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (active && res?.ok && res?.connected && res?.data) {
+          setData((prev) => ({
+            ...prev,
+            ...res.data,
+          }))
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      active = false
+    }
+  }, [])
 
   // Another tab of the admin saved something: show it here too
   useEffect(() => {
