@@ -66,18 +66,16 @@
     cursor: default;
   }
 
-  /* Paper grain: fixed and non-interactive, so it never repaints on scroll. */
+  /* Paper grain: lightweight static texture, GPU accelerated with zero blending lag */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 60;
     pointer-events: none;
-    opacity: 0.32;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    transform: translateZ(0);
-    will-change: transform;
+    opacity: 0.035;
+    background-image: radial-gradient(#1c1a17 0.75px, transparent 0.75px);
+    background-size: 16px 16px;
   }
 
   h1,

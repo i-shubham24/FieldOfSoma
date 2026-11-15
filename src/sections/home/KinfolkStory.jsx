@@ -30,10 +30,10 @@ export default function KinfolkStory() {
         {/* Scrolling photographic canvas: extended from above to prominently feature her face */}
         <motion.div
           style={{
-            y: reduce ? 0 : imageY,
-            scale: reduce ? 1 : imageScale,
+            y: imageY,
+            scale: imageScale,
           }}
-          className="absolute inset-x-0 -top-[25%] sm:-top-[30%] h-[180%] w-full will-change-transform"
+          className="absolute inset-x-0 -top-[25%] sm:-top-[30%] h-[180%] w-full will-change-transform transform-gpu"
         >
           {/* Editorial portrait backdrop with serene face and graceful movement visible */}
           <div className="relative h-full w-full">

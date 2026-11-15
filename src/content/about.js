@@ -1,56 +1,49 @@
 import { images } from './images.js'
 
-// About page. Sections with a `note` are draft wording until Kirti supplies her own;
-// the note shows on the page so nobody mistakes it for her words.
+// About page. Updated with Kirti's verified story, training lineage, and teaching philosophy.
 
 export const about = {
   intro: {
     label: 'About',
     headline: [{ text: 'Kirti Verma' }],
-    lede: 'A movement and somatic educator. Her teaching brings together Somatic Movement Therapy and Tai Chi, with elements of Creative Movement drawn from dance.',
+    lede: 'Movement and Somatic practitioner and Educator. Her teaching brings together Somatic movement therapy, Tai Chi and Improvisation. She has been working on creating a pedagogy to work with body through Inquiry and Ease.',
     image: images.kirtiPortrait,
     caption: 'Kirti Verma, movement and somatic educator',
   },
 
   story: {
-    note: 'Draft: Kirti will share her own story.',
-    heading: 'A practice that began with listening',
+    heading: 'A practice of inquiry and ease',
     paragraphs: [
-      'Kirti came to body-based practice the way many of her students do: through a body that was asking to be heard. What began as a personal search for relief became a long study of how people sense, hold and move.',
-      'Her work is informed by Somatic Movement Therapy: drawing from approaches like the Feldenkrais Method, Body-Mind Centering, Abhyas Somatics and Somatic Intelligence to create safety, presence and grounding in the bones. Tai Chi brings an internal martial art discipline rooted in Taoism and Traditional Chinese Medicine, training structure, balance and sensitivity to vital energy. Creative Movement invites spontaneous expression and playful exploration.',
-      'Today she teaches these distinct practices side by side. Some students arrive with chronic pain, and some arrive seeking stillness. Most discover that the same patient quality of attention serves both.',
+      "Kirti is drawn to change the narrative of how we look at our bodies and live with it. Working with health is not about finding symptoms and healing it. It starts with being kind and available to our body's needs. Creating a habit of listening and becoming present is an essential to change our relationship with the body.",
+      'Trained in Contemporary Dance and various other forms of dance, she found solace in Improvisation when her journey to Exploration started. From that space, her path to Inquiry began supported by Somatic practices and Tai Chi.',
+      'Her work is informed by Somatic Movement Therapy: drawing from approaches like Feldenkrais method, Body-mind centering, Abhyas Somatics and Somatic Intelligence to create safety, presence and grounding in the body. Tai Chi brings an internal martial art discipline rooted in Taoism and Traditional Chinese Medicine training structure, balance and sensitivity to vital energy. Creative movement and Improvisation invites spontaneity in our expression and playful explorations.',
+      'Today she teaches these distinct practices in Online as well as in-person format. Her intention is to create spaces for people to discover a new relationship with themselves through body and movement.',
     ],
-    image: images.kirtiContemplationLeaves,
+    image: images.kirtiTheatricalPortrait,
   },
 
   lineage: {
-    note: 'Draft: trainings, teachers and years to be confirmed by Kirti.',
     heading: 'Training and lineage',
     rows: [
       {
         field: 'Somatic Movement Therapy',
-        title: 'Sensory-motor retraining and somatic inquiry',
-        detail: 'Informed by the Feldenkrais Method, Body-Mind Centering, Abhyas Somatics and Somatic Intelligence',
-      },
-      {
-        field: 'Bone Grounding and Alignment',
-        title: 'Neuromuscular presence and structural balance',
-        detail: 'Gentle spinal decompression, safety in the bones and somatic guided prompts',
+        title: 'Sensory-motor retraining and grounding',
+        detail: 'Drawing from Feldenkrais method, Body-mind centering, Abhyas Somatics and Somatic Intelligence to create safety, presence and grounding in the body',
       },
       {
         field: 'Tai Chi',
-        title: 'Traditional internal form and moving meditation',
-        detail: 'Rooted in Taoism and Traditional Chinese Medicine; weight transitions and qi cultivation',
+        title: 'Internal martial art and moving meditation',
+        detail: 'Rooted in Taoism and Traditional Chinese Medicine training structure, balance and sensitivity to vital energy',
       },
       {
-        field: 'Creative Movement',
-        title: 'Creative movement derived from dance',
-        detail: 'Unchoreographed somatic exploration, rhythm and expressive release',
+        field: 'Creative Movement & Improvisation',
+        title: 'Spontaneity in expression and playful exploration',
+        detail: 'Contemporary dance, improvisation, and somatic inquiry bypassing performance and aesthetic judgment',
       },
       {
-        field: 'Integrative Practice',
-        title: 'Nervous system regulation and movement education',
-        detail: 'Somatic education for chronic tension, posture realignment and embodied ease',
+        field: 'Pedagogy & Facilitation',
+        title: 'Inquiry and Ease',
+        detail: 'Creating spaces for people to discover a new relationship with themselves through body and movement, online and in person',
       },
     ],
   },

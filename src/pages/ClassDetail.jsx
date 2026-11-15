@@ -285,8 +285,8 @@ export default function ClassDetail() {
                   <div className="mt-4 flex items-center gap-5">
                     <div className="h-16 w-16 shrink-0 overflow-hidden bg-soma-sand">
                       <img
-                        src={images.kirtiPortrait.src}
-                        alt={images.kirtiPortrait.alt}
+                        src={images.kirtiAuthorPreview.src}
+                        alt={images.kirtiAuthorPreview.alt}
                         loading="lazy"
                         className="photo h-full w-full object-cover"
                       />

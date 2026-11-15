@@ -4,19 +4,15 @@ import 'lenis/dist/lenis.css'
 
 export default function SmoothScroll({ children }) {
   useEffect(() => {
-    // Respect user's motion preferences
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return undefined
-    }
-
     const lenis = new Lenis({
-      duration: 1.0,
+      duration: 0.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 1.15,
+      touchMultiplier: 1.0,
+      syncTouch: false,
       infinite: false,
       prevent: (node) => {
         if (!node || typeof node.hasAttribute !== 'function') return false
@@ -32,7 +28,6 @@ export default function SmoothScroll({ children }) {
       allowNestedScroll: true,
     })
 
-    // Dialogs and scroll areas opt out through `prevent` above, so their own scrolling works
     window.__lenis = lenis
 
     let rafId

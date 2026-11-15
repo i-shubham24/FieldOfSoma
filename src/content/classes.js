@@ -114,7 +114,7 @@ export const classes = {
       ratingCount: 162,
       studentsCount: 420,
       lastUpdated: 'October 2026',
-      image: images.kirtiForestHero,
+      image: images.kirtiSomaticWorkshop,
       previewUrl: '',
       videoUrl: '',
       overview: [
@@ -246,7 +246,7 @@ export const classes = {
       ratingCount: 88,
       studentsCount: 210,
       lastUpdated: 'October 2026',
-      image: images.somaticConstructiveRest,
+      image: images.kirtiCreativeDance,
       previewUrl: '',
       videoUrl: '',
       overview: [
@@ -307,7 +307,7 @@ export const classes = {
       ratingCount: 135,
       studentsCount: 340,
       lastUpdated: 'September 2026',
-      image: images.kirtiForestGrounding,
+      image: images.somaticConstructiveRest,
       previewUrl: '',
       videoUrl: '',
       overview: [
@@ -368,7 +368,7 @@ export const classes = {
       ratingCount: 95,
       studentsCount: 260,
       lastUpdated: 'October 2026',
-      image: images.kirtiTaiChiSingleWhipBw,
+      image: images.kirtiTaiChiLake,
       previewUrl: '',
       videoUrl: '',
       overview: [

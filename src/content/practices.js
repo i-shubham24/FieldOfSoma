@@ -1,15 +1,14 @@
 import { images } from './images.js'
 
-// The Practices page: two distinct practices, each with Kirti's own summary, about text,
-// who it serves and (for Somatics) possible results, from her "Website notes" doc.
-// Creative Movement is shown as a third practice for now; its text is not Kirti's yet
-// and will be replaced when she shares her writing.
+// The Practices page: Somatic Movement Therapy, Tai Chi, and Creative Movement
+// and Improvisation, each with Kirti's own summary, about text, who it serves
+// and possible results, from her "Website notes" doc.
 
 export const practices = {
   intro: {
     label: 'The Practices',
     headline: [{ text: 'Find your way back' }, { text: 'into the body', italic: true }],
-    lede: 'Somatic Movement Therapy and Tai Chi are two distinct practices. Creative Movement, drawn from dance, adds a third, freer way in.',
+    lede: 'Somatic Movement Therapy and Tai Chi are two distinct practices. Creative Movement and Improvisation, drawn from dance, adds a third, freer way in.',
   },
 
   items: [
@@ -17,13 +16,13 @@ export const practices = {
       id: 'somatics',
       name: 'Somatic Movement Therapy',
       verbs: 'Release, sense',
-      image: images.kirtiPortrait,
+      image: images.kirtiSomaticFacilitation,
       intention:
-        'Slow, gentle movement that retrains the muscles braced from years of tightness. Nothing is forced or stretched. You learn to release the excess tension and bring the body back into a state of equilibrium.',
+        'Slow, gentle movement that retrain the muscles braced from years of tightness. Nothing is forced or stretched. You learn to release the excess tension, to bring back the body into a state of equilibrium.',
       about: [
-        'Drawing on approaches such as the Feldenkrais Method, Body-Mind Centering, Abhyas Somatics and Somatic Intelligence, we work with sensitising into the body, creating safety and grounding in the bones.',
-        'As the body grounds and becomes present, we progress into exploration through guided prompts.',
-        'Listening and presence develop while the body starts to realign itself.',
+        'Derived from different approaches like Feldenkrais method, Body-mind centering, Abhyas Somatics, Somatic Intelligence, we work with sensitising into the body creating safety and grounding in the bones.',
+        'As the body grounds and become present, we progress into exploration through guided prompts.',
+        'Listening and Presence is developed while the body starts to realign itself.',
       ],
       serves: [
         'Chronic back, neck, hip or shoulder tension',
@@ -31,7 +30,11 @@ export const practices = {
         'People looking for better stability in body and clarity in mind',
         'People looking to develop a better relationship with their body',
       ],
-      results: ['Spinal decompression', 'Better gait', 'From urgency to a calm state of mind'],
+      results: [
+        'Spinal decompression',
+        'Better gait',
+        'From urgency to calm state of mind',
+      ],
       format: 'Private sessions and small groups, in person and online',
       cta: 'Book a Somatics session',
       audioCue: {
@@ -44,19 +47,26 @@ export const practices = {
       id: 'tai-chi',
       name: 'Tai Chi',
       verbs: 'Ground, flow',
-      image: images.kirtiTaiChiLake,
+      image: images.kirtiTaiChiWhiteStance,
       intention:
-        'A gentle internal martial art practised as a moving meditation. Based on the philosophy of Taoism and Traditional Chinese Medicine, it strengthens your body from the inside out: an internal training to develop structure, balance and sensitivity to your qi, the vital force.',
+        'A gentle internal martial art practiced as a moving meditation. Based on the philosophy of Taoism and Traditional Chinese Medicine, strengthen your body from inside out: an internal training to develop structure, balance and sensitivity to your qi, the vital force.',
       about: [
-        'The body is gently loaded through its own weight to work with gravity, alignment and sustained posture. It is a way to learn that strength can be developed with our own body weight when the body is organised in an aligned manner. As we learn to carry our weight, our balance improves and our central axis aligns with our whole being, physically and energetically.',
-        'A set of movements is designed to let vital energy flow through the whole body, removing tension patterns and blockages.',
-        'Sustainable strength and focus develop while you move in a graceful manner.',
+        'The body is gently loaded through own body weight to work with gravity, alignment and sustained posture. A way to learn that strength can be developed with our own body weight when the body is organised in an aligned manner. As we learn to carry our weight, our balance improves and central axis align with our whole being physically and energetically.',
+        'A set of movements designed in a manner to flow our vital energy in the whole body removing tension patterns and blockages.',
+        'Sustainable Strength and focus is developed while you move in a graceful manner.',
       ],
       serves: [
         'People looking to improve their posture',
-        'Learning how to preserve and cultivate your energy',
+        'How to preserve and cultivate your energy',
         'Gaining confidence through your body and stance',
         'Better gait and stability',
+      ],
+      results: [
+        'Improved Balance',
+        'Strengthen joints and bones',
+        'Clarity in mind',
+        'Better coordination skills',
+        'Enhanced energy everyday with regular practice',
       ],
       format: 'Weekly group classes, in person and online',
       cta: 'Join a Tai Chi class',
@@ -68,16 +78,19 @@ export const practices = {
     },
     {
       id: 'creative-movement',
-      name: 'Creative Movement',
+      name: 'Creative Movement and Improvisation',
       verbs: 'Express, play',
-      image: images.kirtiFieldSoma,
+      image: images.kirtiFieldDance,
       intention:
-        'To let the body move before the mind decides how it should look. There is no choreography, no mirror and no audience. Simple prompts open the door, and what follows is yours.',
+        'Open movement inquiry drawn from Contemporary dance and improvisation. There is no choreography, no performance. You follow sensation, impulses, rhythm and curiosity with some movement prompts. For feeling alive, expressive and unguarded in your own skin.',
+      about: [
+        'When you explore moving in different ways, it expands the possibilities of your everyday life and be surprised how many choices are available.',
+      ],
       serves: [
-        'People who feel shut down or self-conscious in their bodies',
-        'Anyone who misses dancing and dislikes being watched',
+        'People who are self-conscious in their bodies',
+        'Anyone who missed dancing and disliked being watched',
         'Artists and performers looking for new material',
-        'Those moving through change, grief or stress',
+        'People who want to break out of their mundane patterns',
       ],
       format: 'Workshops and small groups, in person',
       cta: 'Ask about the next workshop',

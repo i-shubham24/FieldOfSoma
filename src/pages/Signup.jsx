@@ -81,8 +81,8 @@ export default function Signup() {
           <div className="rounded-[4px] border border-soma-sand overflow-hidden bg-white p-2 shadow-xs max-w-sm">
             <div className="h-32 sm:h-38 w-full overflow-hidden rounded-[2px] bg-soma-linen">
               <img
-                src={images.himalayanCedarForest.src}
-                alt={images.himalayanCedarForest.alt}
+                src={images.himalayanCedarMisty.src}
+                alt={images.himalayanCedarMisty.alt}
                 className="h-full w-full object-cover"
               />
             </div>

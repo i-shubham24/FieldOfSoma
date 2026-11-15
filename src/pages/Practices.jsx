@@ -134,6 +134,7 @@ function SplitPractice({ item, flip = false }) {
             <Frame
               image={item.image}
               ratio="aspect-[4/5]"
+              position="object-[center_20%]"
               sizes="(min-width: 1024px) 34rem, 100vw"
               drift
               unveil
@@ -168,7 +169,8 @@ function WidePractice({ item }) {
         <div className="mx-auto max-w-6xl">
           <Frame
             image={item.image}
-            ratio="aspect-[4/3] md:aspect-[21/9]"
+            ratio="aspect-[4/3] md:aspect-[3/2] lg:aspect-[16/10]"
+            position="object-top"
             sizes="(min-width: 1280px) 72rem, 100vw"
             drift
             unveil

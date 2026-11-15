@@ -6,16 +6,17 @@ import DappledLight from './DappledLight'
 const VEILED = 'inset(100% 0% 0% 0%)'
 const OPEN = 'inset(0% 0% 0% 0%)'
 
-// The image moves a little slower than the page, so the frame reads as a window.
-function Drift({ children }) {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const scale = useTransform(scrollYProgress, [0, 1], [1.16, 1.08])
-  const y = useTransform(scrollYProgress, [0, 1], ['-3.5%', '3.5%'])
+// The image moves with an elegant, visible parallax as the frame passes through the viewport.
+function Drift({ children, containerRef }) {
+  const internalRef = useRef(null)
+  const targetRef = containerRef || internalRef
+  const { scrollYProgress } = useScroll({ target: targetRef, offset: ['start end', 'end start'] })
+  const scale = useTransform(scrollYProgress, [0, 1], [1.14, 1.14])
+  const y = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
 
   return (
-    <div ref={ref} className="absolute inset-0">
-      <motion.div style={{ scale, y }} className="absolute inset-0 will-change-transform transform-gpu">
+    <div ref={internalRef} className="absolute inset-0 overflow-hidden">
+      <motion.div style={{ scale, y }} className="absolute inset-0 h-full w-full will-change-transform transform-gpu">
         {children}
       </motion.div>
     </div>
@@ -70,7 +71,7 @@ export default function Frame({
         animate={masked ? { clipPath: inView ? OPEN : VEILED } : undefined}
         transition={{ duration: 1.25, delay, ease: EASE }}
       >
-        {drift && !reduce ? <Drift>{media}</Drift> : media}
+        {drift ? <Drift containerRef={ref}>{media}</Drift> : media}
       </motion.div>
       {text ? (
         <figcaption className="mt-4 text-[0.8125rem] leading-normal text-soma-clay-deep">

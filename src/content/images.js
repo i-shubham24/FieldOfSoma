@@ -58,4 +58,65 @@ export const images = {
     'Kirti Verma in a wide Tai Chi stance in white clothes, in black and white',
   ),
   taiChiGroupClass: photo('soma-studio-group', 1200, 'A Tai Chi group class with arms raised in a bright studio'),
+
+  kirtiSomaticFacilitation: photo(
+    'kirti-somatic-facilitation',
+    1200,
+    'Kirti Verma kneeling beside a participant providing gentle hands-on somatic facilitation',
+  ),
+  kirtiTaiChiWhiteStance: photo(
+    'kirti-tai-chi-white-stance',
+    1200,
+    'Kirti Verma poised in a balanced Tai Chi posture in traditional white attire',
+  ),
+  kirtiFieldDance: photo(
+    'kirti-field-dance',
+    1200,
+    'Kirti Verma dancing with arms open wide in an expansive green meadow',
+  ),
+  kirtiTheatricalPortrait: photo(
+    'kirti-theatrical-portrait',
+    1200,
+    'Kirti Verma seated in contemplative stillness under warm directional light',
+  ),
+  kirtiForestAwakening: photo(
+    'kirti-forest-awakening',
+    1200,
+    'Kirti Verma mindfully connecting with tall forest trees and moss',
+  ),
+  kirtiRestingIntegration: photo(
+    'kirti-resting-integration',
+    1200,
+    'A participant resting on a mat in somatic restorative integration',
+  ),
+  kirtiAtmosphericMovement: photo(
+    'kirti-atmospheric-movement',
+    1200,
+    'Atmospheric movement portrait of Kirti Verma with gentle motion blur',
+  ),
+  himalayanCedarMisty: photo(
+    'himalayan-cedar-misty',
+    1200,
+    'Misty pine forest on a tranquil mountain slope',
+  ),
+  kirtiForestPine: photo(
+    'kirti-forest-pine',
+    1200,
+    'Kirti Verma in a grounded posture among woodland trees',
+  ),
+  kirtiWoodlandStillness: photo(
+    'kirti-woodland-stillness',
+    1200,
+    'Quiet woodland alignment and mindful stillness among tall trees',
+  ),
+  kirtiMeadowWind: photo(
+    'kirti-meadow-wind',
+    1200,
+    'Organic movement among tall grasses in open countryside',
+  ),
+  kirtiSomaticGroupCircle: photo(
+    'kirti-somatic-group-circle',
+    1200,
+    'Participants seated in an integration circle on the studio floor',
+  ),
 }

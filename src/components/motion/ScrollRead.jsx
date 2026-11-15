@@ -28,7 +28,5 @@ function ScrollReadMotion({ text, className }) {
 
 // A passage that comes into ink word by word, at the pace of the reader's scroll.
 export default function ScrollRead({ text, className }) {
-  const reduce = useReducedMotion()
-  if (reduce) return <p className={className}>{text}</p>
   return <ScrollReadMotion text={text} className={className} />
 }

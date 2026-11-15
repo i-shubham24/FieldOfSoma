@@ -32,6 +32,7 @@ function Intro() {
           <Frame
             image={image}
             ratio="aspect-[840/642]"
+            position="object-[center_28%]"
             sizes="(min-width: 768px) 48rem, 100vw"
             priority
             drift

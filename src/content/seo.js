@@ -49,9 +49,9 @@ export const pages = {
     path: '/about',
     title: 'About Kirti Verma: Movement and Somatic Educator',
     description:
-      'Kirti Verma is a movement and somatic educator. She teaches Somatic Movement Therapy and Tai Chi, with Creative Movement drawn from dance.',
+      'Movement and Somatic practitioner and Educator. Her teaching brings together Somatic movement therapy, Tai Chi and Improvisation through Inquiry and Ease.',
     keywords:
-      'Kirti Verma, movement and somatic educator, somatic movement therapy teacher, Tai Chi teacher, creative movement, somatics India',
+      'Kirti Verma, movement and somatic educator, Feldenkrais, Somatic Movement Therapy, Body-Mind Centering, Tai Chi, creative movement, somatics India',
     image: '/photos/kirti-author-preview.jpg',
     imageAlt: 'Kirti Verma: Movement and Somatic Educator',
   },

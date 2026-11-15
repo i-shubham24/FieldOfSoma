@@ -21,10 +21,10 @@ export default function Login() {
     <div className="flex min-h-dvh flex-wrap bg-soma-paper font-sans text-soma-ink">
       <div className="relative min-h-[260px] flex-[1_1_420px] overflow-hidden bg-soma-ink">
         <img
-          src={images.kirtiForestHero.src}
-          srcSet={images.kirtiForestHero.srcSet}
+          src={images.kirtiAtmosphericMovement.src}
+          srcSet={images.kirtiAtmosphericMovement.srcSet}
           sizes="50vw"
-          alt={images.kirtiForestHero.alt}
+          alt={images.kirtiAtmosphericMovement.alt}
           className="photo absolute inset-0 h-full w-full object-cover object-[center_30%]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent from-40% to-soma-ink/75" />

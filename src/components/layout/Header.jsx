@@ -253,8 +253,8 @@ export default function Header() {
                     <div className="flex gap-4 items-center">
                       <div className="h-20 w-16 shrink-0 overflow-hidden bg-soma-linen">
                         <img
-                          src={images.kirtiSomaticWorkshop.src}
-                          alt={images.kirtiSomaticWorkshop.alt}
+                          src={images.kirtiSomaticGroupCircle.src}
+                          alt={images.kirtiSomaticGroupCircle.alt}
                           className="photo h-full w-full object-cover"
                         />
                       </div>
