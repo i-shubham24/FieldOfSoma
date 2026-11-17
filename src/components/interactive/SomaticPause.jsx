@@ -13,7 +13,6 @@ import { MOODS, rgba } from './pauseMoods'
 const STAGES = [{ id: 'arrive', name: 'Arrive', ...pause.arrival }, ...pause.steps]
 const FIRST_STEP = 1
 const LAST_STEP = STAGES.length - 1
-const ROUND_SECONDS = pause.steps.reduce((total, step) => total + step.seconds, 0)
 
 // A soft tone at the start of each step, a different note for each
 const PITCHES = { inhale: 396, exhale: 352, tense: 440, release: 330, rest: 294, sense: 392 }
@@ -124,7 +123,6 @@ function PauseDialog({ onClose }) {
   const ref = useRef(null)
   const reduce = useReducedMotion()
   const clockRef = useRef({ stage: 0, elapsed: 0, cycle: 0, active: true })
-  const barRefs = useRef([])
   const soundRef = useRef(false)
   const [view, setView] = useState(() => readClock(clockRef.current))
   const [active, setActive] = useState(true)
@@ -139,13 +137,12 @@ function PauseDialog({ onClose }) {
     soundRef.current = soundOn
   }, [soundOn])
 
-  // One clock drives the countdown, the step bars and the orb, so they never drift apart.
+  // One clock drives the countdown, the subtitles and the orb, so they never drift apart.
   // It runs on animation frames, so it also rests while the tab is hidden.
   useEffect(() => {
     let frame = 0
     let last = performance.now()
     let shown = readClock(clockRef.current)
-    const written = []
 
     const tick = (now) => {
       const clock = clockRef.current
@@ -158,17 +155,6 @@ function PauseDialog({ onClose }) {
         }
       }
       last = now
-
-      // Step bars: full for steps done, filling for this one, empty for those ahead
-      for (let i = FIRST_STEP; i <= LAST_STEP; i += 1) {
-        const value =
-          i < clock.stage ? 1 : i > clock.stage ? 0 : clock.elapsed / STAGES[i].seconds
-        const bar = barRefs.current[i]
-        if (bar && written[i] !== value) {
-          bar.style.transform = `scaleX(${value})`
-          written[i] = value
-        }
-      }
 
       const next = readClock(clock)
       if (!sameView(next, shown)) {
@@ -222,7 +208,7 @@ function PauseDialog({ onClose }) {
       aria-label="Somatic Pause, a short guided practice"
       tabIndex={-1}
       data-lenis-prevent
-      className="fixed inset-0 z-[55] overflow-x-hidden overflow-y-auto overscroll-contain outline-none transition-[background-color] duration-[2400ms] ease-in-out"
+      className="fixed inset-0 z-[55] flex flex-col justify-between overflow-hidden outline-none transition-[background-color] duration-[2400ms] ease-in-out select-none"
       style={{ backgroundColor: mood.tint }}
       initial={reduce ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -245,7 +231,7 @@ function PauseDialog({ onClose }) {
         />
       </AnimatePresence>
 
-      <div className="relative flex min-h-full flex-col px-5 py-4 sm:px-10 sm:py-8">
+      <div className="relative flex h-full min-h-[100dvh] w-full flex-col justify-between px-5 py-4 sm:px-10 sm:py-6">
         {/* Top toolbar */}
         <div className="relative z-10 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -340,50 +326,8 @@ function PauseDialog({ onClose }) {
           </div>
         </div>
 
-        {/* The steps and their timings, with a bar that fills as each one runs */}
-        <div className="relative mx-auto w-full max-w-3xl pt-4">
-          <div className="flex items-baseline justify-between gap-4">
-            <p className="font-sans text-label font-medium tracking-[0.16em] text-soma-clay-deep uppercase">
-              The steps
-            </p>
-            <p className="text-[0.8125rem] text-soma-clay-deep tabular-nums">
-              {ROUND_SECONDS} seconds a round
-            </p>
-          </div>
-          <ol className="mt-4 grid grid-cols-3 gap-x-5 gap-y-5 sm:grid-cols-6">
-            {pause.steps.map((step, i) => {
-              const index = i + FIRST_STEP
-              const now = view.stage === index
-              const done = view.stage > index
-              return (
-                <li key={step.id} aria-current={now ? 'step' : undefined}>
-                  <span className="relative block h-px overflow-hidden bg-soma-ink/15">
-                    <span
-                      ref={(node) => {
-                        barRefs.current[index] = node
-                      }}
-                      className="absolute inset-0 origin-left bg-soma-moss"
-                      style={{ transform: 'scaleX(0)' }}
-                    />
-                  </span>
-                  <span className="mt-2.5 flex items-baseline justify-between gap-2 text-[0.8125rem]">
-                    <span
-                      className={`transition-colors duration-700 ${
-                        now ? 'font-medium text-soma-ink' : done ? 'text-soma-moss' : 'text-soma-clay-deep'
-                      }`}
-                    >
-                      {step.name}
-                    </span>
-                    <span className="text-soma-clay-deep tabular-nums">{step.seconds}s</span>
-                  </span>
-                </li>
-              )
-            })}
-          </ol>
-          <p className="mt-6 hidden text-center text-[0.8125rem] text-soma-clay-deep sm:block">
-            Press Space to pause or resume, and Esc to close.
-          </p>
-        </div>
+        {/* Balanced bottom spacer */}
+        <div className="h-11 shrink-0" aria-hidden="true" />
       </div>
     </motion.div>
   )

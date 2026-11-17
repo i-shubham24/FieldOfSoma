@@ -320,7 +320,7 @@ export default function FluidOrb({ clockRef, stages, reduce, children }) {
   }, [clockRef, stages, reduce])
 
   return (
-    <div ref={wrapRef} className="relative aspect-square w-[max(16rem,min(32rem,88vw,60svh))]">
+    <div ref={wrapRef} className="relative aspect-square w-[max(14rem,min(28rem,82vw,50svh))]">
       <canvas
         ref={canvasRef}
         aria-hidden="true"
