@@ -1,6 +1,8 @@
 import { getCollection, isDbConnected } from '../config/db.js'
+import { requireAdminAuth } from '../middleware/auth.js'
 
 export default async function classesRoutes(fastify) {
+  // Public catalog view
   fastify.get('/classes', async (request, reply) => {
     if (!isDbConnected()) return []
     const col = getCollection('classes')
@@ -8,7 +10,8 @@ export default async function classesRoutes(fastify) {
     return col.find({}).toArray()
   })
 
-  fastify.post('/classes', async (request, reply) => {
+  // Create class (Admin only)
+  fastify.post('/classes', { preHandler: requireAdminAuth }, async (request, reply) => {
     if (!isDbConnected()) return { ok: false, error: 'Database offline' }
     const col = getCollection('classes')
     const doc = {
@@ -22,7 +25,8 @@ export default async function classesRoutes(fastify) {
     return { ok: true, item: doc }
   })
 
-  fastify.put('/classes/:id', async (request, reply) => {
+  // Update class (Admin only)
+  fastify.put('/classes/:id', { preHandler: requireAdminAuth }, async (request, reply) => {
     if (!isDbConnected()) return { ok: false, error: 'Database offline' }
     const col = getCollection('classes')
     const id = request.params.id
@@ -32,7 +36,8 @@ export default async function classesRoutes(fastify) {
     return { ok: true }
   })
 
-  fastify.delete('/classes/:id', async (request, reply) => {
+  // Delete class (Admin only)
+  fastify.delete('/classes/:id', { preHandler: requireAdminAuth }, async (request, reply) => {
     if (!isDbConnected()) return { ok: false, error: 'Database offline' }
     const col = getCollection('classes')
     const id = request.params.id

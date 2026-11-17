@@ -1,20 +1,21 @@
 import { getCollection, isDbConnected } from '../config/db.js'
 import { seedData } from '../../src/admin/sampleData.js'
+import { requireAdminAuth } from '../middleware/auth.js'
 
 export default async function syncRoutes(fastify) {
-  // Full state retrieval for admin initialization
-  fastify.get('/sync', async (request, reply) => {
+  // Full state retrieval for admin initialization (Admin only)
+  fastify.get('/sync', { preHandler: requireAdminAuth }, async (request, reply) => {
     if (!isDbConnected()) {
       return { ok: false, connected: false, message: 'Database offline, using client cache' }
     }
 
     try {
-      const messages = await getCollection('messages')?.find({}).toArray() || []
-      const sessions = await getCollection('bookings')?.find({}).toArray() || []
-      const classes = await getCollection('classes')?.find({}).toArray() || []
-      const orders = await getCollection('orders')?.find({}).toArray() || []
-      const reviews = await getCollection('reviews')?.find({}).toArray() || []
-      const writing = await getCollection('writing')?.find({}).toArray() || []
+      const messages = (await getCollection('messages')?.find({}).toArray()) || []
+      const sessions = (await getCollection('bookings')?.find({}).toArray()) || []
+      const classes = (await getCollection('classes')?.find({}).toArray()) || []
+      const orders = (await getCollection('orders')?.find({}).toArray()) || []
+      const reviews = (await getCollection('reviews')?.find({}).toArray()) || []
+      const writing = (await getCollection('writing')?.find({}).toArray()) || []
       const settingsDoc = await getCollection('settings')?.findOne({ _id: 'singleton' })
 
       const defaults = seedData()
@@ -40,8 +41,8 @@ export default async function syncRoutes(fastify) {
     }
   })
 
-  // Full state update from admin
-  fastify.post('/sync', async (request, reply) => {
+  // Full state update from admin (Admin only)
+  fastify.post('/sync', { preHandler: requireAdminAuth }, async (request, reply) => {
     if (!isDbConnected()) {
       return { ok: false, connected: false, error: 'Database offline' }
     }
@@ -97,12 +98,12 @@ export default async function syncRoutes(fastify) {
           await col.updateOne(
             { _id: 'singleton' },
             { $set: { ...(profile && { profile }), ...(settings && { settings }), ...(activity && { activity }) } },
-            { upsert: true }
+            { upsert: true },
           )
         }
       }
 
-      return { ok: true, synced: true }
+      return { ok: true, syncedAt: new Date().toISOString() }
     } catch (error) {
       reply.status(500)
       return { ok: false, error: error.message }

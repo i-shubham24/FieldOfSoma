@@ -25,9 +25,10 @@ const vite = await createServer({
   server: { middlewareMode: true, hmr: false },
   optimizeDeps: { noDiscovery: true, entries: [] },
 })
-let allPages
+let allPages, getFullSchemasForRoute, getNoscriptContentForRoute
 try {
   ;({ allPages } = await vite.ssrLoadModule('/src/content/seo.js'))
+  ;({ getFullSchemasForRoute, getNoscriptContentForRoute } = await vite.ssrLoadModule('/src/content/schemas.js'))
 } finally {
   await vite.close()
 }
@@ -74,6 +75,20 @@ function headFor(page) {
   html = setMeta(html, 'name', 'twitter:title', title)
   html = setMeta(html, 'name', 'twitter:image', image)
   html = setMeta(html, 'name', 'twitter:image:alt', imageAlt)
+
+  // Inject structured JSON-LD schemas
+  const schemas = getFullSchemasForRoute ? getFullSchemasForRoute(page.path) : null
+  if (schemas && schemas.length > 0) {
+    const jsonLd = `  <script type="application/ld+json">${JSON.stringify(schemas)}</script>\n  </head>`
+    html = html.replace('</head>', jsonLd)
+  }
+
+  // Inject crawler-ready noscript content fallback
+  const noscript = getNoscriptContentForRoute ? getNoscriptContentForRoute(page.path) : null
+  if (noscript) {
+    html = html.replace('<div id="root">', `<noscript>${noscript}</noscript>\n    <div id="root">`)
+  }
+
   return html
 }
 

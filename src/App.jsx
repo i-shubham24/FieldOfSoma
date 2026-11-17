@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom'
 import PageShell from './components/layout/PageShell'
 import AppErrorBoundary from './components/shared/AppErrorBoundary'
 
@@ -24,6 +24,16 @@ function PageFallback() {
   return <div className="min-h-screen bg-soma-paper" aria-hidden="true" />
 }
 
+function LegacyCourseRedirect() {
+  const { id } = useParams()
+  return <Navigate to={`/classes/${id}`} replace />
+}
+
+function LegacyArticleRedirect() {
+  const { id } = useParams()
+  return <Navigate to={`/articles/${id}`} replace />
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -38,13 +48,19 @@ export default function App() {
               <Route path="about" element={<About />} />
               <Route path="somatics" element={<Somatics />} />
               <Route path="practices" element={<Practices />} />
+              <Route path="practice" element={<Navigate to="/practices" replace />} />
               <Route path="classes" element={<Classes />} />
+              <Route path="courses" element={<Navigate to="/classes" replace />} />
               <Route path="classes/:id" element={<ClassDetail />} />
+              <Route path="course/:id" element={<LegacyCourseRedirect />} />
+              <Route path="class/:id" element={<LegacyCourseRedirect />} />
               <Route path="cart" element={<Cart />} />
               <Route path="checkout" element={<Checkout />} />
               <Route path="calendar" element={<Calendar />} />
               <Route path="articles" element={<Articles />} />
+              <Route path="journal" element={<Navigate to="/articles" replace />} />
               <Route path="articles/:id" element={<Article />} />
+              <Route path="journal/:id" element={<LegacyArticleRedirect />} />
               <Route path="contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
             </Route>

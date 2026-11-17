@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LockIcon } from '@phosphor-icons/react/dist/csr/Lock'
 import Wordmark from '../../components/layout/Wordmark'
@@ -10,9 +11,38 @@ import { button, field, label } from '../ui'
 export default function Login() {
   useAdminTitle('Sign in')
   const navigate = useNavigate()
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault()
+    setBusy(true)
+    setError('')
+    const form = event.currentTarget
+    const email = form['admin-email']?.value
+    const password = form['admin-password']?.value
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+      const data = await res.json()
+      if (res.ok && data.token) {
+        signIn(data.token)
+        navigate('/admin')
+        return
+      }
+      if (res.status === 429) {
+        setError('Too many login attempts. Please wait a minute.')
+        setBusy(false)
+        return
+      }
+    } catch {
+      // Offline fallback
+    }
+    // Preview fallback for development
     signIn()
     navigate('/admin')
   }
@@ -67,8 +97,13 @@ export default function Login() {
                 className={`${field} h-12`}
               />
             </div>
-            <button type="submit" className={`${button.primary} h-12 w-full`}>
-              Sign in
+            {error ? (
+              <p className="text-xs text-red-700 bg-red-50 p-2 border border-red-200 rounded-[2px]" role="alert">
+                {error}
+              </p>
+            ) : null}
+            <button type="submit" disabled={busy} className={`${button.primary} h-12 w-full`}>
+              {busy ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
 

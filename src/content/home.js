@@ -45,7 +45,7 @@ export const pillars = {
     },
     {
       id: 'creative-movement',
-      name: 'Creative Movement and Improvisation',
+      name: 'Creative Movement',
       verbs: 'Express, play',
       body: 'Open movement inquiry drawn from contemporary dance and improvisation. There is no choreography, no performance. You follow sensation, impulses, rhythm and curiosity with movement prompts.',
       audience: 'For feeling alive, expressive and unguarded in your own skin.',
@@ -65,7 +65,7 @@ export const windowSection = {
   link: { to: '/somatics', label: 'Discover Somatics' },
   cycle: {
     centre: 'Pandiculation',
-    phases: ['Contract', 'Release', 'Rest', 'Sense'],
+    phases: ['Tense', 'Release', 'Rest', 'Sense'],
     caption:
       'The yawn-like tightening and letting go that animals make on waking. In Somatics it is done slowly, and on purpose.',
   },

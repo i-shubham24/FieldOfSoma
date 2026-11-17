@@ -1,7 +1,39 @@
 {
+  "redirects": [
+    {
+      "source": "/journal",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/journal/:slug",
+      "destination": "/articles/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/courses",
+      "destination": "/classes",
+      "permanent": true
+    },
+    {
+      "source": "/course/:slug",
+      "destination": "/classes/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/class/:slug",
+      "destination": "/classes/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/practice",
+      "destination": "/practices",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
-      "source": "/((?!api/|assets/).*)",
+      "source": "/((?!api/|assets/|photos/|audio/|feeds/|google-merchant\\.xml|sitemap\\.xml|robots\\.txt|security\\.txt|\\.well-known/).*)",
       "destination": "/index.html"
     }
   ],
@@ -61,11 +93,37 @@
       ]
     },
     {
+      "source": "/(google-merchant\\.xml|feeds/(.*))",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(\\.well-known/security\\.txt|security\\.txt)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
       "source": "/photos/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=2592000"
+          "value": "public, max-age=2592000, immutable"
         }
       ]
     },

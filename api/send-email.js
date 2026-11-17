@@ -15,7 +15,18 @@ export default async function handler(req, res) {
   }
 
   try {
-    const data = typeof req.body === 'string' ? JSON.parse(req.body) : req.body || {}
+    const raw = typeof req.body === 'string' ? JSON.parse(req.body) : req.body || {}
+    const data = raw && typeof raw === 'object' ? raw : {}
+
+    // OWASP Bot Defense: Invisible honeypot check
+    const honeypot = data.hp_website || data.honeypot || data.website_url
+    if (honeypot && String(honeypot).trim().length > 0) {
+      return res.status(200).json({
+        ok: true,
+        message: 'Inquiry delivered successfully',
+      })
+    }
+
     const { email, phone, message } = data
 
     if (!email && !phone) {

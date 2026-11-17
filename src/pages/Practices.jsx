@@ -169,9 +169,10 @@ function WidePractice({ item }) {
         <div className="mx-auto max-w-6xl">
           <Frame
             image={item.image}
-            ratio="aspect-[4/3] md:aspect-[5/4] lg:aspect-[4/3]"
-            position="object-top"
+            ratio="aspect-[1200/1258]"
+            position="object-center"
             sizes="(min-width: 1280px) 72rem, 100vw"
+            className="mx-auto max-h-[82vh]"
             unveil
           />
           {/* Text on the left; the tone player and who it serves on the right, held in view

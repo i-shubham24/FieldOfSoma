@@ -1,6 +1,8 @@
 import { getCollection, isDbConnected } from '../config/db.js'
+import { requireAdminAuth } from '../middleware/auth.js'
 
 export default async function writingRoutes(fastify) {
+  // Public article reading
   fastify.get('/writing', async (request, reply) => {
     if (!isDbConnected()) return []
     const col = getCollection('writing')
@@ -8,6 +10,7 @@ export default async function writingRoutes(fastify) {
     return col.find({}).sort({ date: -1 }).toArray()
   })
 
+  // Public single article reading
   fastify.get('/writing/:id', async (request, reply) => {
     if (!isDbConnected()) return null
     const col = getCollection('writing')
@@ -15,7 +18,8 @@ export default async function writingRoutes(fastify) {
     return col.findOne({ $or: [{ id }, { _id: id }] })
   })
 
-  fastify.post('/writing', async (request, reply) => {
+  // Create article (Admin only)
+  fastify.post('/writing', { preHandler: requireAdminAuth }, async (request, reply) => {
     if (!isDbConnected()) return { ok: false, error: 'Database offline' }
     const col = getCollection('writing')
     const doc = {
@@ -28,7 +32,8 @@ export default async function writingRoutes(fastify) {
     return { ok: true, item: doc }
   })
 
-  fastify.put('/writing/:id', async (request, reply) => {
+  // Update article (Admin only)
+  fastify.put('/writing/:id', { preHandler: requireAdminAuth }, async (request, reply) => {
     if (!isDbConnected()) return { ok: false, error: 'Database offline' }
     const col = getCollection('writing')
     const id = request.params.id
@@ -38,7 +43,8 @@ export default async function writingRoutes(fastify) {
     return { ok: true }
   })
 
-  fastify.delete('/writing/:id', async (request, reply) => {
+  // Delete article (Admin only)
+  fastify.delete('/writing/:id', { preHandler: requireAdminAuth }, async (request, reply) => {
     if (!isDbConnected()) return { ok: false, error: 'Database offline' }
     const col = getCollection('writing')
     const id = request.params.id

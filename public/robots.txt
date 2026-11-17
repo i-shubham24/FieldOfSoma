@@ -3,5 +3,6 @@ Allow: /
 Disallow: /login
 Disallow: /signup
 Disallow: /admin
+Disallow: /api/
 
 Sitemap: https://fieldofsoma.com/sitemap.xml

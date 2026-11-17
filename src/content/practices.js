@@ -78,7 +78,7 @@ export const practices = {
     },
     {
       id: 'creative-movement',
-      name: 'Creative Movement and Improvisation',
+      name: 'Creative Movement',
       verbs: 'Express, play',
       image: images.kirtiFieldDance,
       intention:

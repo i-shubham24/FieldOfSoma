@@ -77,8 +77,8 @@ export default function Signup() {
             An account keeps the recorded classes you buy together, ready to watch whenever you like.
           </p>
 
-          {/* Framed photo */}
-          <div className="rounded-[4px] border border-soma-sand overflow-hidden bg-white p-2 shadow-xs max-w-sm">
+          {/* Framed photo: hidden on mobile and tablet screens to eliminate extra scroll */}
+          <div className="hidden lg:block rounded-[4px] border border-soma-sand overflow-hidden bg-white p-2 shadow-xs max-w-sm">
             <div className="h-32 sm:h-38 w-full overflow-hidden rounded-[2px] bg-soma-linen">
               <img
                 src={images.himalayanCedarMisty.src}

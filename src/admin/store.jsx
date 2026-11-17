@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState } from 
 import { clearFiles, removeUnusedFiles } from './media'
 import { DATA_VERSION, seedData } from './sampleData'
 import { newId } from './util'
+import { getAdminAuthHeaders } from './session'
 
 // The admin's data. Every screen reads and changes it through useAdminData().
 //
@@ -79,7 +80,7 @@ export function AdminDataProvider({ children }) {
     const timer = setTimeout(() => {
       fetch('/api/sync', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...getAdminAuthHeaders() },
         body: JSON.stringify(data),
       }).catch(() => {})
     }, 1200)
@@ -90,7 +91,9 @@ export function AdminDataProvider({ children }) {
   // Synchronize with MongoDB on mount
   useEffect(() => {
     let active = true
-    fetch('/api/sync')
+    fetch('/api/sync', {
+      headers: getAdminAuthHeaders(),
+    })
       .then((res) => (res.ok ? res.json() : null))
       .then((res) => {
         if (active && res?.ok && res?.connected && res?.data) {

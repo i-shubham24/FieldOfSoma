@@ -36,7 +36,7 @@ export const about = {
         detail: 'Rooted in Taoism and Traditional Chinese Medicine training structure, balance and sensitivity to vital energy',
       },
       {
-        field: 'Creative Movement & Improvisation',
+        field: 'Creative Movement',
         title: 'Spontaneity in expression and playful exploration',
         detail: 'Contemporary dance, improvisation, and somatic inquiry bypassing performance and aesthetic judgment',
       },

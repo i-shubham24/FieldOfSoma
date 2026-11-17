@@ -1,9 +1,13 @@
 import { sendContactEmail, verifyTransporter } from '../mailer.js'
 import { getCollection, isDbConnected } from '../config/db.js'
+import { createRateLimiter } from '../middleware/rateLimit.js'
+import { requireAdminAuth } from '../middleware/auth.js'
+
+const inquiryLimiter = createRateLimiter({ bucket: 'email_inquiries', maxRequests: 5, windowMs: 600000 })
 
 export default async function emailRoutes(fastify) {
-  // Verify SMTP server credentials
-  fastify.post('/verify', async (request, reply) => {
+  // Verify SMTP server credentials (admin only)
+  fastify.post('/verify', { preHandler: requireAdminAuth }, async (request, reply) => {
     try {
       await verifyTransporter()
       return { ok: true, message: 'SMTP server is ready to send emails' }
@@ -13,10 +17,17 @@ export default async function emailRoutes(fastify) {
     }
   })
 
-  // Send email and persist message in MongoDB
-  fastify.post('/send-email', async (request, reply) => {
+  // Send email and persist message in MongoDB (with bot honeypot & IP rate limiting)
+  fastify.post('/send-email', { preHandler: inquiryLimiter }, async (request, reply) => {
     const data = request.body || {}
     const { name, email, phone, message } = data
+
+    // OWASP Bot Defense: Invisible honeypot trap
+    // If a spam bot fills the hidden honeypot field, drop silently with fake 200
+    const honeypot = data.hp_website || data.honeypot || data.website_url
+    if (honeypot && String(honeypot).trim().length > 0) {
+      return { ok: true, message: 'Inquiry processed successfully' }
+    }
 
     if (!email && !phone) {
       reply.status(400)
