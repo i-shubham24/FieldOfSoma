@@ -33,7 +33,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!api/|assets/|photos/|audio/|feeds/|google-merchant\\.xml|sitemap\\.xml|robots\\.txt|security\\.txt|\\.well-known/).*)",
+      "source": "/((?!api/|assets/).*)",
       "destination": "/index.html"
     }
   ],
@@ -93,7 +93,7 @@
       ]
     },
     {
-      "source": "/(google-merchant\\.xml|feeds/(.*))",
+      "source": "/google-merchant.xml",
       "headers": [
         {
           "key": "Content-Type",
@@ -106,7 +106,33 @@
       ]
     },
     {
-      "source": "/(\\.well-known/security\\.txt|security\\.txt)",
+      "source": "/feeds/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/security.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/security.txt",
       "headers": [
         {
           "key": "Content-Type",
