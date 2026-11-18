@@ -246,7 +246,7 @@ export const classes = {
       ratingCount: 88,
       studentsCount: 210,
       lastUpdated: 'October 2026',
-      image: images.kirtiCreativeDance,
+      image: images.kirtiStudioUpwardGesture,
       previewUrl: '',
       videoUrl: '',
       overview: [

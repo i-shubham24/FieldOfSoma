@@ -56,7 +56,7 @@ export const articles = {
       topic: 'Creative Movement',
       title: 'Moving with nobody watching',
       excerpt: 'Without steps to follow or anyone looking, the body often finds its own way to move.',
-      image: images.kirtiStageLunge,
+      image: images.kirtiMeadowCurvedArms,
       paragraphs: [
         'Many of us stop moving freely once we start to worry about how we look. We learn to sit still and stand straight, and we forget what it was like to move for fun.',
         'Creative Movement is a chance to forget the mirror for a few minutes. There are no steps to learn and nobody to impress. You follow what feels good, and see where it goes.',

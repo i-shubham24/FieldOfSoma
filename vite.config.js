@@ -12,6 +12,9 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
+    watch: {
+      ignored: ['**/client_photos/**', '**/.git/**'],
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:3001',

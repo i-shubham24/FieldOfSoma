@@ -169,21 +169,20 @@ function WidePractice({ item }) {
         <div className="mx-auto max-w-6xl">
           <Frame
             image={item.image}
-            ratio="aspect-[1200/1258]"
+            ratio="aspect-[16/9]"
             position="object-center"
             sizes="(min-width: 1280px) 72rem, 100vw"
-            className="mx-auto max-h-[82vh]"
+            drift
             unveil
           />
-          {/* Text on the left; the tone player and who it serves on the right, held in view
-              while the longer text scrolls, so the two columns stay balanced. */}
-          <div className="mt-16 grid items-start gap-14 md:mt-20 lg:grid-cols-12 lg:gap-8">
-            <div className="lg:col-span-6">
+          {/* Text on the left sits cleanly below the photograph; audio guide on the right floats as an overlay. */}
+          <div className="grid items-start gap-14 lg:grid-cols-12 lg:gap-8">
+            <div className="mt-14 md:mt-20 lg:col-span-6">
               <Heading item={item} />
             </div>
-            <div className="space-y-14 lg:sticky lg:top-28 lg:col-span-5 lg:col-start-8">
+            <div className="space-y-14 lg:sticky lg:top-28 lg:col-span-5 lg:col-start-8 lg:-mt-24">
               {item.audioCue ? (
-                <div className="[&>div]:mt-0">
+                <div className="relative z-10 shadow-sm [&>div]:mt-0">
                   <AudioGuide
                     practiceTitle={item.name}
                     verbs={item.verbs}

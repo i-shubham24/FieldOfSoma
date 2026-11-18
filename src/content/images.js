@@ -119,4 +119,34 @@ export const images = {
     1200,
     'Participants seated in an integration circle on the studio floor',
   ),
+  kirtiMeadowCurvedArms: photo(
+    'kirti-meadow-curved-arms',
+    1200,
+    'Kirti Verma moving mindfully with curved arms in an open meadow',
+  ),
+  kirtiStudioPartnerTouch: photo(
+    'kirti-studio-partner-touch',
+    1200,
+    'Kirti Verma smiling during gentle partner touch in a movement workshop',
+  ),
+  kirtiStudioReflectiveFlow: photo(
+    'kirti-studio-reflective-flow',
+    900,
+    'Artistic monochrome reflection of Kirti Verma and a partner in floor movement',
+  ),
+  kirtiContactImprovisation: photo(
+    'kirti-contact-improvisation',
+    992,
+    'Dynamic contact improvisation movement blur between two dancers',
+  ),
+  kirtiStudioQuadrupedalCrawl: photo(
+    'kirti-studio-quadrupedal-crawl',
+    1200,
+    'Workshop participants exploring quadrupedal floor locomotion',
+  ),
+  kirtiStudioUpwardGesture: photo(
+    'kirti-studio-upward-gesture',
+    800,
+    'Kirti Verma reaching upward with attentive gaze in studio practice',
+  ),
 }

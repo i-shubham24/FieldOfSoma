@@ -19,7 +19,7 @@ export const about = {
       'Her work is informed by Somatic Movement Therapy: drawing from approaches like Feldenkrais method, Body-mind centering, Abhyas Somatics and Somatic Intelligence to create safety, presence and grounding in the body. Tai Chi brings an internal martial art discipline rooted in Taoism and Traditional Chinese Medicine training structure, balance and sensitivity to vital energy. Creative movement and Improvisation invites spontaneity in our expression and playful explorations.',
       'Today she teaches these distinct practices in Online as well as in-person format. Her intention is to create spaces for people to discover a new relationship with themselves through body and movement.',
     ],
-    image: images.kirtiTheatricalPortrait,
+    image: images.kirtiStudioReflectiveFlow,
   },
 
   lineage: {
