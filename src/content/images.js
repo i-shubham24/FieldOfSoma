@@ -65,7 +65,7 @@ export const images = {
     'Kirti Verma kneeling beside a participant providing gentle hands-on somatic facilitation',
   ),
   kirtiTaiChiWhiteStance: photo(
-    'kirti-tai-chi-white-stance',
+    'kirti-tai-chi-upper-stance',
     1200,
     'Kirti Verma poised in a balanced Tai Chi posture in traditional white attire',
   ),
