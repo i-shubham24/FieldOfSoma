@@ -152,42 +152,38 @@ function Philosophy() {
   )
 }
 
-function Experience() {
-  const { heading, body, quotes, note } = about.experience
-  const [first, second] = quotes
+function WhatClientsSay() {
+  const { heading, intro, quotes } = about.testimonials
 
   return (
-    <section className="py-28 md:py-40">
+    <section className="border-t border-soma-sand/60 py-28 md:py-40">
       <div className="shell">
         <div className="mx-auto max-w-6xl">
           <div className="max-w-2xl">
             <Reveal as="h2" className="text-heading">
               {heading}
             </Reveal>
-            <Reveal as="p" delay={0.08} className="mt-6 text-lede font-light text-soma-ink/80">
-              {body}
-            </Reveal>
+            {intro ? (
+              <Reveal as="p" delay={0.08} className="mt-6 text-lede font-light text-soma-ink/80">
+                {intro}
+              </Reveal>
+            ) : null}
           </div>
 
-          <div className="mt-20 grid gap-16 lg:grid-cols-12 lg:gap-8">
-            <Reveal as="figure" className="lg:col-span-7">
-              <blockquote className="font-display text-[clamp(1.75rem,3vw,2.625rem)] leading-[1.25] italic">
-                “{first.quote}”
-              </blockquote>
-              <figcaption className="mt-7 text-[0.875rem] text-soma-clay-deep">
-                {first.name} / {first.context}
-              </figcaption>
-            </Reveal>
-            <Reveal as="figure" delay={0.12} className="lg:col-span-4 lg:col-start-9 lg:mt-36">
-              <blockquote className="font-display text-[clamp(1.375rem,2vw,1.75rem)] leading-[1.35] italic">
-                “{second.quote}”
-              </blockquote>
-              <figcaption className="mt-6 text-[0.875rem] text-soma-clay-deep">
-                {second.name} / {second.context}
-              </figcaption>
-            </Reveal>
+          <div className="mt-16 grid gap-10 md:grid-cols-2 lg:gap-14">
+            {quotes.map((item, i) => (
+              <Reveal
+                key={i}
+                as="figure"
+                delay={(i % 2) * 0.08}
+                className="flex flex-col justify-between border-t border-soma-sand pt-8"
+              >
+                <blockquote className="font-display text-[clamp(1.15rem,1.6vw,1.45rem)] leading-[1.4] text-soma-ink/90 italic">
+                  “{item.quote}”
+                </blockquote>
+              </Reveal>
+            ))}
           </div>
-          {note ? <DraftNote className="mt-12">{note}</DraftNote> : null}
         </div>
       </div>
     </section>
@@ -234,7 +230,7 @@ export default function About() {
       <Story />
       <Lineage />
       <Philosophy />
-      <Experience />
+      <WhatClientsSay />
       <ClosingCall {...about.closing} />
     </>
   )

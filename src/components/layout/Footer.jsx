@@ -6,6 +6,7 @@ import ContactLinks from '../ui/ContactLinks'
 import Wordmark from './Wordmark'
 
 const DISCIPLINES = [
+  { to: '/practices#somatics', label: 'Somatic Movement Therapy' },
   { to: '/practices#tai-chi', label: 'Tai Chi' },
   { to: '/practices#creative-movement', label: 'Creative Movement' },
   { to: '/calendar', label: 'Private Sessions' },
@@ -30,17 +31,15 @@ export default function Footer() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           {/* Left statement with high-contrast serif and selective italics */}
           <div className="lg:col-span-5">
-            <div className="space-y-5">
-              <p className="font-display text-xl sm:text-2xl lg:text-[1.75rem] font-normal leading-[1.3] text-soma-ink">
-                <span className="italic">Field of Soma</span> is movement education.<br />
-                Body-based practices for healing and living well.
+            <div className="space-y-4">
+              <p className="font-display text-xl sm:text-2xl lg:text-[1.625rem] font-normal leading-[1.32] text-soma-ink">
+                <span className="italic">Field of Soma</span> is a space to cultivate awareness about our body and make a way towards healing by restoring our self-healing capacity.
               </p>
-              <p className="font-display text-xl sm:text-2xl lg:text-[1.75rem] font-normal leading-[1.3] text-soma-ink">
-                Informed by Somatics and Tai Chi,<br />
-                with Creative Movement from dance.
+              <p className="font-sans text-[0.875rem] font-normal leading-[1.6] text-soma-clay-deep max-w-[42ch]">
+                This can be done when we bring a shift in our lifestyle, our habits and patterns, our energy utilisation and a regular practice. To bring a deeper shift in our consciousness, it requires work and devotion towards the body and health.
               </p>
-              <p className="font-sans text-[0.875rem] font-normal leading-[1.6] text-soma-clay-deep max-w-[38ch]">
-                Cultivating felt presence and coming back to the body&apos;s innate capacity to heal, steady and express.
+              <p className="font-sans text-[0.875rem] font-normal leading-[1.6] text-soma-clay-deep max-w-[42ch]">
+                This space is for people who are looking to develop a relationship with themselves that is honest, kind and with reverence to your innate capacity.
               </p>
             </div>
           </div>

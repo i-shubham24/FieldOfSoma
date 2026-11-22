@@ -1,7 +1,15 @@
 // Zero-Trust Admin Authorization Guard (OWASP BOLA / IDOR Defense)
 import crypto from 'node:crypto'
 
-const ADMIN_SECRET = process.env.ADMIN_SECRET_KEY || process.env.ADMIN_KEY || 'soma_admin_dev_secret_key_2026'
+let ADMIN_SECRET = process.env.ADMIN_SECRET_KEY || process.env.ADMIN_KEY
+if (!ADMIN_SECRET) {
+  if (process.env.NODE_ENV === 'production') {
+    ADMIN_SECRET = crypto.randomBytes(32).toString('hex')
+    console.warn('[SECURITY WARNING] ADMIN_SECRET_KEY not set in production! Generated an ephemeral 256-bit key for this process.')
+  } else {
+    ADMIN_SECRET = 'soma_admin_dev_secret_key_2026'
+  }
+}
 
 // In-memory active session tokens for the admin
 const activeAdminTokens = new Set()

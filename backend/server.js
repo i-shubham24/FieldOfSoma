@@ -28,11 +28,44 @@ const HOST = process.env.HOST || '0.0.0.0'
 const fastify = Fastify({
   logger: {
     level: process.env.NODE_ENV === 'production' ? 'info' : 'warn',
+    redact: [
+      'req.headers.authorization',
+      'req.headers["x-admin-key"]',
+      'body.password',
+      'body.token',
+      'body.newPassword',
+      'body.purgeEmail',
+    ],
   },
 })
 
 // Global NoSQL and Prototype Pollution Injection Sanitizer
 fastify.addHook('preValidation', sanitizeRequestHook)
+
+// CSRF Defense Hook for state-modifying requests
+fastify.addHook('preValidation', async (request, reply) => {
+  const method = request.method
+  if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
+    // Webhook endpoints authenticate via cryptographic HMAC signatures
+    if (request.url.startsWith('/api/webhooks/')) return
+
+    const origin = request.headers.origin || request.headers.referer
+    if (origin && process.env.NODE_ENV === 'production') {
+      try {
+        const originHost = new URL(origin).host
+        const isAllowed =
+          originHost === 'fieldofsoma.com' ||
+          originHost === 'www.fieldofsoma.com' ||
+          originHost.endsWith('.vercel.app')
+        if (!isAllowed) {
+          reply.status(403).send({ ok: false, error: 'Forbidden: Cross-site request rejected.' })
+        }
+      } catch {
+        reply.status(403).send({ ok: false, error: 'Forbidden: Invalid request origin.' })
+      }
+    }
+  }
+})
 
 // Zero-Trust Production HTTP Security Headers
 fastify.addHook('onSend', (request, reply, payload, done) => {
@@ -47,11 +80,30 @@ fastify.addHook('onSend', (request, reply, payload, done) => {
   done(null, payload)
 })
 
-// Enable Cross-Origin Resource Sharing
+// Whitelist allowed production and staging domains
+const ALLOWED_ORIGINS = new Set([
+  'https://fieldofsoma.com',
+  'https://www.fieldofsoma.com',
+  'https://fieldofsoma.vercel.app',
+  ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim()) : []),
+])
+
+// Enable Tightened Cross-Origin Resource Sharing
 await fastify.register(cors, {
-  origin: true,
+  origin: (origin, cb) => {
+    if (!origin) return cb(null, true)
+    if (process.env.NODE_ENV !== 'production' && /^http:\/\/localhost(:\d+)?$/.test(origin)) {
+      return cb(null, true)
+    }
+    if (ALLOWED_ORIGINS.has(origin) || origin.endsWith('.fieldofsoma.vercel.app')) {
+      return cb(null, true)
+    }
+    return cb(new Error('CORS: Origin not permitted'), false)
+  },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-admin-key'],
+  credentials: true,
+  maxAge: 86400,
 })
 
 // Health check endpoint

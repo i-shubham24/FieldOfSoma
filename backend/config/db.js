@@ -18,12 +18,31 @@ export async function connectToDatabase() {
     client = new MongoClient(MONGODB_URI, {
       serverSelectionTimeoutMS: 3000,
       connectTimeoutMS: 3000,
+      maxPoolSize: 50,
+      minPoolSize: 5,
+      maxIdleTimeMS: 30000,
+      retryWrites: true,
     })
 
     await client.connect()
     db = client.db(DB_NAME)
     isConnected = true
-    console.log(`[MongoDB] Connected successfully to ${DB_NAME}`)
+    console.log(`[MongoDB] Connected successfully to ${DB_NAME} (Connection Pool: 5-50)`)
+
+    // Ensure database performance indexes
+    try {
+      await Promise.allSettled([
+        db.collection('orders').createIndex({ id: 1 }, { unique: true }),
+        db.collection('orders').createIndex({ createdAt: -1 }),
+        db.collection('bookings').createIndex({ id: 1 }, { unique: true }),
+        db.collection('bookings').createIndex({ date: 1 }),
+        db.collection('messages').createIndex({ createdAt: -1 }),
+        db.collection('classes').createIndex({ id: 1 }, { unique: true }),
+      ])
+    } catch (idxErr) {
+      console.warn('[MongoDB] Index creation notice:', idxErr.message)
+    }
+
     return db
   } catch (error) {
     isConnected = false

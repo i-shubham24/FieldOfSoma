@@ -6,6 +6,21 @@ import { getCollection, isDbConnected } from '../config/db.js'
 const authLimiter = createRateLimiter({ bucket: 'auth_login', maxRequests: 8, windowMs: 60000 })
 const EXPECTED_EMAIL = process.env.ADMIN_EMAIL || 'info@fieldofsoma.com'
 const EXPECTED_PASS = process.env.ADMIN_PASSWORD || 'fieldofsoma2026'
+const EXPECTED_PASS_HASH = process.env.ADMIN_PASSWORD_HASH // Format: salt:hash using scrypt
+
+function verifyPassword(candidatePassword) {
+  if (EXPECTED_PASS_HASH && EXPECTED_PASS_HASH.includes(':')) {
+    const [salt, storedHash] = EXPECTED_PASS_HASH.split(':')
+    const candidateHash = crypto.scryptSync(String(candidatePassword), salt, 64).toString('hex')
+    const a = Buffer.from(candidateHash)
+    const b = Buffer.from(storedHash)
+    return a.length === b.length && crypto.timingSafeEqual(a, b)
+  }
+
+  const passBuffer = Buffer.from(String(candidatePassword))
+  const expectedBuffer = Buffer.from(EXPECTED_PASS)
+  return passBuffer.length === expectedBuffer.length && crypto.timingSafeEqual(passBuffer, expectedBuffer)
+}
 
 export default async function authRoutes(fastify) {
   // 1. Admin login with rate limiting and timing-safe password comparison
@@ -18,15 +33,7 @@ export default async function authRoutes(fastify) {
     }
 
     const emailMatch = String(email).trim().toLowerCase() === EXPECTED_EMAIL.toLowerCase()
-
-    // Timing-safe comparison to prevent timing side-channel attacks
-    const passBuffer = Buffer.from(String(password))
-    const expectedBuffer = Buffer.from(EXPECTED_PASS)
-    const passMatch =
-      passBuffer.length === expectedBuffer.length &&
-      crypto.timingSafeEqual(passBuffer, expectedBuffer)
-
-    // In development/test mode, accept sample preview login if passwords match
+    const passMatch = verifyPassword(password)
     const isValid = emailMatch && passMatch
 
     if (!isValid) {

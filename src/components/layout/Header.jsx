@@ -29,6 +29,7 @@ const CORE_DISCIPLINES = [
   { to: '/practices#somatics', label: 'Somatic Movement Therapy' },
   { to: '/practices#tai-chi', label: 'Tai Chi' },
   { to: '/practices#creative-movement', label: 'Creative Movement' },
+  { to: '/calendar', label: 'Private Sessions' },
 ]
 
 
