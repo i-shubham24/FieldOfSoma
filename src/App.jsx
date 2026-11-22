@@ -15,6 +15,7 @@ const Calendar = lazy(() => import('./pages/Calendar'))
 const Articles = lazy(() => import('./pages/Articles'))
 const Article = lazy(() => import('./pages/Article'))
 const Contact = lazy(() => import('./pages/Contact'))
+const Policy = lazy(() => import('./pages/Policy'))
 const Login = lazy(() => import('./pages/Login'))
 const Signup = lazy(() => import('./pages/Signup'))
 const NotFound = lazy(() => import('./pages/NotFound'))
@@ -27,6 +28,12 @@ function PageFallback() {
 function LegacyCourseRedirect() {
   const { id } = useParams()
   return <Navigate to={`/classes/${id}`} replace />
+}
+
+function VanityProductRedirect() {
+  const { id } = useParams()
+  const cleanId = (id || '').replace(/^SOMA-/i, '')
+  return <Navigate to={`/classes/${cleanId}`} replace />
 }
 
 function LegacyArticleRedirect() {
@@ -52,6 +59,7 @@ export default function App() {
               <Route path="classes" element={<Classes />} />
               <Route path="courses" element={<Navigate to="/classes" replace />} />
               <Route path="classes/:id" element={<ClassDetail />} />
+              <Route path="p/:id" element={<VanityProductRedirect />} />
               <Route path="course/:id" element={<LegacyCourseRedirect />} />
               <Route path="class/:id" element={<LegacyCourseRedirect />} />
               <Route path="cart" element={<Cart />} />
@@ -62,6 +70,10 @@ export default function App() {
               <Route path="articles/:id" element={<Article />} />
               <Route path="journal/:id" element={<LegacyArticleRedirect />} />
               <Route path="contact" element={<Contact />} />
+              <Route path="privacy" element={<Policy policyKey="privacy" />} />
+              <Route path="terms" element={<Policy policyKey="terms" />} />
+              <Route path="shipping" element={<Policy policyKey="shipping" />} />
+              <Route path="returns" element={<Policy policyKey="returns" />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

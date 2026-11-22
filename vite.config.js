@@ -36,6 +36,7 @@ export default defineConfig({
           if (/node_modules[\/](react|react-dom|react-router|react-router-dom|scheduler)[\/]/.test(id)) return 'vendor-react'
           if (/node_modules[\/](motion|framer-motion|motion-dom|motion-utils)[\/]/.test(id)) return 'vendor-motion'
           if (/node_modules[\/]lenis[\/]/.test(id)) return 'vendor-lenis'
+          if (/node_modules[\/]@phosphor-icons[\/]/.test(id)) return 'vendor-icons'
           return undefined
         },
       },

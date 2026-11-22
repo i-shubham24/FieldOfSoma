@@ -1,5 +1,12 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/p/:slug",
+      "destination": "/classes/:slug",
+      "permanent": true
+    },
     {
       "source": "/journal",
       "destination": "/articles",
@@ -33,7 +40,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!api/|assets/).*)",
+      "source": "/((?!api/|assets/|google-merchant\\.xml|feeds/|sitemap\\.xml|robots\\.txt).*)",
       "destination": "/index.html"
     }
   ],

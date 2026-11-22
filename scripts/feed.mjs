@@ -33,6 +33,10 @@ const escapeXml = (unsafe) =>
     .replace(/'/g, '&apos;')
 
 const itemsXml = classes.items
+  .filter((course) => {
+    const numericPrice = parseFloat(String(course.price || '').replace(/[^0-9.]/g, '')) || 0
+    return numericPrice > 0 && course.id && course.title
+  })
   .map((course) => {
     const numericPrice = parseFloat(String(course.price || '').replace(/[^0-9.]/g, '')) || 600
     const imageUrl = course.image?.src
@@ -41,7 +45,7 @@ const itemsXml = classes.items
 
     return `    <item>
       <g:id>SOMA-${escapeXml(course.id)}</g:id>
-      <g:title>${escapeXml(course.title)}</g:title>
+      <g:title>${escapeXml(course.title)} | Field of Soma</g:title>
       <g:description>${escapeXml(course.subtitle)}</g:description>
       <g:link>${BASE}/classes/${escapeXml(course.id)}</g:link>
       <g:image_link>${escapeXml(imageUrl)}</g:image_link>

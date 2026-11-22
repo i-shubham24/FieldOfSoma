@@ -111,6 +111,12 @@ export default function Footer() {
               Somatic education is not medical treatment. Please keep seeing your doctor or
               therapist for any medical condition.
             </p>
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-[0.8125rem] text-soma-clay-deep lg:justify-end">
+              <Link to="/privacy" className="transition-colors hover:text-soma-ink">Privacy</Link>
+              <Link to="/terms" className="transition-colors hover:text-soma-ink">Terms</Link>
+              <Link to="/shipping" className="transition-colors hover:text-soma-ink">Delivery</Link>
+              <Link to="/returns" className="transition-colors hover:text-soma-ink">Refunds</Link>
+            </div>
             <p className="font-sans text-[0.8125rem] tracking-[0.04em] text-soma-clay-deep">
               © {new Date().getFullYear()} {site.name}
             </p>

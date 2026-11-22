@@ -12,7 +12,7 @@ const root = fileURLToPath(new URL('..', import.meta.url))
 const dist = join(root, 'dist')
 const BASE = 'https://fieldofsoma.com'
 const SITE = 'Field of Soma'
-const DEFAULT_TITLE = 'Field of Soma: Movement and Somatic Education with Kirti Verma'
+const DEFAULT_TITLE = 'Field of Soma | Somatic Movement & Tai Chi India'
 const DEFAULT_IMAGE = `${BASE}/photos/kirti-author-preview.jpg`
 const DEFAULT_IMAGE_ALT = 'Kirti Verma: Movement and Somatic Educator'
 
@@ -25,9 +25,9 @@ const vite = await createServer({
   server: { middlewareMode: true, hmr: false },
   optimizeDeps: { noDiscovery: true, entries: [] },
 })
-let allPages, getFullSchemasForRoute, getNoscriptContentForRoute
+let allPages, getFullSchemasForRoute, getNoscriptContentForRoute, formatMetaTitle, formatMetaDescription
 try {
-  ;({ allPages } = await vite.ssrLoadModule('/src/content/seo.js'))
+  ;({ allPages, formatMetaTitle, formatMetaDescription } = await vite.ssrLoadModule('/src/content/seo.js'))
   ;({ getFullSchemasForRoute, getNoscriptContentForRoute } = await vite.ssrLoadModule('/src/content/schemas.js'))
 } finally {
   await vite.close()
@@ -46,21 +46,26 @@ function setMeta(html, attribute, key, value) {
 }
 
 function headFor(page) {
-  const title = !page.title ? DEFAULT_TITLE : page.title.includes(SITE) ? page.title : `${page.title} | ${SITE}`
+  const rawTitle = page.title || DEFAULT_TITLE
+  const title = formatMetaTitle ? formatMetaTitle(rawTitle) : (rawTitle.includes(SITE) ? rawTitle : `${rawTitle} | ${SITE}`)
   const url = `${BASE}${page.path}`
   let image = page.image ? (page.image.startsWith('/') ? `${BASE}${page.image}` : page.image) : DEFAULT_IMAGE
   if (image.endsWith('.webp')) {
     image = DEFAULT_IMAGE
   }
   const imageAlt = page.image && !page.image.endsWith('.webp') ? page.imageAlt || title : DEFAULT_IMAGE_ALT
+  const description = page.description ? (formatMetaDescription ? formatMetaDescription(page.description) : page.description) : ''
 
-  let html = template.replace(/<title>[^<]*<\/title>/, `<title>${escape(title)}</title>`)
+  // Start with template and strip any default dev ld+json schemas to guarantee 0 duplicates
+  let html = template.replace(/<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/gi, '')
+
+  html = html.replace(/<title>[^<]*<\/title>/, `<title>${escape(title)}</title>`)
   html = html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/, `$1${escape(url)}$2`)
   html = setMeta(html, 'name', 'robots', page.noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large')
-  if (page.description) {
-    html = setMeta(html, 'name', 'description', page.description)
-    html = setMeta(html, 'property', 'og:description', page.description)
-    html = setMeta(html, 'name', 'twitter:description', page.description)
+  if (description) {
+    html = setMeta(html, 'name', 'description', description)
+    html = setMeta(html, 'property', 'og:description', description)
+    html = setMeta(html, 'name', 'twitter:description', description)
   }
   if (page.keywords) html = setMeta(html, 'name', 'keywords', page.keywords)
   html = setMeta(html, 'property', 'og:type', page.type || 'website')
@@ -83,10 +88,10 @@ function headFor(page) {
     html = html.replace('</head>', jsonLd)
   }
 
-  // Inject crawler-ready noscript content fallback
+  // Inject crawler-ready noscript content fallback with semantic #seo-snapshot
   const noscript = getNoscriptContentForRoute ? getNoscriptContentForRoute(page.path) : null
   if (noscript) {
-    html = html.replace('<div id="root">', `<noscript>${noscript}</noscript>\n    <div id="root">`)
+    html = html.replace('<div id="root">', `<noscript id="seo-snapshot">${noscript}</noscript>\n    <div id="root">`)
   }
 
   return html

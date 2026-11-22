@@ -22,6 +22,10 @@ const pages = [
   ['/about', '0.8'],
   ['/articles', '0.7'],
   ['/contact', '0.6'],
+  ['/privacy', '0.5'],
+  ['/terms', '0.5'],
+  ['/shipping', '0.5'],
+  ['/returns', '0.5'],
   ...ids('classes.js').map((id) => [`/classes/${id}`, '0.7']),
   ...ids('articles.js').map((id) => [`/articles/${id}`, '0.6']),
 ]
