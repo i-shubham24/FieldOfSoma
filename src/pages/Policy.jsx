@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { ArrowLeftIcon } from '@phosphor-icons/react/dist/csr/ArrowLeft'
 import Reveal from '../components/motion/Reveal'
-import RevealLines from '../components/motion/RevealLines'
 import { PAGE_TOP } from '../lib/layout'
 import useTitle from '../lib/useTitle'
 
@@ -10,7 +9,7 @@ const POLICIES = {
     slug: 'privacy',
     title: 'Privacy Policy',
     seoTitle: 'Privacy Policy | Field of Soma',
-    seoDescription: 'Read the Field of Soma privacy policy: how personal data, payments and inquiries are handled with care and confidential security.',
+    seoDescription: 'Read the Field of Soma privacy policy: how personal data, consultations and payments are protected with confidential security and transport encryption.',
     lastUpdated: 'November 2026',
     sections: [
       {
@@ -46,7 +45,7 @@ const POLICIES = {
     slug: 'terms',
     title: 'Terms of Service',
     seoTitle: 'Terms of Service | Field of Soma',
-    seoDescription: 'Review the terms of service and practice guidelines for Field of Soma classes, private consultations and website use with Kirti Verma.',
+    seoDescription: 'Review the terms of service, educational disclaimer and class participation guidelines for Field of Soma movement practices and private consultations.',
     lastUpdated: 'November 2026',
     sections: [
       {
@@ -69,32 +68,10 @@ const POLICIES = {
           'Private sessions require mindful attendance. If you need to reschedule or cancel a booked session, please provide at least 24 hours advance notice to receive full credit toward a future date.',
         ],
       },
-    ],
-  },
-  shipping: {
-    slug: 'shipping',
-    title: 'Digital Delivery Policy',
-    seoTitle: 'Digital Delivery & Access | Field of Soma',
-    seoDescription: 'Learn about instant digital access, video streaming delivery and order fulfillment for recorded movement classes at Field of Soma.',
-    lastUpdated: 'November 2026',
-    sections: [
       {
-        heading: 'Instant Online Delivery',
+        heading: 'Community Guidelines',
         content: [
-          'All recorded classes, audio pandiculations, and workshop materials sold on Field of Soma are 100% digital products. No physical packages or DVDs are dispatched.',
-          'Immediately upon successful payment, you receive instant access to stream the videos in high definition on your computer, tablet, or phone. A confirmation receipt with class links is also emailed to you right away.',
-        ],
-      },
-      {
-        heading: 'Worldwide Access & Zero Fees',
-        content: [
-          'Because delivery is entirely digital, there are no shipping charges, customs fees, or delivery delays anywhere in the world. Access is available 24 hours a day, 7 days a week.',
-        ],
-      },
-      {
-        heading: 'Access Assistance',
-        content: [
-          'If you experience any delay in receiving your confirmation email or accessing your streaming library, our support team will resolve it promptly. Write to info@fieldofsoma.com with your order details.',
+          'Our spaces, both online and in group workshops, prioritize mutual respect, listening, and somatic presence. We reserve the right to cancel attendance for disruptive or non-consensual conduct.',
         ],
       },
     ],
@@ -103,7 +80,7 @@ const POLICIES = {
     slug: 'returns',
     title: 'Refund & Cancellation Policy',
     seoTitle: 'Refund & Cancellation Policy | Field of Soma',
-    seoDescription: 'Understand our 7-day money-back guarantee on recorded movement classes and fair rescheduling policy for 1:1 somatic sessions.',
+    seoDescription: 'Learn about our 7-day satisfaction money-back guarantee on recorded movement classes and fair cancellation policy for private sessions at Field of Soma.',
     lastUpdated: 'November 2026',
     sections: [
       {
@@ -156,7 +133,7 @@ export default function Policy({ policyKey }) {
           </Link>
 
           {/* Policy navigation tabs */}
-          <nav aria-label="Policies" className="mt-8 flex flex-wrap gap-4 border-b border-soma-sand pb-4">
+          <nav aria-label="Policies" className="mt-8 flex flex-wrap gap-6 border-b border-soma-sand pb-4">
             {Object.values(POLICIES).map((p) => {
               const active = p.slug === policy.slug
               return (
@@ -174,11 +151,11 @@ export default function Policy({ policyKey }) {
           </nav>
 
           <header className="mt-10">
-            <RevealLines>
+            <Reveal>
               <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal text-soma-ink">
                 {policy.title}
               </h1>
-            </RevealLines>
+            </Reveal>
             <p className="mt-3 font-sans text-xs tracking-wider text-soma-clay-deep uppercase">
               Last updated: {policy.lastUpdated}
             </p>

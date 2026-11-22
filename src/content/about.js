@@ -13,6 +13,36 @@ export const about = {
 
   story: {
     heading: 'A practice of inquiry and ease',
+    chapters: [
+      {
+        id: 'journey',
+        subheading: 'From dance to listening',
+        paragraphs: [
+          "Kirti is drawn to change the narrative of how we look at our bodies and live with it. Working with health is not about finding symptoms and healing it. It starts with being kind and available to our body's needs. Creating a habit of listening and becoming present is an essential to change our relationship with the body.",
+          'Trained in Contemporary Dance and various other forms of dance, she found solace in Improvisation when her journey to Exploration started. From that space, her path to Inquiry began supported by Somatic practices and Tai Chi.',
+        ],
+        image: images.kirtiStudioReflectiveFlow,
+      },
+      {
+        id: 'disciplines',
+        subheading: 'Informed by three distinct traditions',
+        paragraphs: [
+          'Her work is informed by Somatic Movement Therapy: drawing from approaches like Feldenkrais method, Body-mind centering, Abhyas Somatics and Somatic Intelligence to create safety, presence and grounding in the body.',
+          'Tai Chi brings an internal martial art discipline rooted in Taoism and Traditional Chinese Medicine training structure, balance and sensitivity to vital energy. Creative movement and Improvisation invites spontaneity in our expression and playful explorations.',
+          'Today she teaches these distinct practices in Online as well as in-person format. Her intention is to create spaces for people to discover a new relationship with themselves through body and movement.',
+        ],
+        image: images.kirtiWoodlandStillness,
+      },
+      {
+        id: 'healing',
+        subheading: 'Restoring our self-healing capacity',
+        paragraphs: [
+          'Field of Soma is a space to cultivate awareness about our body and make a way towards healing by restoring our self-healing capacity. This can be done when we bring a shift in our lifestyle, our habits and patterns, our energy utilisation and a regular practice. To bring a deeper shift in our consciousness, it requires work and devotion towards the body and health.',
+          'This space is for people who are looking to develop a relationship with themselves that is honest, kind and with reverence to your innate capacity. This work allows to expand the presence and capacity to hold life in its fullness, its pleasures and challenges, its ease and discomforts while taking responsibility to accept what is present and what needs a change.',
+        ],
+        image: images.kirtiMeadowCurvedArms,
+      },
+    ],
     paragraphs: [
       "Kirti is drawn to change the narrative of how we look at our bodies and live with it. Working with health is not about finding symptoms and healing it. It starts with being kind and available to our body's needs. Creating a habit of listening and becoming present is an essential to change our relationship with the body.",
       'Trained in Contemporary Dance and various other forms of dance, she found solace in Improvisation when her journey to Exploration started. From that space, her path to Inquiry began supported by Somatic practices and Tai Chi.',
@@ -99,18 +129,20 @@ export const about = {
       },
       {
         quote:
-          'These sessions are a sacred part of my week, and I am incredibly grateful for the time and energy she puts into facilitating this space.',
+          'After the session, I was feeling more grounded, connected to my body and peaceful.',
       },
       {
         quote:
-          'She never told me what I should feel. She waited for me to begin noticing, until I could answer.',
+          'The pace of the class was great, I really appreciated that each movement had sufficient time to build awareness, instead of moving on quickly like other classes usually do.',
       },
     ],
   },
 
   closing: {
-    heading: 'Meet in practice',
-    body: 'The simplest way to know whether this work suits you is to try one session.',
-    secondary: { to: '/practices', label: 'Read about the practices' },
+    label: 'Begin with Kirti',
+    headline: [{ text: 'Start with' }, { text: 'where you are', italic: true }],
+    body: 'Whether you are working with long-held tension, curious about Tai Chi or seeking gentle somatic education, private consultations and weekly classes are open to all bodies.',
+    primary: { to: '/calendar', label: 'Book a session or class' },
+    secondary: { to: '/contact', label: 'Ask a question' },
   },
 }

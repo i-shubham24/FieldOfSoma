@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/shipping",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
       "source": "/p/:slug",
       "destination": "/classes/:slug",
       "permanent": true

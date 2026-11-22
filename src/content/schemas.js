@@ -143,29 +143,6 @@ export const homeFaqSchema = {
   ],
 }
 
-export const shippingFaqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'How are recorded classes delivered?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'All recorded classes are digital video lessons delivered immediately upon checkout. You receive instant streaming access in your account and a confirmation receipt via email with direct class access links.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Are there any shipping or handling fees?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'No, shipping is 100% free worldwide because all classes and instructional materials are delivered digitally through online streaming.',
-      },
-    },
-  ],
-}
-
 export const returnsFaqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -481,17 +458,6 @@ export function getFullSchemasForRoute(path) {
     return schemas
   }
 
-  if (path === '/shipping') {
-    schemas.push(
-      shippingFaqSchema,
-      breadcrumbSchema([
-        { name: 'Home', path: '/' },
-        { name: 'Digital Delivery Policy', path: '/shipping' },
-      ]),
-    )
-    return schemas
-  }
-
   if (path === '/returns') {
     schemas.push(
       returnsFaqSchema,
@@ -529,7 +495,6 @@ export function getNoscriptContentForRoute(path) {
     <li><a href="/contact">Contact and Inquiries</a></li>
     <li><a href="/privacy">Privacy Policy</a></li>
     <li><a href="/terms">Terms of Service</a></li>
-    <li><a href="/shipping">Digital Delivery Policy</a></li>
     <li><a href="/returns">Refund and Cancellation Policy</a></li>
   </ul>
 </div>`
@@ -700,17 +665,6 @@ export function getNoscriptContentForRoute(path) {
   <p>Somatic movement education and Tai Chi are educational body-based practices, not medical treatments. Please consult your physician for medical conditions.</p>
   <h2>Course Access</h2>
   <p>Class purchases grant individual access to instructional streaming video content. Rescheduling private appointments requires 24 hours advance notice.</p>
-</div>`
-  }
-
-  if (path === '/shipping') {
-    return `
-<div id="seo-snapshot" class="soma-seo-snapshot" style="padding:2rem;max-width:800px;margin:0 auto;font-family:sans-serif;line-height:1.6;">
-  <nav aria-label="Breadcrumb"><a href="/">Home</a> &gt; Digital Delivery Policy</nav>
-  <h1>Digital Delivery &amp; Access Policy</h1>
-  <p>All recorded movement classes sold on Field of Soma are delivered as instant digital streaming content. No physical goods are dispatched.</p>
-  <h2>Worldwide Delivery</h2>
-  <p>Access is provided immediately upon payment completion, accompanied by an order confirmation email. There are zero shipping or handling fees worldwide.</p>
 </div>`
   }
 

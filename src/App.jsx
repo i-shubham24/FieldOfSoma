@@ -72,7 +72,7 @@ export default function App() {
               <Route path="contact" element={<Contact />} />
               <Route path="privacy" element={<Policy policyKey="privacy" />} />
               <Route path="terms" element={<Policy policyKey="terms" />} />
-              <Route path="shipping" element={<Policy policyKey="shipping" />} />
+              <Route path="shipping" element={<Navigate to="/terms" replace />} />
               <Route path="returns" element={<Policy policyKey="returns" />} />
               <Route path="*" element={<NotFound />} />
             </Route>

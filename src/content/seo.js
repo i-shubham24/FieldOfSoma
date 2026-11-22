@@ -180,13 +180,6 @@ export const pages = {
       'Review the terms of service, educational disclaimer and class participation guidelines for Field of Soma movement practices and private consultations.',
     schema: getFullSchemasForRoute('/terms'),
   },
-  shipping: {
-    path: '/shipping',
-    title: 'Digital Delivery & Access Policy',
-    description:
-      'Read our digital delivery policy: instant online streaming access and email order confirmation for all recorded classes with zero shipping fees worldwide.',
-    schema: getFullSchemasForRoute('/shipping'),
-  },
   returns: {
     path: '/returns',
     title: 'Refund & Cancellation Policy',

@@ -47,7 +47,74 @@ function Intro() {
 }
 
 function Story() {
-  const { heading, paragraphs, note, image } = about.story
+  const { heading, chapters, paragraphs, note, image } = about.story
+
+  if (chapters?.length) {
+    return (
+      <section className="pt-12 pb-28 sm:pt-16 md:pb-40">
+        <div className="shell">
+          <div className="mx-auto max-w-6xl">
+            <Reveal as="h2" className="max-w-[20ch] text-heading">
+              {heading}
+            </Reveal>
+
+            <div className="mt-16 space-y-24 sm:mt-20 sm:space-y-32">
+              {chapters.map((chapter, index) => {
+                const isEven = index % 2 === 1
+                return (
+                  <article
+                    key={chapter.id}
+                    className="grid items-center gap-10 md:grid-cols-12 md:gap-14"
+                  >
+                    {/* Image Column */}
+                    <div
+                      className={`max-w-sm sm:max-w-md md:max-w-none mx-auto w-full md:col-span-5 ${
+                        isEven ? 'md:order-2 md:col-start-8' : 'md:order-1'
+                      }`}
+                    >
+                      <Frame
+                        image={chapter.image}
+                        ratio="aspect-[4/5]"
+                        sizes="(min-width: 1024px) 24rem, 80vw"
+                        drift
+                        className="w-full shadow-sm"
+                      />
+                    </div>
+
+                    {/* Text Column */}
+                    <div
+                      className={`md:col-span-7 ${
+                        isEven ? 'md:order-1 md:col-start-1 md:pr-6' : 'md:order-2 md:col-start-6 md:pl-6'
+                      }`}
+                    >
+                      <Reveal as="p" className="text-label font-medium tracking-wider text-soma-clay-deep uppercase">
+                        Part 0{index + 1}
+                      </Reveal>
+                      <Reveal
+                        as="h3"
+                        className="mt-3 font-display text-2xl sm:text-3xl lg:text-[2.15rem] font-normal leading-[1.25] text-soma-ink"
+                      >
+                        {chapter.subheading}
+                      </Reveal>
+                      <div className="mt-6 space-y-5 text-lede font-light leading-relaxed text-soma-ink/85">
+                        {chapter.paragraphs.map((p, pIdx) => (
+                          <Reveal as="p" key={pIdx} delay={pIdx * 0.06}>
+                            {p}
+                          </Reveal>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+
+            {note ? <DraftNote className="mt-16">{note}</DraftNote> : null}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className="pt-12 pb-28 sm:pt-16 md:pb-40">

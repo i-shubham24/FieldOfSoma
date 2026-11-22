@@ -92,21 +92,26 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom: the same wordmark as the top bar, settling gently into place */}
+        {/* Bottom: wordmark on left with copyright underneath; disclaimer and 3 policy links on right */}
         <div className="mt-14 flex flex-col justify-between gap-6 overflow-hidden border-t border-soma-ink/15 pt-8 sm:mt-18 lg:mt-20 lg:flex-row lg:items-end">
-          <Link to="/" aria-label={`${site.name}, home`} className="self-start">
-            <motion.span
-              initial={reduce ? false : { opacity: 0, y: -12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.6 }}
-              transition={{ duration: 1, ease: EASE }}
-              className="block"
-            >
-              <Wordmark className="text-[1.375rem] sm:text-[1.625rem]" />
-            </motion.span>
-          </Link>
+          <div className="space-y-2">
+            <Link to="/" aria-label={`${site.name}, home`} className="block self-start">
+              <motion.span
+                initial={reduce ? false : { opacity: 0, y: -12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 1, ease: EASE }}
+                className="block"
+              >
+                <Wordmark className="text-[1.375rem] sm:text-[1.625rem]" />
+              </motion.span>
+            </Link>
+            <p className="font-sans text-[0.8125rem] tracking-[0.04em] text-soma-clay-deep">
+              © {new Date().getFullYear()} {site.name}
+            </p>
+          </div>
 
-          <div className="max-w-[46ch] space-y-2 text-left lg:text-right">
+          <div className="max-w-[46ch] space-y-3 text-left lg:text-right">
             <p className="font-sans text-[0.8125rem] leading-[1.6] text-soma-clay-deep">
               Somatic education is not medical treatment. Please keep seeing your doctor or
               therapist for any medical condition.
@@ -114,12 +119,8 @@ export default function Footer() {
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-[0.8125rem] text-soma-clay-deep lg:justify-end">
               <Link to="/privacy" className="transition-colors hover:text-soma-ink">Privacy</Link>
               <Link to="/terms" className="transition-colors hover:text-soma-ink">Terms</Link>
-              <Link to="/shipping" className="transition-colors hover:text-soma-ink">Delivery</Link>
               <Link to="/returns" className="transition-colors hover:text-soma-ink">Refunds</Link>
             </div>
-            <p className="font-sans text-[0.8125rem] tracking-[0.04em] text-soma-clay-deep">
-              © {new Date().getFullYear()} {site.name}
-            </p>
           </div>
         </div>
       </div>
