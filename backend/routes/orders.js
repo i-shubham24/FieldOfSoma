@@ -37,23 +37,43 @@ export default async function ordersRoutes(fastify) {
     }
 
     const ids = Array.isArray(classIds) ? classIds : []
-    if (ids.length === 0) {
+    if (ids.length === 0 || ids.length > 20) {
       reply.status(400)
-      return { ok: false, error: 'At least one class must be selected.' }
+      return { ok: false, error: 'A valid selection of 1 to 20 classes is required.' }
     }
 
-    // Resolve canonical prices strictly on the server
+    // Guard against negative quantity, zero or arithmetic tampering
+    if (payload.quantity !== undefined && (!Number.isInteger(payload.quantity) || payload.quantity <= 0)) {
+      reply.status(400)
+      return { ok: false, error: 'Quantity must be a positive integer.' }
+    }
+
+    // Resolve canonical prices strictly on the server (client price is completely discarded)
     let canonicalTotal = 0
     const verifiedItems = []
 
-    for (const id of ids) {
-      const price = CANONICAL_CLASS_PRICES[id] || 600
+    for (const rawId of ids) {
+      const id = String(rawId).trim()
+      if (!Object.prototype.hasOwnProperty.call(CANONICAL_CLASS_PRICES, id)) {
+        reply.status(400)
+        return { ok: false, error: `Invalid class identifier: ${id.slice(0, 30)}` }
+      }
+      const price = CANONICAL_CLASS_PRICES[id]
       canonicalTotal += price
       verifiedItems.push({ id, price })
     }
 
     const col = getCollection('orders')
-    const orderId = payload.id || `SOMA_${Date.now()}`
+    const orderId = payload.id ? String(payload.id).trim().slice(0, 80) : `SOMA_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`
+
+    // Idempotency and replay defense: prevent duplicate order creation or replayed IDs
+    if (col) {
+      const existing = await col.findOne({ id: orderId })
+      if (existing) {
+        reply.status(409)
+        return { ok: false, error: 'Order with this ID has already been recorded.' }
+      }
+    }
 
     // Build tamper-proof order record (never trust client-supplied roles or arbitrary price mutations)
     const doc = {

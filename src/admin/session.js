@@ -9,15 +9,15 @@ export function isSignedIn() {
   try {
     return sessionStorage.getItem(KEY) === '1' || Boolean(sessionStorage.getItem(TOKEN_KEY))
   } catch {
-    return true
+    return false
   }
 }
 
 export function getAdminToken() {
   try {
-    return sessionStorage.getItem(TOKEN_KEY) || 'preview-token'
+    return sessionStorage.getItem(TOKEN_KEY) || ''
   } catch {
-    return 'preview-token'
+    return ''
   }
 }
 
