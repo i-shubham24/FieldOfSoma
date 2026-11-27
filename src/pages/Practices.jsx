@@ -211,7 +211,7 @@ export default function Practices() {
         name: 'Somatic Movement Therapy',
         description:
           'Slow, gentle movement that retrains muscles braced from years of tightness, releasing excess tension and bringing the body back into equilibrium.',
-        provider: { '@id': 'https://fieldofsoma.com/#organization' },
+        provider: { '@id': 'https://www.fieldofsoma.com/#organization' },
       },
       {
         '@type': 'Service',
@@ -219,14 +219,14 @@ export default function Practices() {
         name: 'Tai Chi',
         description:
           'A gentle internal martial art practised as a moving meditation, developing structure, balance and sensitivity to qi.',
-        provider: { '@id': 'https://fieldofsoma.com/#organization' },
+        provider: { '@id': 'https://www.fieldofsoma.com/#organization' },
       },
       {
         '@type': 'Service',
         position: 3,
         name: 'Creative Movement',
         description: 'Open movement drawn from dance, with no choreography and nothing to perform.',
-        provider: { '@id': 'https://fieldofsoma.com/#organization' },
+        provider: { '@id': 'https://www.fieldofsoma.com/#organization' },
       },
     ],
   }

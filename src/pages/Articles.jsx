@@ -164,7 +164,7 @@ export default function Articles() {
     '@type': 'CollectionPage',
     name: 'Writing by Kirti Verma',
     description: 'Short pieces about Somatics, Tai Chi and paying attention to the body.',
-    url: 'https://fieldofsoma.com/articles',
+    url: 'https://www.fieldofsoma.com/articles',
   }
 
   useTitle({

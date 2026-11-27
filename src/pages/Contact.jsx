@@ -150,7 +150,7 @@ export default function Contact() {
     name: 'Contact Field of Soma',
     description:
       'Get in touch with Kirti Verma for questions about private sessions, workshops, or somatic education.',
-    url: 'https://fieldofsoma.com/contact',
+    url: 'https://www.fieldofsoma.com/contact',
     mainEntity: {
       '@type': 'Person',
       name: 'Kirti Verma',

@@ -10,4 +10,4 @@ Disallow: /api/
 Disallow: /order-success/
 Disallow: /thank-you
 
-Sitemap: https://fieldofsoma.com/sitemap.xml
+Sitemap: https://www.fieldofsoma.com/sitemap.xml

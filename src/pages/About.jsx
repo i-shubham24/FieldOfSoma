@@ -268,7 +268,7 @@ export default function About() {
       worksFor: {
         '@type': 'EducationalOrganization',
         name: 'Field of Soma',
-        url: 'https://fieldofsoma.com',
+        url: 'https://www.fieldofsoma.com',
       },
       description:
         'Movement and somatic educator teaching Somatic Movement Therapy and Tai Chi, with creative movement drawn from dance.',

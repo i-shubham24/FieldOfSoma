@@ -150,7 +150,7 @@ export default function ClassDetail() {
           '@type': 'Course',
           name: course.title,
           description: course.subtitle,
-          provider: { '@id': 'https://fieldofsoma.com/#organization' },
+          provider: { '@id': 'https://www.fieldofsoma.com/#organization' },
         }
       : undefined,
     noindex: !course,

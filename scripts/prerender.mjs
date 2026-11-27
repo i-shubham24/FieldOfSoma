@@ -10,7 +10,7 @@ import { createServer } from 'vite'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
 const dist = join(root, 'dist')
-const BASE = 'https://fieldofsoma.com'
+const BASE = 'https://www.fieldofsoma.com'
 const SITE = 'Field of Soma'
 const DEFAULT_TITLE = 'Field of Soma | Somatic Movement & Tai Chi India'
 const DEFAULT_IMAGE = `${BASE}/photos/kirti-author-preview.jpg`

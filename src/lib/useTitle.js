@@ -4,7 +4,7 @@ import { site } from '../content/site'
 const DEFAULT_TITLE = `${site.name}: Movement and Somatic Education with ${site.person}`
 const DEFAULT_DESC =
   'Movement and somatic education with Kirti Verma: Somatic Movement Therapy, Tai Chi and Creative Movement. Gentle practices to release held tension.'
-const BASE_URL = 'https://fieldofsoma.com'
+const BASE_URL = 'https://www.fieldofsoma.com'
 
 function setMeta(attribute, name, content) {
   if (!content) return
@@ -43,7 +43,7 @@ function setJsonLd(schema) {
   script.textContent = JSON.stringify(schema)
 }
 
-const DEFAULT_OG_IMAGE = 'https://fieldofsoma.com/photos/kirti-forest-hero.jpg'
+const DEFAULT_OG_IMAGE = 'https://www.fieldofsoma.com/photos/kirti-forest-hero.jpg'
 const DEFAULT_OG_ALT = 'Kirti Verma standing among tall pines in a white dress'
 
 // Sets page title, meta description, OpenGraph tags, canonical link, breadcrumbs and JSON-LD schema.

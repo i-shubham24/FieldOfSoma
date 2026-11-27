@@ -8,7 +8,7 @@ import { getFullSchemasForRoute } from './schemas.js'
 // - Meta descriptions: Clamped strictly between 130 and 155 characters with active commercial/educational CTAs.
 // - Static crawler prerendering, clean canonical tags, and structured JSON-LD schemas.
 
-export const BASE_URL = 'https://fieldofsoma.com'
+export const BASE_URL = 'https://www.fieldofsoma.com'
 export const BRAND_NAME = 'Field of Soma'
 
 // Arial 20px character pixel widths for SERP pixel boundary enforcement

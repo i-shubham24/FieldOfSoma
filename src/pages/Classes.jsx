@@ -449,7 +449,7 @@ export default function Classes() {
     itemListElement: classes.items.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      url: `https://fieldofsoma.com/classes/${item.id}`,
+      url: `https://www.fieldofsoma.com/classes/${item.id}`,
       name: item.title,
     })),
   }

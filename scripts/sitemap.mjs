@@ -10,7 +10,7 @@ const ids = (file) =>
     (match) => match[1],
   )
 
-const BASE = 'https://fieldofsoma.com'
+const BASE = 'https://www.fieldofsoma.com'
 const today = new Date().toISOString().slice(0, 10)
 
 const pages = [

@@ -32,8 +32,8 @@ export default function Article() {
           '@type': 'Article',
           headline: article.title,
           description: article.excerpt,
-          author: { '@id': 'https://fieldofsoma.com/#person' },
-          publisher: { '@id': 'https://fieldofsoma.com/#organization' },
+          author: { '@id': 'https://www.fieldofsoma.com/#person' },
+          publisher: { '@id': 'https://www.fieldofsoma.com/#organization' },
         }
       : undefined,
     noindex: !article,

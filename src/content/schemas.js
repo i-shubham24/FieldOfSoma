@@ -2,7 +2,7 @@ import { classes } from './classes.js'
 import { articles } from './articles.js'
 import { practices } from './practices.js'
 
-export const BASE_URL = 'https://fieldofsoma.com'
+export const BASE_URL = 'https://www.fieldofsoma.com'
 
 export const organizationSchema = {
   '@context': 'https://schema.org',
